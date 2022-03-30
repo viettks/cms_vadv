@@ -15,5 +15,7 @@
     <script src="{{URL::asset('vendor/chartjs/Chart.bundle.min.js') }}"></script>
     <script src="{{URL::asset('vendor/select2/select2.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="{{URL::asset('js/common.js')}}"></script>
     <!-- Main JS-->
     <script src="{{URL::asset('js/main.js') }}"></script>
+    <script src="{{URL::asset('js/customtable.js') }}"></script>

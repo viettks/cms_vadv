@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DebtController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Settings\PrintController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,8 +46,17 @@ Route::group([
     'prefix' => 'order'
 
 ], function ($router) {
-    Route::get('/',    [PrintController::class, 'listPrint']);
+    Route::get('/',    [OrderController::class, 'getOne']);
+    Route::get('/list',[OrderController::class, 'getListOrder']);
     Route::post('/',   [OrderController::class, 'createOrder']);
-    Route::put('/',    [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
-    Route::delete('/', [PrintController::class, 'deletePrint'])->middleware('can:ADMIN');
+    Route::patch('/',  [OrderController::class, 'update'])->middleware('can:ADMIN');
+});
+
+//DEBT
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'debt'
+
+], function ($router) {
+    Route::get('/',[DebtController::class, 'getDebtes']);
 });

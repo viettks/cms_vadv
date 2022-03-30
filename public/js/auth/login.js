@@ -20,7 +20,6 @@
                     window.location.href = "/";
             },
             error: function(xhr) {
-                debugger
                 $('#spAlert').text('Sai tên đăng nhập hoặc mật khẩu.');
                 $('#btnCloseArlert').closest('.alert').removeClass('fade').addClass('show');
             },

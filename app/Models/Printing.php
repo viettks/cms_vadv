@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Printing extends Model
 {
     use HasFactory;
-    protected $table = 'tb_order';
+
+    protected $table = 'tb_print';
 
     protected $fillable = [
         'name',
-        'phone',
-        'address',
-        'payment',
-        'release',
-        'amount',
-        'note',
-        'status',
+        'big_price',
+        'small_price',
+        'pe_film_1',
+        'pe_film_2',
+        'pe_film_3',
         'created_by',
         'updated_by'
     ];

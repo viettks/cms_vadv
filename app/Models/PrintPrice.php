@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PrintSetting extends Model
+class PrintPrice extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_print';
+    protected $table = 'tb_print_price';
 
     protected $fillable = [
-        'name',
-        'big_price',
-        'small_price',
-        'pe_film_1',
-        'pe_film_2',
-        'pe_film_3',
+        'print_id',
+        'from',
+        'to',
+        'price',
+        'order_num',
         'created_by',
         'updated_by'
     ];
