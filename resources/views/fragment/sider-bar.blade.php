@@ -26,7 +26,7 @@
                 </li>
                 <li>
                     <a href="{{ url('revenue') }}">
-                        <i class="fa fa-signal"></i>Quản lý doanh thu</a>
+                        <i class="fa fa-signal"></i>Quản lý chi</a>
                 </li>
                 <li>
                     <a href="{{ url('debt') }}">
@@ -40,7 +40,7 @@
                             <a href="{{ url('settings/add-print') }}">Tạo mới loại in</a>
                         </li>
                         <li>
-                            <a href="{{ url('order/list') }}">Danh sách đơn hàng</a>
+                            <a href="{{ url('/settings/list-print') }}">Danh sách loại in</a>
                         </li>
                     </ul>
                 </li>

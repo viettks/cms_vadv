@@ -8,7 +8,6 @@
         <div class="container-fluid">
             <div class="header-wrap">
                 <form class="form-header" action="" method="POST">
-                        @yield('title')
                 </form>
                 <div class="header-button">
                     <div class="account-wrap">

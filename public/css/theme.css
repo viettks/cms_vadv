@@ -1213,6 +1213,7 @@ section {
 .seach-box .form-group{
     display: inline-block;
     align-self: flex-end;
+    min-width: 170px;
 }
 
 select.form-control:not([size]):not([multiple]) {

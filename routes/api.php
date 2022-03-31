@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\Settings\PrintController;
+use App\Models\Revenue;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +40,7 @@ Route::group([
     Route::post('/',   [PrintController::class, 'createPrint'])->middleware('can:ADMIN');
     Route::put('/',    [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
     Route::delete('/', [PrintController::class, 'deletePrint'])->middleware('can:ADMIN');
+    Route::get('/list/pagging',[PrintController::class, 'listPaggingPrint']);
 });
 
 //ORDER
@@ -59,4 +62,14 @@ Route::group([
 
 ], function ($router) {
     Route::get('/',[DebtController::class, 'getDebtes']);
+});
+
+//REVENUES
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'revenue'
+
+], function ($router) {
+    Route::get('/list',[RevenueController::class, 'getRevenues']);
+    Route::post('/',[RevenueController::class, 'create']);
 });

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Quản lý nợ')
+@section('title','Danh sách loại in')
 @section('style')
 <style>
     .mh-76{
@@ -23,50 +23,11 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Quản lý nợ</strong>
+            <strong class="card-title" v-if="headerText">Danh sách loại in</strong>
         </div>
         <div class="card-body">
-            <div class="table-data__tool">
-                <div class="table-data__tool-left w-100">
-                    <span class="text-danger text-strong">
-                        <i class="fa fa-dollar"></i>&nbsp; Tổng công nợ : </span>
-                    <span class="text-danger text-strong" id="total">0</span>
-                    <span class="text-danger text-strong"> VNĐ.</span>
-                </div>
-                <div class="table-data__tool-right">
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fa fa-download"></i>&nbsp; Xuất file excel</button>
-                </div>
-                <hr>
-            </div>
             <div class="m-b-30">
                 <div class="m-b-45 mr-2 seach-box">
-                    <div class="form-group mr-2">
-                        <label>Ngày bắt đầu</label>
-                        <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Ngày bắt đầu">
-                    </div>
-                    <div class="form-group mr-2">
-                        <label>Ngày kết thúc</label>
-                        <input type="date" class="form-control" id="toDate" name="toDate" placeholder="Ngày bắt đầu">
-                    </div>
-                    <div class="form-group mr-2">
-                        <label>Tình trạng</label>
-                        <select class="form-control" name="sStatus" id="sStatus">
-                            <option value="" selected="selected">Tất cả</option>
-                            <option value="0">Đang xử lý</option>
-                            <option value="1">Đã giao hàng</option>
-                        </select>
-                    </div>
-                    @can('ADMIN')
-                    <div class="form-group mr-2">
-                        <label>Nhân viên</label>
-                        <select class="form-control" name="time" name="sStaff" id="sStaff">
-                            <option value="" selected="selected">Tất cả</option>
-                            <option value="">Đang xử lý</option>
-                            <option value="">Đã giao hàng</option>
-                        </select>
-                    </div>
-                    @endcan
                     <div class="form-group mr-2">
                         <label></label>
                         <input class="form-control" type="text" name="sValue" id="sValue" placeholder="Tìm kiếm...">
@@ -80,13 +41,10 @@
                     <table class="table table-borderless table-striped table-earning" id="tb_data">
                         <thead>
                             <tr>
-                                <th>NGÀY</th>
-                                <th>TÊN KHÁCH HÀNG</th>
-                                <th>SỐ ĐIỆN THOẠI</th>
-                                <th>TỒNG TIỀN</th>
-                                <th>CHI TRẢ</th>
-                                <th>NỢ</th>
-                                <th>TÌNH TRẠNG</th>
+                                <th>LOẠI IN</th>
+                                <th>KHÔNG CÁN MÀNG</th>
+                                <th>CÁN MÀNG BÓNG</th>
+                                <th>CÁN MÀNG MỜ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,7 +89,7 @@
                             <div class="col col-sm-4">
                                 <label for="">Chưa hoàn thành</label>
                                 <label class="switch switch-default switch-pill switch-danger mr-2">
-                                    <input type="checkbox" id="status" class="switch-input" checked="true" disabled>
+                                    <input type="checkbox" id="status" class="switch-input" checked="true">
                                     <span class="switch-label"></span>
                                     <span class="switch-handle"></span>
                                 </label>
@@ -158,7 +116,7 @@
                                 <label for="payment" class=" form-control-label">Trả trước</label>
                             </div>
                             <div class="col-12 col-md-4">
-                                <input type="number" disabled id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
+                                <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
                             </div>
                             <div class="col col-md-2">
                                 <label for="release" class=" form-control-label">Ngày hoàn thành</label>
@@ -172,7 +130,7 @@
                                 <label for="note" class=" form-control-label">Ghi chú</label>
                             </div>
                             <div class="col-12 col-md-10">
-                                <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                                <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
                             </div>
                         </div>
                         <hr>
@@ -210,6 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="update();"><i class="fa fa-save"></i>&nbsp;Lưu</button>
                 </div>
             </div>
         </div>
@@ -223,32 +182,16 @@
     //FOR DATATABLE
 
     var columns = [
-            {"data" : "create_date", "orderable": false,},
-            {"data" : "name","orderable": false, "render": function ( data, type, row, meta ) {
-                return '<a href="#" onclick="showInfo(\''+row.id+'\')">'+ data + '</a>';
-            }},
-            {"data" : "phone", "orderable": false,},
-            {"data" : "amount", "orderable": false,},
-            {"data" : "payment", "orderable": false,},
-            {"data" : "debt", "orderable": false,},
-            {"data" : "status", "orderable": false, "render": function ( data, type, full, meta ) {
- 
-                    if(data == 1){
-                        return '<p class="text-success">Hoàn thành.</p>';
-                    }else{
-                        return '<p class="text-danger">Chưa hoàn thành.</p>';
-                    }
-            }},
+            {"data" : "name", "orderable": false,},
+            {"data" : "pe_film_1", "orderable": false,},
+            {"data" : "pe_film_2", "orderable": false,},
+            {"data" : "pe_film_3", "orderable": false,},
         ];
 
     var ajax = {
-            'url' : '{{url("api/debt")}}',
+            'url' : '{{url("api/print/list/pagging")}}',
             "type": "GET",
             "data": {
-                "fromDate" : function() { return $('#fromDate').val() },
-                "toDate" : function() { return $('#toDate').val() },
-                "status" : function() { return $('#sStatus').val() },
-                "staff" : function() { return $('#sStaff').val() },
                 "value" : function() { return $('#sValue').val() },
             }
         };
@@ -261,11 +204,7 @@
         init();
 
         $("#btnSeach").click(function(){
-            if(COMMON._isNullOrEmpty($("#fromDate"))||COMMON._isNullOrEmpty($("#toDate"))){
-                alert('Vui lòng kiểm tra ngày bắt đầu và ngày kết thúc!');
-            }else{
-                table.ajax.reload(null,true);
-            }
+            table.ajax.reload(null,true);
         });
 
         var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
@@ -327,6 +266,29 @@
                     alert('Đã xảy ra lỗi!')
                 }
                 
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
+        });
+    }
+
+    function update() {
+        $.ajax({
+            type: "PATCH",
+            url: "{{url('/api/order')}}",
+            data: {
+                'id': $("#orderID").val(),
+                'status' : $("#status").prop("checked")===true ? 1 : 0,
+                'note': $("#note").val(),
+                'payment' : $("#payment").val(),
+            },
+            dataType: "json",
+            success: function(data) {
+                alert('Lưu thành công!')
+                $('#modal1').modal('hide');
+                $('#btnSeach').click();
+
             },
             error: function(xhr) {
                 alert('Đã xảy ra lỗi!')

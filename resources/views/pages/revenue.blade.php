@@ -8,6 +8,13 @@
     .input-date-wrap{
         width: 185px;
     }
+    .modal-lg{
+        min-width: 60%;
+    }
+    .switch-label{
+        border-color: #ff182b !important;
+        background-color: #ff182b !important;
+    }   
 </style>
 @endsection
 @section('content')
@@ -22,8 +29,8 @@
             <div class="table-data__tool">
                 <div class="table-data__tool-left w-100">
                     <span class="text-danger text-strong">
-                        <i class="fa fa-dollar"></i>&nbsp; Tổng chi : </span>
-                    <span class="text-danger text-strong">1000000</span>
+                        <i class="fa fa-dollar"></i>&nbsp; Tổng doanh thu : </span>
+                    <span class="text-danger text-strong" id="total">0</span>
                     <span class="text-danger text-strong"> VNĐ.</span>
                 </div>
                 <div class="table-data__tool-right">
@@ -33,85 +40,63 @@
                 <hr>
             </div>
             <div class="m-b-30">
-                <div class="filters m-b-45 mr-2">
-                    <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border input-date-wrap">
-                        <span>Ngày bắt đầu</span>
-                        <input type="date" class="form-control" placeholder="Ngày bắt đầu">
+                <div class="m-b-45 mr-2 seach-box">
+                    <div class="form-group mr-2">
+                        <label>Ngày bắt đầu</label>
+                        <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Ngày bắt đầu">
                     </div>
-                    <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border input-date-wrap">
-                        <span>Ngày kết thúc</span>
-                        <input type="date" class="form-control" placeholder="Ngày bắt đầu">
+                    <div class="form-group mr-2">
+                        <label>Ngày kết thúc</label>
+                        <input type="date" class="form-control" id="toDate" name="toDate" placeholder="Ngày bắt đầu">
                     </div>
-                    <div class="rs-select2--dark rs-select2--sm rs-select2--border input-date-wrap">
-                        <span>Tình trạng</span>
-                        <select class="js-select2 au-select-dark w-100" name="time">
-                            <option selected="selected">Tất cả</option>
-                            <option value="">Đang xử lý</option>
-                            <option value="">Đã giao hàng</option>
+                    <div class="form-group mr-2">
+                        <label>Tình trạng</label>
+                        <select class="form-control" name="sStatus" id="sStatus">
+                            <option value="" selected="selected">Tất cả</option>
+                            <option value="0">Đang xử lý</option>
+                            <option value="1">Đã giao hàng</option>
                         </select>
-                        <div class="dropDownSelect2"></div>
                     </div>
                     @can('ADMIN')
-                    <div class="rs-select2--dark rs-select2--sm rs-select2--border input-date-wrap">
-                        <span>Nhân viên</span>
-                        <select class="js-select2 au-select-dark w-100" name="time">
-                            <option selected="selected">Tất cả</option>
+                    <div class="form-group mr-2">
+                        <label>Nhân viên</label>
+                        <select class="form-control" name="time" name="sStaff" id="sStaff">
+                            <option value="" selected="selected">Tất cả</option>
                             <option value="">Đang xử lý</option>
                             <option value="">Đã giao hàng</option>
                         </select>
-                        <div class="dropDownSelect2"></div>
                     </div>
                     @endcan
-                    <div class="rs-select2--dark rs-select2--sm rs-select2--border input-date-wrap">
-                        <span></span>
-                        <button type="button" class="btn btn-primary">Tra cứu</button>
+                    <div class="form-group mr-2">
+                        <label></label>
+                        <input class="form-control" type="text" name="sValue" id="sValue" placeholder="Tìm kiếm...">
+                    </div>
+                    <div class="form-group mr-2">
+                        <label></label>
+                        <button type="button" class="btn btn-primary" id="btnSeach">Tra cứu</button>
+                    </div>
+                    <div class="form-group mr-2 w-100 d-flex justify-content-end">
+                        <label></label>
+                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1" id="btnCreate">
+                            <i class="fa fa-plus"></i>
+                            Thêm mới</button>
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <table class="table table-borderless table-striped table-earning">
+                    <table class="table table-borderless table-striped table-earning" id="tb_data">
                         <thead>
                             <tr>
-                                <th>Ngày</th>
-                                <th>Tên đối tác</th>
-                                <th>Diễn giải</th>
-                                <th>Số tiền</th>
-                                <th>Hóa đơn</th>
-                                <th>Tình trạng</th>
+                                <th>NGÀY</th>
+                                <th>TÊN ĐỐI TÁC</th>
+                                <th>LÝ DO CHI</th>
+                                <th>SỐ TIỀN</th>
+                                <th>HÓA ĐƠN</th>
+                                <th>NHÂN VIÊN</th>
+                                <th>NGƯỜI DUYỆT</th>
+                                <th>TRẠNG THÁI</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Ngày</th>
-                                <td>Tên khách hàng</td>
-                                <td>Số điện thoại</td>
-                                <td>Chi tiết</td>
-                                <td>KT ngang</td>
-                                <td>KT dọc</td>
-                            </tr>
-                            <tr>
-                                <td>Ngày</th>
-                                <td>Tên khách hàng</td>
-                                <td>Số điện thoại</td>
-                                <td>Chi tiết</td>
-                                <td>KT ngang</td>
-                                <td>KT dọc</td>
-                            </tr>
-                            <tr>
-                                <td>Ngày</th>
-                                <td>Tên khách hàng</td>
-                                <td>Số điện thoại</td>
-                                <td>Chi tiết</td>
-                                <td>KT ngang</td>
-                                <td>KT dọc</td>
-                            </tr>
-                            <tr>
-                                <td>Ngày</th>
-                                <td>Tên khách hàng</td>
-                                <td>Số điện thoại</td>
-                                <td>Chi tiết</td>
-                                <td>KT ngang</td>
-                                <td>KT dọc</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -120,7 +105,241 @@
         </div>
     </div>
 </div>
+@section('modal')
+<!-- modal medium -->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">
+                        <i class="mr-2 fa fa-align-justify"></i>
+                        Tạo mới phiếu chi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="crForm" method="post" class="form-horizontal">
+                        <div class="row form-group">
+                            <h5 class="title-5 m-b-30 ml-3">Thông tin phiếu chi</h5>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-sm-4">
+                                <label for="name" class=" form-control-label">Tên đối tác (<span class="required">*</span>)</label>
+                            </div>
+                            <div class="col col-sm-8">
+                                <input type="text" id="crName" name="name" placeholder="Tên đối tác" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-sm-4">
+                                <label for="name" class=" form-control-label">Số tiền (<span class="required">*</span>)</label>
+                            </div>
+                            <div class="col col-sm-8">
+                                <input type="number" id="crAmount" name="amount" placeholder="Giá tiền" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-sm-4">
+                                <label for="name" class=" form-control-label">Hóa đơn (<span class="required">*</span>)</label>
+                            </div>
+                            <div class="col col-sm-8">
+                                <input type="file" id="crFile" name="file" placeholder="Hóa đơn" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-sm-4">
+                                <label for="name" class=" form-control-label">Lý do chi (<span class="required">*</span>)</label>
+                            </div>
+                            <div class="col col-sm-8">
+                                <textarea name="note" id="crNote" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="create();"><i class="fa fa-save"></i>&nbsp;Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal medium -->
+@endsection
 
 @endsection
 @section('extend_script')
+<script>
+    //FOR DATATABLE
+
+    var columns = [
+            {"data" : "created_at", "orderable": false,},
+            {"data" : "name", "orderable": false,},
+            {"data" : "note", "orderable": false,},
+            {"data" : "amount", "orderable": false,},
+            {"data" : "file_name", "orderable": false, "render": function ( data, type, full, meta ) {
+      
+                return '<a href="#">'+data+'</a>';
+
+            }},
+            {"data" : "created_by", "orderable": false,},
+            {"data" : "updated_by", "orderable": false,},
+            {"data" : "status", "orderable": false, "render": function ( data, type, full, meta ) {
+      
+                    if(data == 1){
+                        return '<p class="text-success">Hoàn thành.</p>';
+                    }else{
+                        return '<p class="text-danger">Chưa hoàn thành.</p>';
+                    }
+            }},
+        ];
+
+    var ajax = {
+            'url' : '{{url("api/revenue/list")}}',
+            "type": "GET",
+            "data": {
+                "fromDate" : function() { return $('#fromDate').val() },
+                "toDate" : function() { return $('#toDate').val() },
+                "status" : function() { return $('#sStatus').val() },
+                "staff" : function() { return $('#sStaff').val() },
+                "value" : function() { return $('#sValue').val() },
+            }
+        };
+
+    function callback(settings){
+        $("#total").text(settings.json.total);
+    }
+
+    $(document).ready(function(){
+        init();
+
+        $("#btnSeach").click(function(){
+            if(COMMON._isNullOrEmpty($("#fromDate"))||COMMON._isNullOrEmpty($("#toDate"))){
+                alert('Vui lòng kiểm tra ngày bắt đầu và ngày kết thúc!');
+            }else{
+                table.ajax.reload(null,true);
+            }
+        });
+
+        var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+    });
+
+    function init() {
+        var today = new Date();
+        var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+        $("#fromDate").val(firstDayOfMonth.toLocaleDateString('en-CA'));
+        $("#toDate").val(lastDayOfMonth.toLocaleDateString('en-CA'));
+    }
+
+    function showInfo(id) {
+        $.ajax({
+            type: "GET",
+            url: "{{url('/api/order')}}",
+            data: {
+                'id': id,
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.length > 0){
+                    $('#name').val(data[0].customer);
+                    $('#phone').val(data[0].phone);
+                    $('#address').val(data[0].address);
+                    $('#payment').val(data[0].payment);
+                    $('#release').val(data[0].release_dt);
+                    $('#note').val(data[0].note);
+                    $("#totalPrice").text(data[0].total);
+                    $("#orderID").val(data[0].id)
+                    $("#tb_data_sub tbody").empty();
+                    data.forEach((element,index) => {
+                        var row = `<tr> <td>${element.print}</td>
+                                        <td>${element.film_type}</td>
+                                        <td>${element.width}</td>
+                                        <td>${element.heigth}</td>
+                                        <td>${element.quantity}</td>
+                                        <td>${element.amount}</td></tr>`;
+                        $("#tb_data_sub tbody").append(row);
+                    });
+                    $('#payment').off('change');
+                    $('#payment').change(function(e){
+                        if(this.value < data[0].payment){
+                            alert('Giá trị trả trước không được nhỏ hơn giá trị hiện tại!');
+                            this.value = data[0].payment;
+                            this.focus();
+                        }
+                    });
+                    $('#status').off('change');
+                    if(data[0].status == 1){
+                        $('#status').attr("checked", true);
+                    }else{
+                        $('#status').attr("checked", false);
+                    }
+               
+                    $('#modal1').modal('show');
+                }else{
+                    alert('Đã xảy ra lỗi!')
+                }
+                
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
+        });
+    }
+
+    function create() {
+        if(!validateCreate()) return;
+        var formData = new FormData($('#crForm')[0]);
+        formData.append('file',$('#crFile')[0].files[0]);
+
+        $.ajax({
+            type:'POST',
+            url: "{{ url('/api/revenue')}}",
+            contentType: 'multipart/form-data',
+            data: formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                alert(data.message);
+                $('#modal1').modal('hide');
+            },
+            error: function(data){
+                
+            }
+        });
+    }
+
+    function validateCreate() {
+        if(COMMON._isNullOrEmpty($('#crName'))){
+            alert('Vui lòng nhập tên đối tác!');
+            $('#crName').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crAmount'))){
+            alert('Vui lòng nhập số tiền!');
+            $('#crAmount').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crFile'))){
+            alert('Vui lòng chọn tệp hóa đơn!');
+            $('#crFile').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crNote'))){
+            alert('Vui lòng nhập lý do chi!');
+            $('#crNote').focus();
+            return false;
+        }
+        return true;
+    }
+
+    $('#modal1').on('show.bs.modal', function (event) {
+        $('#crName').val('');
+        $('#crAmount').val('');
+        $('#crFile').val('');
+        $('#crNote').val('');
+    });
+</script>
 @endsection

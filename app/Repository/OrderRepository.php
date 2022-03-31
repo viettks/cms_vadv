@@ -70,7 +70,6 @@ class OrderRepository
         $result['recordsFiltered'] = $count;
         $result['data'] = $data;
         $result['total'] = $total;
-        $result['sql'] = $param;
         return $result;
     }
 

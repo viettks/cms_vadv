@@ -35,6 +35,7 @@ Route::group([
     // SETTINGS
     //IN ẤN
     Route::get('/settings/add-print', [PrintController::class,'viewCreate'])->name('addPrint');
+    Route::get('/settings/list-print', [PrintController::class,'viewList'])->name('listPrint');
     //END IN ẤN
     // SETTINGS
 });

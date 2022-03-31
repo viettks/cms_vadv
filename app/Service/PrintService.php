@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\Printing;
 use App\Models\PrintPrice;
 use App\Repository\PriceRepository;
+use App\Repository\PrintRepository;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -83,4 +84,9 @@ class PrintService
             $price =  new PriceRepository();
             return $price->getAllPriceDetail();
         }
+
+    public static function listPrintPagging($param)
+    {
+        return PrintRepository::listPrintPagging($param);
+    }
 }

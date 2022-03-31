@@ -17,6 +17,10 @@ class PrintController extends Controller
         return view('pages.settings.print');
     }
 
+    public function viewList(Request $request)
+    {
+        return view('pages.settings.list-print');
+    }
 
     //API
 
@@ -30,6 +34,14 @@ class PrintController extends Controller
             'status' => "OK",
             'data'   => $data, 
         ]);
+    }
+
+    /*
+     * List Of Print WITH PAGGING
+     */
+    public function listPaggingPrint(Request $request)
+    {
+        return response()->json(PrintService::listPrintPagging($request->all()), 200);
     }
 
      /*

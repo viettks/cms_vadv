@@ -29,7 +29,7 @@ class DebtRepository
         $eloquent =  DB::table('tb_order AS o')
         ->join('tb_debt AS d','o.id','=','d.order_id')
         ->where(function($query) use ($param){
-            $query->whereBetween(DB::raw('DATE(created_at)'), [$param['fromDate'],$param['toDate']]);
+            $query->whereBetween(DB::raw('DATE(o.created_at)'), [$param['fromDate'],$param['toDate']]);
             if(isset($param['status'])){
                 $query->where('status', '=',$param['status']);
             }
@@ -47,7 +47,7 @@ class DebtRepository
         $result['recordsTotal'] = $data->count();
         $result['recordsFiltered'] = $data->count();
         $result['data'] = $data;
-        $result['total'] = $eloquent->sum('debt');
+        $result['total'] = $eloquent->sum(DB::raw('o.amount - o.payment'));
         return $result;
     }
 }
