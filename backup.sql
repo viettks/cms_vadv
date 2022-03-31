@@ -96,15 +96,10 @@ CREATE TABLE IF NOT EXISTS `tb_debt` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_debt: ~4 rows (approximately)
+-- Dumping data for table vadv_cms.tb_debt: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_debt` DISABLE KEYS */;
-INSERT INTO `tb_debt` (`id`, `order_id`, `amount`, `payment`, `status`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 1, 8642000, 0, 0, NULL, NULL, NULL, '2022-03-25 17:28:50', '2022-03-25 17:28:50'),
-	(2, 2, 8642000, 0, 0, NULL, 3, 3, '2022-03-25 17:30:54', '2022-03-25 17:30:54'),
-	(3, 3, 8642000, 0, 0, NULL, 3, 3, '2022-03-25 17:31:25', '2022-03-25 17:31:25'),
-	(4, 4, 8642000, 0, 0, NULL, 3, 3, '2022-03-25 17:32:44', '2022-03-25 17:32:44');
 /*!40000 ALTER TABLE `tb_debt` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order
@@ -117,20 +112,16 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
   `release` datetime DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
   `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order: ~4 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_order` DISABLE KEYS */;
-INSERT INTO `tb_order` (`id`, `name`, `phone`, `address`, `payment`, `release`, `amount`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 'Hòai nam', '0123456789', 'Thanh xuân', 0, '2015-11-11 00:00:00', 8642000, 'test thôi', 3, 3, '2022-03-25 17:28:50', '2022-03-25 17:28:50'),
-	(2, 'Hòai nam', '0123456789', 'Thanh xuân', 0, '2015-11-11 00:00:00', 8642000, 'test thôi', 3, 3, '2022-03-25 17:30:54', '2022-03-25 17:30:54'),
-	(3, 'Hòai nam', '0123456789', 'Thanh xuân', 0, '2015-11-11 00:00:00', 8642000, 'test thôi', 3, 3, '2022-03-25 17:31:25', '2022-03-25 17:31:25'),
-	(4, 'Hòai nam', '0123456789', 'Thanh xuân', 0, '2015-11-11 00:00:00', 8642000, 'test thôi', 3, 3, '2022-03-25 17:32:44', '2022-03-25 17:32:44');
 /*!40000 ALTER TABLE `tb_order` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order_detail
@@ -153,43 +144,73 @@ CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   KEY `FK_tb_order_detail_tb_print` (`print_id`),
   CONSTRAINT `FK_tb_order_detail_tb_order` FOREIGN KEY (`order_id`) REFERENCES `tb_order` (`id`),
   CONSTRAINT `FK_tb_order_detail_tb_print` FOREIGN KEY (`print_id`) REFERENCES `tb_print` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order_detail: ~8 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order_detail: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_order_detail` DISABLE KEYS */;
-INSERT INTO `tb_order_detail` (`id`, `order_id`, `print_id`, `width`, `heigth`, `quantity`, `unit_price`, `film_type`, `amount`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 1, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:28:50', '2022-03-25 17:28:50'),
-	(2, 1, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:28:50', '2022-03-25 17:28:50'),
-	(3, 2, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:30:54', '2022-03-25 17:30:54'),
-	(4, 2, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:30:54', '2022-03-25 17:30:54'),
-	(5, 3, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:31:25', '2022-03-25 17:31:25'),
-	(6, 3, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:31:25', '2022-03-25 17:31:25'),
-	(7, 4, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:32:44', '2022-03-25 17:32:44'),
-	(8, 4, 2, 1, 1, 1000, 4321, 0, 4321000, 3, 3, '2022-03-25 17:32:44', '2022-03-25 17:32:44');
 /*!40000 ALTER TABLE `tb_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print
 CREATE TABLE IF NOT EXISTS `tb_print` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `big_price` bigint DEFAULT NULL,
-  `small_price` bigint DEFAULT NULL,
-  `pe_film_1` bigint DEFAULT NULL,
-  `pe_film_2` bigint DEFAULT NULL,
-  `pe_film_3` bigint DEFAULT NULL,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `pe_film_1` bigint NOT NULL,
+  `pe_film_2` bigint NOT NULL,
+  `pe_film_3` bigint NOT NULL,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table vadv_cms.tb_print: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_print` DISABLE KEYS */;
-INSERT INTO `tb_print` (`id`, `name`, `big_price`, `small_price`, `pe_film_1`, `pe_film_2`, `pe_film_3`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(2, 'in thường', 1234, 4321, 0, 11111, 22222, 3, 3, '2022-03-24 13:36:12', '2022-03-24 13:36:12'),
-	(3, 'in nhanh', 5432, 9999, 0, 44444, 55555, 3, 3, '2022-03-24 13:36:57', '2022-03-24 13:36:57');
 /*!40000 ALTER TABLE `tb_print` ENABLE KEYS */;
+
+-- Dumping structure for table vadv_cms.tb_print_price
+CREATE TABLE IF NOT EXISTS `tb_print_price` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `print_id` int NOT NULL,
+  `from` int NOT NULL,
+  `to` int DEFAULT NULL,
+  `price` bigint NOT NULL,
+  `order_num` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table vadv_cms.tb_print_price: ~4 rows (approximately)
+/*!40000 ALTER TABLE `tb_print_price` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_print_price` ENABLE KEYS */;
+
+-- Dumping structure for table vadv_cms.tb_revenue
+CREATE TABLE IF NOT EXISTS `tb_revenue` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `amount` bigint DEFAULT NULL,
+  `url` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_name` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table vadv_cms.tb_revenue: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tb_revenue` DISABLE KEYS */;
+INSERT INTO `tb_revenue` (`id`, `name`, `note`, `amount`, `url`, `file_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, NULL, '3', 2, 'upload/revenue\\1648750949Phần quản lý.xlsx', '1648750949Phần quản lý.xlsx', NULL, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:22:29'),
+	(2, NULL, '3', 2, 'upload/revenue\\1648750996Phần quản lý.xlsx', '1648750996Phần quản lý.xlsx', NULL, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:23:16'),
+	(3, '1', '3', 2, 'upload/revenue\\1648751012Phần quản lý.xlsx', '1648751012Phần quản lý.xlsx', NULL, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:23:32'),
+	(4, '1241', '2', 2, 'upload/revenue\\1648751250Phần quản lý.xlsx', '1648751250Phần quản lý.xlsx', NULL, 3, NULL, '2022-04-01 18:22:29', '2022-03-31 18:27:30');
+/*!40000 ALTER TABLE `tb_revenue` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_role
 CREATE TABLE IF NOT EXISTS `tb_role` (
