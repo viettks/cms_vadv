@@ -8,19 +8,21 @@ use App\Service\OrderService;
 use App\Service\PrintService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
     public function viewListOrder(Request $request)
     {
-        return view('pages.order.list');
+        $memberes = DB::table('users AS u')->get();
+        return view('pages.order.list')->with(compact('memberes'));
     }
 
     public function add(Request $request)
     {
 
-        $printes = Printing::all();
+        $printes = Printing::where('is_delete','!=','1')->get();
         $priceService = new PrintService();
         $details = $priceService->getPriceDetails();
         return view('pages.order.add')
@@ -98,6 +100,9 @@ class OrderController extends Controller
     public function getListOrder(Request $request)
     {
         $param = $request->all();
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
 
         $orderSvc = new OrderService(); 
         $result = $orderSvc->getListOrder($param);

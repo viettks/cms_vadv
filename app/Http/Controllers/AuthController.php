@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -20,39 +21,17 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Sai tên đăng nhập hoặc mật khẩu'], 401);
+        }
+
+        $user = auth()->user();
+        if($user->is_delete == 1){
+            return response()->json(['error' => 'Tài khoản của bạn đã bị xóa khỏi hệ thống'], 403);
         }
         return $this->createNewToken($token)->withCookie(cookie('token', $token, 120));
     }
 
-        /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'user_name' => 'required|string|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $user = User::create(array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password)]
-                ));
-
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
-    }
-
-            /**
+    /**
      * Register a User.
      *
      * @return \Illuminate\Http\JsonResponse

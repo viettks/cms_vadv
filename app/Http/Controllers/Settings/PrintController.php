@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\Printing;
+use App\Models\PrintPrice;
 use App\Service\PrintService;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,6 +23,17 @@ class PrintController extends Controller
         return view('pages.settings.list-print');
     }
 
+    public function viewUpdate(Request $request)
+    {
+        $id = $request->id;
+        $printing = Printing::where('is_delete','!=',1)->find($id);
+        if(!isset($printing)){
+            abort(404);
+        }
+        $printPrices = PrintPrice::where('print_id','!=',1)->get();
+        return view('pages.settings.updatePrint')->with(compact('printing','printPrices'));
+    }
+
     //API
 
     /*
@@ -29,7 +41,7 @@ class PrintController extends Controller
      */
     public function listPrint(Request $request)
     {
-        $data = Printing::get();
+        $data = Printing::where('is_delete','!=','1')->get();
         return response()->json([
             'status' => "OK",
             'data'   => $data, 
@@ -94,7 +106,6 @@ class PrintController extends Controller
     public function updatePrint(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'              => 'required|string',
             'pe_film_1'         => 'required|integer',
             'pe_film_2'         => 'required|integer',
             'pe_film_3'         => 'required|integer',
@@ -120,6 +131,7 @@ class PrintController extends Controller
             return response()->json([
                 'status' => 201,
                 'data'   => $result,
+                'message' =>'Cập nhật thành công.'
             ]);
         } catch (Exception $e) {
             return response()->json([

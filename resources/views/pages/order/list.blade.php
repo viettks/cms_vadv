@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Quản lý đơn hàng')
+@section('title','Danh sách đơn hàng')
 @section('style')
 <style>
     .mh-76{
@@ -23,7 +23,7 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Quản lý đơn hàng</strong>
+            <strong class="card-title" v-if="headerText">Danh sách đơn hàng</strong>
         </div>
         <div class="card-body">
             <div class="table-data__tool">
@@ -62,8 +62,9 @@
                         <label>Nhân viên</label>
                         <select class="form-control" name="time" name="sStaff" id="sStaff">
                             <option value="" selected="selected">Tất cả</option>
-                            <option value="">Đang xử lý</option>
-                            <option value="">Đã giao hàng</option>
+                            @foreach ($memberes as $member)
+                            <option value="{{$member->id}}">{{$member->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     @endcan

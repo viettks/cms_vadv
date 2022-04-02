@@ -53,8 +53,10 @@
                         <label>Tình trạng</label>
                         <select class="form-control" name="sStatus" id="sStatus">
                             <option value="" selected="selected">Tất cả</option>
-                            <option value="0">Đang xử lý</option>
-                            <option value="1">Đã giao hàng</option>
+                            <option value="0">Dưới 15 ngày</option>
+                            <option value="1">Trên 15 ngày</option>
+                            <option value="2">Trên 30 ngày</option>
+                            <option value="3">Hoàn thành</option>
                         </select>
                     </div>
                     @can('ADMIN')
@@ -62,8 +64,9 @@
                         <label>Nhân viên</label>
                         <select class="form-control" name="time" name="sStaff" id="sStaff">
                             <option value="" selected="selected">Tất cả</option>
-                            <option value="">Đang xử lý</option>
-                            <option value="">Đã giao hàng</option>
+                            @foreach ($memberes as $member)
+                            <option value="{{$member->id}}">{{$member->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     @endcan
@@ -231,12 +234,18 @@
             {"data" : "amount", "orderable": false,},
             {"data" : "payment", "orderable": false,},
             {"data" : "debt", "orderable": false,},
-            {"data" : "status", "orderable": false, "render": function ( data, type, full, meta ) {
+            {"data" : "status", "orderable": false, "render": function ( data, type, row, meta ) {
  
                     if(data == 1){
                         return '<p class="text-success">Hoàn thành.</p>';
                     }else{
-                        return '<p class="text-danger">Chưa hoàn thành.</p>';
+                        if(row.debt_date <= 15){
+                            return '<p class="text-danger">Dưới 15 ngày.</p>';
+                        }else if(row.debt_date > 30){
+                            return '<p class="text-danger">Trên 30 ngày.</p>';
+                        }else{
+                            return '<p class="text-danger">Trên 15 ngày.</p>';
+                        }
                     }
             }},
         ];

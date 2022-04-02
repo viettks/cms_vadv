@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Revenue;
 use App\Service\RevenueService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class RevenueController extends Controller
 {
     public function index(Request $request)
     {
-        return view('pages.revenue');
+        $memberes = DB::table('users AS u')->get();
+        return view('pages.revenue')->with(compact('memberes'));
     }
 
     public function getRevenues(Request $request)
     {
         $param = $request->all();
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
         return response()->json(RevenueService::getRevenues($param), 200);
     }
 
@@ -34,10 +39,10 @@ class RevenueController extends Controller
         }
 
         $file = $request->file;
-        $fileName =  now()->timestamp .$file->getClientOriginalName();
-        $url =  $file->move('upload/revenue', $fileName);
+        $fileName =  $file->getClientOriginalName();
+        $url =  $file->move('upload/revenue', now()->timestamp.$fileName);
         $revenue = $request->only(['name','amount','note']);
-        $revenue['url'] = $url;
+        $revenue['url'] = now()->timestamp.$fileName;
         $revenue['file_name'] = $fileName;
         $author = auth()->user();
         $revenue['created_by'] = $author->id;
@@ -47,5 +52,34 @@ class RevenueController extends Controller
             'data'   => $result,
             'message'=> "Tạo mới thành công.", 
         ]);
+    }
+
+    public function approve(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required',
+            ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
+        $author = auth()->user();
+        $revenue = Revenue::find($request->id);
+        $revenue->status = $request->status;
+        $revenue->updated_by = $author->id;
+        $revenue->save();
+        return response()->json([
+            'status' => 201,
+            'data'   => $revenue,
+            'message'=> "Cập nhật thành công.", 
+        ]);
+    }
+
+    public function getFile(Request $request)
+    {
+        $filepath = public_path('upload/revenue/'.$request->file);
+        return Response()->download($filepath);
     }
 }

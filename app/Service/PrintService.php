@@ -35,7 +35,7 @@ class PrintService
         }
     }
 
-        //CREATE PRINT AND PRICE
+        //UPDATE PRINT AND PRICE
         public function updatePrint($print, $prices)
         {
             try {
@@ -67,9 +67,7 @@ class PrintService
         {
             try {
                 DB::beginTransaction();
-
-                PrintPrice::where('print_id','=',$print_id)->delete();
-                Printing::where('id','=',$print_id)->delete();
+                Printing::where('id','=',$print_id)->update(["is_delete",1]);
                 DB::commit();
                 return $print_id;
             } catch (Exception $e) {

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Tạo mới loại in')
+@section('title','Cập nhật loại in')
 @section('style')
 <style>
     .mh-76 {
@@ -20,7 +20,7 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Tạo mới loại in</strong>
+            <strong class="card-title" v-if="headerText">Cập nhật loại in</strong>
         </div>
         <div class="card-body">
             <form action="" method="post" class="form-horizontal" onsubmit="return false;">
@@ -32,7 +32,8 @@
                         <label for="input-normal" class=" form-control-label">Tên loại in (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="name" name="name" placeholder="Tên loại in" class="form-control" maxlength="200">
+                        <input type="text" id="name" name="name" disabled value="{{$printing->name}}" placeholder="Tên loại in" class="form-control" maxlength="200">
+                        <input type="hidden" id="id" name="id" value="{{$printing->id}}"  placeholder="Tên loại in" class="form-control" maxlength="200">
                     </div>
                     <div class="col col-sm-6">
                     </div>
@@ -42,19 +43,19 @@
                         <label for="text-input" class=" form-control-label">Cán màng ? (<span class="required">*</span>)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_1" name="pe_film_1" placeholder="Không cán màng" class="form-control">
+                        <input type="number" id="pe_film_1" name="pe_film_1" value="{{$printing->pe_film_1}}" placeholder="Không cán màng" class="form-control">
                         <small class="help-block form-text">Không cán màng</small>
                     </div>
                     <div class="col col-md-6"></div>
                     <div class="col col-md-2"></div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_2" name="pe_film_2" placeholder="Cán màng bóng" class="form-control">
+                        <input type="number" id="pe_film_2" name="pe_film_2" value="{{$printing->pe_film_2}}" placeholder="Cán màng bóng" class="form-control">
                         <small class="help-block form-text">Cán màng bóng</small>
                     </div>
                     <div class="col col-md-6"></div>
                     <div class="col col-md-2"></div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_3" name="pe_film_3" placeholder="Cán màng mờ" class="form-control">
+                        <input type="number" id="pe_film_3" name="pe_film_3" value="{{$printing->pe_film_3}}" placeholder="Cán màng mờ" class="form-control">
                         <small class="help-block form-text">Cán màng mờ</small>
                     </div>
                     <div class="col col-md-6"></div>
@@ -74,10 +75,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($printPrices as $price)
                                 <tr>
-                                    <td><input type="number" name="from"  placeholder="Từ" class="form-control-sm"></td>
-                                    <td><input type="number" name="to"    placeholder="Đến" class="form-control-sm"></td>
-                                    <td><input type="number" name="price" placeholder="Giá tiền" class="form-control-sm"></td>
+                                    <td><input type="number" name="from" value="{{$price->from}}" placeholder="Từ" class="form-control-sm"></td>
+                                    <td><input type="number" name="to" value="{{$price->to}}" placeholder="Đến" class="form-control-sm"></td>
+                                    <td><input type="number" name="price" value="{{$price->price}}"  placeholder="Giá tiền" class="form-control-sm"></td>
                                     <td>
                                         <div class="table-data-feature">
                                             <button class="item" onclick="deleteRow(this);">
@@ -86,6 +88,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -157,7 +160,7 @@
         if(!price) return;
 
         var data = {
-            "name" : $("#name").val(),
+            "id" : '{{$printing->id}}',
             "pe_film_1" : Number.parseInt($("#pe_film_1").val()),
             "pe_film_2" : Number.parseInt($("#pe_film_2").val()),
             "pe_film_3" : Number.parseInt($("#pe_film_3").val()),
@@ -166,7 +169,7 @@
 
         return $.ajax({
             url : "{{ url('api/print') }}",
-            type : "POST",
+            type : "PUT",
             dataType:"json",
             data: data,
             success : function(data) {

@@ -29,7 +29,7 @@
             <div class="table-data__tool">
                 <div class="table-data__tool-left w-100">
                     <span class="text-danger text-strong">
-                        <i class="fa fa-dollar"></i>&nbsp; Tổng doanh thu : </span>
+                        <i class="fa fa-dollar"></i>&nbsp; Tổng chi : </span>
                     <span class="text-danger text-strong" id="total">0</span>
                     <span class="text-danger text-strong"> VNĐ.</span>
                 </div>
@@ -54,7 +54,8 @@
                         <select class="form-control" name="sStatus" id="sStatus">
                             <option value="" selected="selected">Tất cả</option>
                             <option value="0">Đang xử lý</option>
-                            <option value="1">Đã giao hàng</option>
+                            <option value="1">Từ chối</option>
+                            <option value="2">Đã chi</option>
                         </select>
                     </div>
                     @can('ADMIN')
@@ -62,8 +63,9 @@
                         <label>Nhân viên</label>
                         <select class="form-control" name="time" name="sStaff" id="sStaff">
                             <option value="" selected="selected">Tất cả</option>
-                            <option value="">Đang xử lý</option>
-                            <option value="">Đã giao hàng</option>
+                            @foreach ($memberes as $member)
+                            <option value="{{$member->id}}">{{$member->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     @endcan
@@ -170,28 +172,33 @@
 
 @endsection
 @section('extend_script')
+@can('ADMIN', null)
 <script>
     //FOR DATATABLE
 
     var columns = [
-            {"data" : "created_at", "orderable": false,},
+            {"data" : "create_date", "orderable": false,},
             {"data" : "name", "orderable": false,},
             {"data" : "note", "orderable": false,},
             {"data" : "amount", "orderable": false,},
-            {"data" : "file_name", "orderable": false, "render": function ( data, type, full, meta ) {
+            {"data" : "file_name", "orderable": false, "render": function ( data, type, row, meta ) {
       
-                return '<a href="#">'+data+'</a>';
+                return '<a href="{{url('revenue')}}/'+row.url+'">'+data+'</a>';
 
             }},
             {"data" : "created_by", "orderable": false,},
             {"data" : "updated_by", "orderable": false,},
-            {"data" : "status", "orderable": false, "render": function ( data, type, full, meta ) {
-      
-                    if(data == 1){
-                        return '<p class="text-success">Hoàn thành.</p>';
-                    }else{
-                        return '<p class="text-danger">Chưa hoàn thành.</p>';
-                    }
+            {"data" : "status", "orderable": false, "render": function ( data, type, row, meta ) {
+                if(data == 2){
+                    return '<p class="text-success">Hoàn thành.</p>';
+                }else if(data == 1){
+                    return '<p class="text-danger">Từ chối.</p>';
+                }else{
+                    return `<button type="button" onclick="approve(${row.id},2)" class="btn btn-outline-success btn-sm">
+                                <i class="fa fa-check"></i>&nbsp; Duyệt</button>
+                            <button type="button" onclick="approve(${row.id},1)" class="btn btn-outline-danger btn-sm">
+                                <i class="fa fa-times"></i>&nbsp;Hủy</button>`;
+                }
             }},
         ];
 
@@ -233,59 +240,144 @@
         $("#toDate").val(lastDayOfMonth.toLocaleDateString('en-CA'));
     }
 
-    function showInfo(id) {
+    function create() {
+        if(!validateCreate()) return;
+        var formData = new FormData($('#crForm')[0]);
+        formData.append('file',$('#crFile')[0].files[0]);
+
         $.ajax({
-            type: "GET",
-            url: "{{url('/api/order')}}",
+            type:'POST',
+            url: "{{ url('/api/revenue')}}",
+            contentType: 'multipart/form-data',
+            data: formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                alert(data.message);
+                $('#modal1').modal('hide');
+                $("#btnSeach").click();
+            },
+            error: function(data){
+                
+            }
+        });
+    }
+
+    function validateCreate() {
+        if(COMMON._isNullOrEmpty($('#crName'))){
+            alert('Vui lòng nhập tên đối tác!');
+            $('#crName').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crAmount'))){
+            alert('Vui lòng nhập số tiền!');
+            $('#crAmount').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crFile'))){
+            alert('Vui lòng chọn tệp hóa đơn!');
+            $('#crFile').focus();
+            return false;
+        }
+        if(COMMON._isNullOrEmpty($('#crNote'))){
+            alert('Vui lòng nhập lý do chi!');
+            $('#crNote').focus();
+            return false;
+        }
+        return true;
+    }
+
+    $('#modal1').on('show.bs.modal', function (event) {
+        $('#crName').val('');
+        $('#crAmount').val('');
+        $('#crFile').val('');
+        $('#crNote').val('');
+    });
+
+    function approve(id,status) {
+        $.ajax({
+            type: "PATCH",
+            url: "{{url('/api/revenue')}}",
             data: {
-                'id': id,
+                "id": id,
+                "status" :status
             },
             dataType: "json",
             success: function(data) {
-                if(data.length > 0){
-                    $('#name').val(data[0].customer);
-                    $('#phone').val(data[0].phone);
-                    $('#address').val(data[0].address);
-                    $('#payment').val(data[0].payment);
-                    $('#release').val(data[0].release_dt);
-                    $('#note').val(data[0].note);
-                    $("#totalPrice").text(data[0].total);
-                    $("#orderID").val(data[0].id)
-                    $("#tb_data_sub tbody").empty();
-                    data.forEach((element,index) => {
-                        var row = `<tr> <td>${element.print}</td>
-                                        <td>${element.film_type}</td>
-                                        <td>${element.width}</td>
-                                        <td>${element.heigth}</td>
-                                        <td>${element.quantity}</td>
-                                        <td>${element.amount}</td></tr>`;
-                        $("#tb_data_sub tbody").append(row);
-                    });
-                    $('#payment').off('change');
-                    $('#payment').change(function(e){
-                        if(this.value < data[0].payment){
-                            alert('Giá trị trả trước không được nhỏ hơn giá trị hiện tại!');
-                            this.value = data[0].payment;
-                            this.focus();
-                        }
-                    });
-                    $('#status').off('change');
-                    if(data[0].status == 1){
-                        $('#status').attr("checked", true);
-                    }else{
-                        $('#status').attr("checked", false);
-                    }
-               
-                    $('#modal1').modal('show');
-                }else{
-                    alert('Đã xảy ra lỗi!')
-                }
-                
+                $("#btnSeach").click();
             },
             error: function(xhr) {
                 alert('Đã xảy ra lỗi!')
             },
         });
+    }
+</script>
+@endcan
+
+@can('USER', null)
+<script>
+    //FOR DATATABLE
+
+    var columns = [
+            {"data" : "create_date", "orderable": false,},
+            {"data" : "name", "orderable": false,},
+            {"data" : "note", "orderable": false,},
+            {"data" : "amount", "orderable": false,},
+            {"data" : "file_name", "orderable": false, "render": function ( data, type, row, meta ) {
+      
+                return '<a href="{{url('revenue')}}/'+row.url+'">'+data+'</a>';
+
+            }},
+            {"data" : "created_by", "orderable": false,},
+            {"data" : "updated_by", "orderable": false,},
+            {"data" : "status", "orderable": false, "render": function ( data, type, row, meta ) {
+                if(data == 2){
+                    return '<p class="text-success">Hoàn thành.</p>';
+                }else if(data == 1){
+                    return '<p class="text-danger">Từ chối.</p>';
+                }else{
+                    return '<p class="text-danger">Đang xử lý.</p>';
+                }
+            }},
+        ];
+
+    var ajax = {
+            'url' : '{{url("api/revenue/list")}}',
+            "type": "GET",
+            "data": {
+                "fromDate" : function() { return $('#fromDate').val() },
+                "toDate" : function() { return $('#toDate').val() },
+                "status" : function() { return $('#sStatus').val() },
+                "staff" : function() { return $('#sStaff').val() },
+                "value" : function() { return $('#sValue').val() },
+            }
+        };
+
+    function callback(settings){
+        $("#total").text(settings.json.total);
+    }
+
+    $(document).ready(function(){
+        init();
+
+        $("#btnSeach").click(function(){
+            if(COMMON._isNullOrEmpty($("#fromDate"))||COMMON._isNullOrEmpty($("#toDate"))){
+                alert('Vui lòng kiểm tra ngày bắt đầu và ngày kết thúc!');
+            }else{
+                table.ajax.reload(null,true);
+            }
+        });
+
+        var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+    });
+
+    function init() {
+        var today = new Date();
+        var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+        $("#fromDate").val(firstDayOfMonth.toLocaleDateString('en-CA'));
+        $("#toDate").val(lastDayOfMonth.toLocaleDateString('en-CA'));
     }
 
     function create() {
@@ -304,6 +396,7 @@
             success: (data) => {
                 alert(data.message);
                 $('#modal1').modal('hide');
+                $("#btnSeach").click();
             },
             error: function(data){
                 
@@ -342,4 +435,6 @@
         $('#crNote').val('');
     });
 </script>
+@endcan
+
 @endsection

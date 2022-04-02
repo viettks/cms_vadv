@@ -182,7 +182,9 @@
     //FOR DATATABLE
 
     var columns = [
-            {"data" : "name", "orderable": false,},
+            {"data" : "name", "orderable": false,"render": function ( data, type, row, meta ) {
+                return `<a href="{{url('/settings/print/update')}}/${row.id}">${data}</a>`;
+            }},
             {"data" : "pe_film_1", "orderable": false,},
             {"data" : "pe_film_2", "orderable": false,},
             {"data" : "pe_film_3", "orderable": false,},
@@ -196,27 +198,13 @@
             }
         };
 
-    function callback(settings){
-        $("#total").text(settings.json.total);
-    }
-
     $(document).ready(function(){
-        init();
-
         $("#btnSeach").click(function(){
             table.ajax.reload(null,true);
         });
 
-        var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+        var table = CMTBL.init($('#tb_data'),columns,ajax,null);
     });
-
-    function init() {
-        var today = new Date();
-        var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
-        $("#fromDate").val(firstDayOfMonth.toLocaleDateString('en-CA'));
-        $("#toDate").val(lastDayOfMonth.toLocaleDateString('en-CA'));
-    }
 
     function showInfo(id) {
         $.ajax({

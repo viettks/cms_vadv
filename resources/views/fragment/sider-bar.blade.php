@@ -32,6 +32,7 @@
                     <a href="{{ url('debt') }}">
                         <i class="fa fa-usd mr-20"></i>Quản lý công nợ</a>
                 </li>
+                @can('ADMIN')
                 <li class="has-sub">
                     <a class="js-arrow" href="#">
                         <i class="fas fa-chart-bar"></i>Cài đặt</a>
@@ -42,8 +43,13 @@
                         <li>
                             <a href="{{ url('/settings/list-print') }}">Danh sách loại in</a>
                         </li>
+
+                        <li>
+                            <a href="{{ url('/settings/member') }}">Danh sách thành viên</a>
+                        </li>
                     </ul>
                 </li>
+                @endcan
             </ul>
         </nav>
     </div>

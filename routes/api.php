@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\Settings\MemberController;
 use App\Http\Controllers\Settings\PrintController;
 use App\Models\Revenue;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +41,7 @@ Route::group([
     Route::post('/',   [PrintController::class, 'createPrint'])->middleware('can:ADMIN');
     Route::put('/',    [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
     Route::delete('/', [PrintController::class, 'deletePrint'])->middleware('can:ADMIN');
-    Route::get('/list/pagging',[PrintController::class, 'listPaggingPrint']);
+    Route::get('/list/pagging',[PrintController::class, 'listPaggingPrint'])->middleware('can:ADMIN');
 });
 
 //ORDER
@@ -72,4 +73,18 @@ Route::group([
 ], function ($router) {
     Route::get('/list',[RevenueController::class, 'getRevenues']);
     Route::post('/',[RevenueController::class, 'create']);
+    Route::patch('/',[RevenueController::class, 'approve'])->middleware('can:ADMIN');
+});
+
+//MEMBER
+Route::group([
+    'middleware' => 'auth:api,can:ADMIN',
+    'prefix' => 'member'
+
+], function ($router) {
+    Route::get('/list',[MemberController::class, 'getListMember']);
+    Route::get('/info',[MemberController::class, 'getInfo']);
+    Route::post('/',[MemberController::class, 'createMember']);
+    Route::patch('/',[MemberController::class, 'updateMember']);
+    Route::delete('/',[MemberController::class, 'deleteMember']);
 });

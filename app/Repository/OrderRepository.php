@@ -52,6 +52,11 @@ class OrderRepository
                     if(isset($param['value'])){
                         $query->where('name', '=',$param['value']);
                     }
+                    if(isset($param['is_admin'])){
+                        if(!$param['is_admin']){
+                            $query->where('created_by', '=',$param['user']);
+                        }
+                    }
                 });
         $orderIds = $eloquent->select('id')->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
         $count = $eloquent->count();

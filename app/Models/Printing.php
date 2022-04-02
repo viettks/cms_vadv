@@ -18,6 +18,7 @@ class Printing extends Model
         'pe_film_1',
         'pe_film_2',
         'pe_film_3',
+        'is_delete',
         'created_by',
         'updated_by'
     ];

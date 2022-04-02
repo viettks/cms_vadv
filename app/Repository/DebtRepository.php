@@ -22,8 +22,6 @@ class DebtRepository
             d.status
             ";
 
-
-
         $result = array();
         
         $eloquent =  DB::table('tb_order AS o')
@@ -31,21 +29,43 @@ class DebtRepository
         ->where(function($query) use ($param){
             $query->whereBetween(DB::raw('DATE(o.created_at)'), [$param['fromDate'],$param['toDate']]);
             if(isset($param['status'])){
-                $query->where('status', '=',$param['status']);
+                $status = $param['status'];
+                if($status == '0'){
+                    $query->whereRaw('DATEDIFF(NOW(),d.created_at) <= 15')
+                          ->where('d.status', '!=','1');
+                }
+                if($status == '1'){
+                    $query->whereRaw('DATEDIFF(NOW(),d.created_at) > 15')
+                          ->whereRaw('DATEDIFF(NOW(),d.created_at) <= 15')
+                          ->where('d.status', '!=','1');
+                }
+                if($status == '2'){
+                    $query->whereRaw('DATEDIFF(NOW(),d.created_at) > 30')
+                          ->where('d.status', '!=','1');
+                }
+                if($status == '3'){
+                    $query->where('d.status', '=','1');
+                }
             }
             if(isset($param['staff'])){
-                $query->where('created_by', '=',$param['staff']);
+                $query->where('d.created_by', '=',$param['staff']);
             }
             if(isset($param['value'])){
-                $query->where('name', '=',$param['value']);
+                $query->where('o.name', 'like','%'.$param['value'].'%');
+                $query->orWhere('o.phone', 'like','%'.$param['value'].'%');
+            }
+            if(isset($param['is_admin'])){
+                if(!$param['is_admin']){
+                    $query->where('o.created_by', '=',$param['user']);
+                }
             }
         })
         ->selectRaw($sql);
 
-        $data = $eloquent->get();
+        $data = $eloquent->skip($param['length'] * $param['start'])->take($param['length'])->get();
 
-        $result['recordsTotal'] = $data->count();
-        $result['recordsFiltered'] = $data->count();
+        $result['recordsTotal'] = $eloquent->count();
+        $result['recordsFiltered'] = $eloquent->count();
         $result['data'] = $data;
         $result['total'] = $eloquent->sum(DB::raw('o.amount - o.payment'));
         return $result;

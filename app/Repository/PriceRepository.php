@@ -38,7 +38,7 @@ class PriceRepository
         pp.from,
         pp.price
         FROM tb_print p 
-        JOIN tb_print_price pp ON p.id = pp.print_id
+        JOIN tb_print_price pp ON p.id = pp.print_id AND p.is_delete != 1
         ORDER BY p.id,pp.from DESC';
         $result = DB::select($sql);
         return $result;
