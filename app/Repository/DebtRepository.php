@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class DebtRepository
 {
     //GET LIST DEBT
-    public static function getDebtes($param)
+    public static function getDebtes($param,$pagging=true)
     {
         $sql = "
             DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
@@ -61,9 +61,11 @@ class DebtRepository
             }
         })
         ->selectRaw($sql);
-
-        $data = $eloquent->skip($param['length'] * $param['start'])->take($param['length'])->get();
-
+        if($pagging){
+            $data = $eloquent->skip($param['length'] * $param['start'])->take($param['length'])->get();
+        }else{
+            $data = $eloquent->get();
+        }
         $result['recordsTotal'] = $eloquent->count();
         $result['recordsFiltered'] = $eloquent->count();
         $result['data'] = $data;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportOrder;
 use App\Models\Order;
 use App\Models\Printing;
 use App\Service\OrderService;
@@ -10,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -26,9 +28,18 @@ class OrderController extends Controller
         $priceService = new PrintService();
         $details = $priceService->getPriceDetails();
         return view('pages.order.add')
-                ->with(compact('printes'))
-                ->with(compact('details'))
-    ;}
+             ->with(compact('printes'))
+             ->with(compact('details'));
+    }
+
+    public function export(Request $request) 
+    {
+        $param = $request->all();
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
+        return Excel::download(new ExportOrder($param), 'don-hang.xlsx');
+    }
 
     //API
 

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class RevenueRepository
 {
-    public static function getRevenues($param)
+    public static function getRevenues($param,$pagging = true)
     {
         $sql = "
             DATE_FORMAT(r.created_at,'%d/%m/%Y') AS create_date,
@@ -44,14 +44,18 @@ class RevenueRepository
                     });
         
         $count = $eloquent->count();
-        $data =  $eloquent->selectRaw($sql)->skip($param['length'] * $param['start'])->take($param['length'])->get();
+        if($pagging){
+            $data =  $eloquent->selectRaw($sql)->skip($param['length'] * $param['start'])->take($param['length'])->get();
+        }else{
+            $data =  $eloquent->selectRaw($sql)->get();
+        }
+
         $total = $eloquent->where('status','=','2')->sum('amount');
 
         $result['recordsTotal'] = $count;
         $result['recordsFiltered'] = $count;
         $result['data'] = $data;
         $result['total'] = $total;
-        $result['sql'] = $eloquent->toSql();
         return $result;
     }
 }

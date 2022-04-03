@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportRevenue;
 use App\Models\Revenue;
 use App\Service\RevenueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RevenueController extends Controller
 {
@@ -14,6 +16,15 @@ class RevenueController extends Controller
     {
         $memberes = DB::table('users AS u')->get();
         return view('pages.revenue')->with(compact('memberes'));
+    }
+    
+    public function export(Request $request) 
+    {
+        $param = $request->all();
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
+        return Excel::download(new ExportRevenue($param), 'Phieu-chi.xlsx');
     }
 
     public function getRevenues(Request $request)
@@ -82,4 +93,5 @@ class RevenueController extends Controller
         $filepath = public_path('upload/revenue/'.$request->file);
         return Response()->download($filepath);
     }
+
 }

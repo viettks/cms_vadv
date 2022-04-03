@@ -6,8 +6,8 @@ use App\Repository\RevenueRepository;
 
 class RevenueService
 {
-    public static function getRevenues($param)
+    public static function getRevenues($param,$pagging = true)
     {
-        return RevenueRepository::getRevenues($param);
+        return RevenueRepository::getRevenues($param,$pagging);
     }
 }

@@ -30,11 +30,14 @@ Route::group([
     // ORDER
     Route::get('/order/list', [OrderController::class,'viewListOrder'])->name('listOrder');
     Route::get('/order/add', [OrderController::class,'add'])->name('addOrder');
+    Route::get('/order/download', [OrderController::class,'export'])->name('exportOrder');
     // CHI
     Route::get('/revenue', [RevenueController::class,'index'])->name('revenue');
     Route::get('/revenue/{file}', [RevenueController::class,'getFile'])->name('getFile');
+    Route::get('/revenue/download/excel', [RevenueController::class,'export'])->name('exportRevenue');
     //NỢ
     Route::get('/debt', [DebtController::class,'index'])->name('debt');
+    Route::get('/debt/download', [DebtController::class,'export'])->name('exportDebt');
     //LOẠI IN
     Route::get('/settings/add-print', [PrintController::class,'viewCreate'])->name('addPrint')->middleware('can:ADMIN');
     Route::get('/settings/list-print', [PrintController::class,'viewList'])->name('listPrint')->middleware('can:ADMIN');

@@ -14,7 +14,7 @@ class OrderRepository
     const ROW_PER_PAGE = 1;
 
     //GET LIST ORDER
-    public function getListOrders($param)
+    public function getListOrders($param,$pagging = true)
     {
         $sql = "
             o.id,
@@ -38,8 +38,6 @@ class OrderRepository
             o.status
             ";
 
-
-
         $result = array();
         $eloquent = Order::where(function($query) use ($param){
                     $query->whereBetween(DB::raw('DATE(created_at)'), [$param['fromDate'],$param['toDate']]);
@@ -58,7 +56,12 @@ class OrderRepository
                         }
                     }
                 });
-        $orderIds = $eloquent->select('id')->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
+        if($pagging){
+            $orderIds = $eloquent->select('id')->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
+        }else{
+            $orderIds = $eloquent->select('id')->get()->toArray();
+        }
+        
         $count = $eloquent->count();
         $total = $eloquent->sum('amount');
         
@@ -70,7 +73,6 @@ class OrderRepository
         ->get();
         ;
 
-        $result['draw'] = $param['draw'];
         $result['recordsTotal'] = $count;
         $result['recordsFiltered'] = $count;
         $result['data'] = $data;

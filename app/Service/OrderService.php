@@ -59,10 +59,10 @@ class OrderService
         }
     }
 
-    public function getListOrder($param)
+    public static function getListOrder($param,$pagging = true)
     {
         $orderRepo = new OrderRepository();
-        return $orderRepo->getListOrders($param);
+        return $orderRepo->getListOrders($param,$pagging);
     }
 
     public function getOne($id)

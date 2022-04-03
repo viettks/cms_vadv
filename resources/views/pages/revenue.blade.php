@@ -34,7 +34,7 @@
                     <span class="text-danger text-strong"> VNĐ.</span>
                 </div>
                 <div class="table-data__tool-right">
-                    <button type="button" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" onclick="exportExcel();">
                         <i class="fa fa-download"></i>&nbsp; Xuất file excel</button>
                 </div>
                 <hr>
@@ -312,6 +312,17 @@
             },
         });
     }
+
+    function exportExcel() {
+        var data = {
+                "fromDate" : $('#fromDate').val(),
+                "toDate" : $('#toDate').val(),
+                "status" : $('#sStatus').val(),
+                "staff" : $('#sStaff').val(),
+                "value" : $('#sValue').val()
+            };
+        window.open('{{url('revenue/download/excel')}}?' + $.param(data), '_blank').focus();
+    }
 </script>
 @endcan
 
@@ -434,6 +445,17 @@
         $('#crFile').val('');
         $('#crNote').val('');
     });
+
+    function exportExcel() {
+        var data = {
+                "fromDate" : $('#fromDate').val(),
+                "toDate" : $('#toDate').val(),
+                "status" : $('#sStatus').val(),
+                "staff" : $('#sStaff').val(),
+                "value" : $('#sValue').val()
+            };
+        window.open('{{url('revenue/download/excel')}}?' + $.param(data), '_blank').focus();
+    }
 </script>
 @endcan
 
