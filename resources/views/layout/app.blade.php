@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body class="animsition">
+<body>
     <div class="page-wrapper">
 
         <!-- PAGE CONTAINER-->

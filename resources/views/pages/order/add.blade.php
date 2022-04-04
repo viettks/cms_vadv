@@ -23,11 +23,6 @@
             <strong class="card-title" v-if="headerText">Tạo mới đơn hàng</strong>
         </div>
         <div class="card-body">
-            <div class="table-data__tool">
-                <div class="table-data__tool-left w-100">
-                </div>
-                <hr>
-            </div>
             <form action="" method="post" class="form-horizontal">
                 <div class="row form-group">
                     <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
