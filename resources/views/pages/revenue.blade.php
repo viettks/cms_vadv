@@ -175,12 +175,14 @@
 @can('ADMIN', null)
 <script>
     //FOR DATATABLE
-
+    
     var columns = [
             {"data" : "create_date", "orderable": false,},
             {"data" : "name", "orderable": false,},
             {"data" : "note", "orderable": false,},
-            {"data" : "amount", "orderable": false,},
+            {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
+                return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }},
             {"data" : "file_name", "orderable": false, "render": function ( data, type, row, meta ) {
       
                 return '<a href="{{url('revenue')}}/'+row.url+'">'+data+'</a>';
@@ -215,7 +217,8 @@
         };
 
     function callback(settings){
-        $("#total").text(settings.json.total);
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        $("#total").text(total);
     }
 
     $(document).ready(function(){
@@ -334,7 +337,9 @@
             {"data" : "create_date", "orderable": false,},
             {"data" : "name", "orderable": false,},
             {"data" : "note", "orderable": false,},
-            {"data" : "amount", "orderable": false,},
+            {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
+                return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }},
             {"data" : "file_name", "orderable": false, "render": function ( data, type, row, meta ) {
       
                 return '<a href="{{url('revenue')}}/'+row.url+'">'+data+'</a>';
@@ -366,7 +371,8 @@
         };
 
     function callback(settings){
-        $("#total").text(settings.json.total);
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        $("#total").text(total);
     }
 
     $(document).ready(function(){

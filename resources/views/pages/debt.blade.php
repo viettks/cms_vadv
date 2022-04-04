@@ -231,9 +231,15 @@
                 return '<a href="#" onclick="showInfo(\''+row.id+'\')">'+ data + '</a>';
             }},
             {"data" : "phone", "orderable": false,},
-            {"data" : "amount", "orderable": false,},
-            {"data" : "payment", "orderable": false,},
-            {"data" : "debt", "orderable": false,},
+            {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
+                return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }},
+            {"data" : "payment", "orderable": false, "render": function ( data, type, row, meta ) {
+                return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }},
+            {"data" : "debt", "orderable": false, "render": function ( data, type, row, meta ) {
+                return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }},
             {"data" : "status", "orderable": false, "render": function ( data, type, row, meta ) {
  
                     if(data == 1){
@@ -263,7 +269,8 @@
         };
 
     function callback(settings){
-        $("#total").text(settings.json.total);
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        $("#total").text(total);
     }
 
     $(document).ready(function(){

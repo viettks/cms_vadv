@@ -5,18 +5,12 @@
     @include('fragment.head')
 
     @yield('style')
-    <style>
-    .page-container {
-        padding-left: 0px;
-    }
-    .header-desktop {
-        left: 0 !important;
-    }
-    </style>
 </head>
 
 <body class="animsition">
     <div class="page-wrapper">
+        @include('fragment.header-moblie')
+        @include('fragment.sider-bar')
 
         <!-- PAGE CONTAINER-->
         <div class="page-container">

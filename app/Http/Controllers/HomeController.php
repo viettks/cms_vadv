@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         if(isset($user)){
-            return view('pages.home');
+            return view('pages.chart');
         }else{
             return redirect()->route('login');
         }

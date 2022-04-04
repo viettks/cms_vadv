@@ -239,7 +239,7 @@
         let height   = $(row).find('input[name=height]')[0].value;
         let quantity = $(row).find('input[name=quantity]')[0].value;
 
-        var size = width * height * quantity;
+        var size = Number.parseFloat(width) * Number.parseFloat(height) * Number.parseInt(quantity);
         var select = print.filter(function( item ) {
                         return item.id == print_id && item.from <= size;
                      });
@@ -251,7 +251,8 @@
         var matching = select[0];
         var priceFilm = film == 1 ? matching.pe_film_1 : (film == 2 ? matching.pe_film_2 : matching.pe_film_3);
         var amount = Math.round(size * (priceFilm + matching.price));
-        $(row).find('.rowPriceData').text(amount);
+        var amountWithFormat = (amount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        $(row).find('.rowPriceData').text(amountWithFormat);
         getPrice();
     }
 
@@ -259,9 +260,10 @@
         var listPrice = $("#tb_data tbody tr td span.rowPriceData");
         var total = 0;
         $(listPrice).each(function(index,item){
-            total += Number.parseFloat($(item).text());
+            let rawPrice = $(item).text().replaceAll('.','');
+            total += Number.parseFloat(rawPrice);
         });
-        $("#totalPrice").text(total);
+        $("#totalPrice").text((total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
     function reset() {

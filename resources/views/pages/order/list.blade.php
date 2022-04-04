@@ -261,7 +261,7 @@
                 if(meta.row > 0 && meta.settings.aoData[meta.row-1]._aData.id == meta.settings.aoData[meta.row]._aData.id){
                     return "";
                 }else{
-                    return data;
+                    return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
                 }
             }},
             {"data" : "status", "orderable": false, "render": function ( data, type, full, meta ) {
@@ -291,7 +291,8 @@
         };
 
     function callback(settings){
-        $("#total").text(settings.json.total);
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        $("#total").text(total);
     }
 
     $(document).ready(function(){
