@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
@@ -86,4 +87,13 @@ Route::group([
     Route::post('/',[MemberController::class, 'createMember']);
     Route::patch('/',[MemberController::class, 'updateMember']);
     Route::delete('/',[MemberController::class, 'deleteMember']);
+});
+
+//CHART
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'chart'
+
+], function ($router) {
+    Route::get('/',[ChartController::class, 'getDatas']);
 });

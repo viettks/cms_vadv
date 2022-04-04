@@ -67,9 +67,9 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <div class="au-card-inner" style="max-width: 1000px;">
-                        <h3 class="title-2 m-b-40">Bar chart</h3>
-                        <canvas id="myChart"></canvas>
+                    <div class="au-card-inner">
+                        <h3 class="title-2 m-b-40">Danh thu</h3>
+                        <canvas id="myChart" style="max-height: 500px" width="100%"></canvas>
                     </div>
                 </div>
             </div>
@@ -85,39 +85,15 @@
 @section('extend_script')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-
+    var chart ;
 
     $(document).ready(function(){
+
         init();
 
         $("#btnSeach").click(function(){
-
+            runChart();
         });
-
-       const labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        ];
-        
-        const data = {
-        labels: labels,
-        datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-        };
-        
-        const config = {
-        type: 'line',
-        data: data,
-        options: {}
-        };
     });
 
     function init() {
@@ -125,28 +101,72 @@
         var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
         $("#month").val(today.getMonth()+1);
         $("#year").val(today.getFullYear());
-        run();
+        runChart();
     }
 
-    function run() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-        // The type of chart we want to create
-            type: 'bar',
-
-        // The data for our dataset
+    function runChart() {
+        $.ajax({
+            type: "GET",
+            url: "{{url('/api/chart')}}",
             data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
-            }]
-        },
+                'year': $("#year").val(),
+                'month': $("#month").val(),
+            },
+            dataType: "json",
+            success: function(data) {
+                var dataSet = data.data;
+                if(dataSet.length > 0){
 
-        // Configuration options go here
-        options: {}
+                    var labels = [];
+                    var data1 = [];
+                    var data2 = [];
+
+                    $(dataSet).each(function(index,item){
+                        labels.push(item.Date);
+                        data1.push(item.amount_get);
+                        data2.push(item.amount_pay);
+                    });
+
+                    if(!chart){
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                            type: 'bar',
+
+                        // The data for our dataset
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: "Thu",
+                                    backgroundColor: 'rgb(0,128,0)',
+                                    borderColor: 'rgb(0,128,0)',
+                                    data: data1,
+                                },
+                                {
+                                    label: "Chi",
+                                    backgroundColor: 'rgb(255, 99, 132)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    data: data2,
+                                }]
+                            },
+
+                        // Configuration options go here
+                        options: {  
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                        });
+                    }else{
+                        chart.data.labels = labels;
+                        chart.data.datasets[0].data = data1;
+                        chart.data.datasets[1].data = data2;
+                        chart.update();
+                    }
+                }
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
         });
     }
 </script>
