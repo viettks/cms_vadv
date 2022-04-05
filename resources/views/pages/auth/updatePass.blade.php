@@ -52,7 +52,7 @@
                         <label for="newPW" class=" form-control-label">Mật khẩu mới (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="newPW" name="newPW" placeholder="Mật khẩu mới" class="form-control">
+                        <input type="password" id="newPW" name="newPW" placeholder="Mật khẩu mới" class="form-control">
                     </div>
                     <div class="col col-sm-6">
                     </div>
@@ -62,7 +62,7 @@
                         <label for="rePW" class=" form-control-label">Nhập lại mật khẩu (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="rePW" name="rePW" placeholder="Nhập lại mật khẩu" class="form-control">
+                        <input type="password" id="rePW" name="rePW" placeholder="Nhập lại mật khẩu" class="form-control">
                     </div>
                     <div class="col col-sm-6">
                     </div>
