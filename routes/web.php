@@ -46,5 +46,6 @@ Route::group([
     Route::get('/settings/print/update/{id}', [PrintController::class,'viewUpdate'])->name('updatePrint')->middleware('can:ADMIN');
     //THÀNH VIÊN
     Route::get('/settings/member', [MemberController::class,'viewList'])->name('listMember')->middleware('can:ADMIN');
+    Route::get('/settings/changePW', [AuthController::class,'viewChangePW'])->name('changePW');
 
 });

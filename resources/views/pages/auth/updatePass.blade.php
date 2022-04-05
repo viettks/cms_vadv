@@ -23,280 +23,83 @@
             <strong class="card-title" v-if="headerText">Cập nhật mật khẩu</strong>
         </div>
         <div class="card-body">
-            <form action="" method="post" class="form-horizontal">
+            <form action="" method="post" class="form-horizontal"  autocomplete="off">
                 <div class="row form-group">
                     <h5 class="title-5 m-b-30 ml-3">Thông tin</h5>
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
+                        <label for="name" class=" form-control-label">Tên nhân viên (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control">
+                        <input type="text" id="name" name="name" placeholder="Tên nhân viên" value="{{auth()->user()->name}}" class="form-control" disabled>
                     </div>
                     <div class="col col-sm-6">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-2">
-                        <label for="phone" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
+                    <div class="col col-sm-2">
+                        <label for="oldPw" class=" form-control-label">Mật khẩu cũ (<span class="required">*</span>)</label>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" class="form-control">
+                    <div class="col col-sm-4">
+                        <input type="password" id="oldPw" name="oldPw" placeholder="Mật khẩu cũ" class="form-control" autocomplete="off">
                     </div>
-                    <div class="col col-md-2">
-                        <label for="address" class=" form-control-label">Địa chỉ (<span class="required">*</span>)</label>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <input type="text" id="address" name="address" placeholder="Địa chỉ" class="form-control">
+                    <div class="col col-sm-6">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-2">
-                        <label for="payment" class=" form-control-label">Trả trước</label>
+                    <div class="col col-sm-2">
+                        <label for="newPW" class=" form-control-label">Mật khẩu mới (<span class="required">*</span>)</label>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
+                    <div class="col col-sm-4">
+                        <input type="text" id="newPW" name="newPW" placeholder="Mật khẩu mới" class="form-control">
                     </div>
-                    <div class="col col-md-2">
-                        <label for="release" class=" form-control-label">Ngày hoàn thành</label>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control">
+                    <div class="col col-sm-6">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-2">
-                        <label for="note" class=" form-control-label">Ghi chú</label>
+                    <div class="col col-sm-2">
+                        <label for="rePW" class=" form-control-label">Nhập lại mật khẩu (<span class="required">*</span>)</label>
                     </div>
-                    <div class="col-12 col-md-10">
-                        <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                    <div class="col col-sm-4">
+                        <input type="text" id="rePW" name="rePW" placeholder="Nhập lại mật khẩu" class="form-control">
                     </div>
-                </div>
-                <hr>
-                <div class="row form-group">
-                    <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
-                </div>
-                <div class="row form-group">
-                    <div class="table-responsive table-data">
-                        <table class="table" id="tb_data">
-                            <thead>
-                                <tr>
-                                    <td>LOẠI IN</td>
-                                    <td>CÁN MÀNG</td>
-                                    <td>KÍCH THƯỚC NGANG</td>
-                                    <td>KÍCH THƯỚC DỌC</td>
-                                    <td>SỐ LƯỢNG</td>
-                                    <td>GIÁ TIỀN</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option disabled>Chọn loại in</option>
-                                            @foreach ($printes as $pr)
-                                            <option value="{{$pr->id}}">{{$pr->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>                                        
-                                        <select name="film" class="form-control-sm form-control" onchange="changeData(this);">
-                                        <option disabled>Chọn màng bọc</option>
-                                        <option value="1">Không cán màng</option>
-                                        <option value="2">Cán màng mờ</option>
-                                        <option value="3">Cán màng bóng</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" name="width"   placeholder="Chiều ngang" class="form-control-sm" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="height" placeholder="Chiều dọc" class="form-control-sm" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="quantity" placeholder="Số lượng" class="form-control-sm" onchange="changeData(this);"></td>
-                                    <td><span class="rowPriceData">0</span></td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" onclick="deleteRow(this);">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col col-sm-6">
                     </div>
                 </div>
-                <div class="row form-group">
-                    <button type="button" class="btn btn-outline-primary btn-sm ml-5" id="addRow">Thêm dòng</button>
-                </div>
-                <div class="table-data__tool">
-                    <div class="table-data__tool-left w-100">
-                        <span class="text-danger text-strong">
-                            <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
-                        <span class="text-danger text-strong" id="totalPrice">0</span>
-                        <span class="text-danger text-strong"> VNĐ.</span>
-                    </div>
-                    <hr>
-                </div>
-            </form>
-            <!-- END USER DATA-->
-        </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-outline-primary mr-2" id="btnSave">
+            <button type="button" class="btn btn-outline-primary mr-2" id="btnSave" onclick="save();">
                 <i class="fa fa-save"></i>&nbsp; Lưu</button>
-            <button type="button" class="btn btn-outline-primary mr-2" id="btnSaveBack">
-                <i class="fa fa-reply"></i>&nbsp; Lưu và quay lại</button>
-            <button type="button" class="btn btn-outline-warning mr-2" id="btnReset">
-                <i class="fa fa-undo"></i>&nbsp; Reset</button>
-            <a class="btn btn-outline-secondary" href="{{url('/order/list')}}">
+            <a class="btn btn-outline-secondary" href="{{url('')}}">
                 <i class="fa fa-times"></i>&nbsp; Hủy</a>
         </div>
     </div>
 </div>
-<template id="templateRow">
-    <tr>
-        <td>
-            <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
-                <option disabled>Chọn loại in</option>
-                @foreach ($printes as $pr)
-                <option value="{{$pr->id}}">{{$pr->name}}</option>
-                @endforeach
-            </select>
-        </td>
-        <td>                                        
-            <select name="film" class="form-control-sm form-control" onchange="changeData(this);">
-            <option disabled>Chọn màng bọc</option>
-            <option value="1">Không cán màng</option>
-            <option value="2">Cán màng mờ</option>
-            <option value="3">Cán màng bóng</option>
-            </select>
-        </td>
-        <td><input type="number" name="width"   placeholder="Chiều ngang" class="form-control-sm" onchange="changeData(this);"></td>
-        <td><input type="number" name="height" placeholder="Chiều dọc" class="form-control-sm" onchange="changeData(this);"></td>
-        <td><input type="number" name="quantity" placeholder="Số lượng" class="form-control-sm" onchange="changeData(this);"></td>
-        <td><span class="rowPriceData">0</span></td>
-        <td>
-            <div class="table-data-feature">
-                <button class="item" onclick="deleteRow(this);">
-                    <i class="zmdi zmdi-delete"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-</template>
 @section('modal')
 @endsection
 
 @endsection
 @section('extend_script')
 <script>
-    const print = @json($details);
-
     $(document).ready(function(){
-        $("#addRow").click(function(){
-            let template = $("#templateRow");
-            $("#tb_data tbody").append(template.html());
-        });
-
-        $("#btnReset").click(function(){
-            reset();
-        });
-
-        $("#btnSave").click(function(){
-            save();
-        });
-
-        $("#btnSaveBack").click(function(){
-            $.when(save()).done(function(data){
-                window.location.href = "{{url('/order/list')}}";
-            });
-        });
     });
-
-    function deleteRow(rowIcon) {
-        $(rowIcon).closest('tr').remove();
-        getPrice();
-    }
-
-    function changeData(subRow){
-        var row = $(subRow).closest('tr');
-        var invalid =    COMMON._isNullOrEmpty($(row).find('select[name=print]')) || COMMON._isNullOrEmpty($(row).find('select[name=film]'))
-                    || COMMON._isNullOrEmpty($(row).find('input[name=width]'))  || COMMON._isNullOrEmpty($(row).find('input[name=height]'))
-                    || COMMON._isNullOrEmpty($(row).find('input[name=quantity]'));
-        if(invalid){
-            $(row).find('span.rowPriceData')[0].text = 0;
-            getPrice();
-            return;
-        }
-
-        let print_id = $(row).find('select[name=print]')[0].value;
-        let film     = $(row).find('select[name=film]')[0].value;
-        let width    = $(row).find('input[name=width]')[0].value;
-        let height   = $(row).find('input[name=height]')[0].value;
-        let quantity = $(row).find('input[name=quantity]')[0].value;
-
-        var size = Number.parseFloat(width) * Number.parseFloat(height) * Number.parseInt(quantity);
-        var select = print.filter(function( item ) {
-                        return item.id == print_id && item.from <= size;
-                     });
-        if(select.length == 0){
-            select = print.filter(function( item ) {
-                        return item.id == print_id;
-                     });
-        }
-        var matching = select[0];
-        var priceFilm = film == 1 ? matching.pe_film_1 : (film == 2 ? matching.pe_film_2 : matching.pe_film_3);
-        var amount = Math.round(size * (priceFilm + matching.price));
-        var amountWithFormat = (amount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        $(row).find('.rowPriceData').text(amountWithFormat);
-        getPrice();
-    }
-
-    function getPrice() {
-        var listPrice = $("#tb_data tbody tr td span.rowPriceData");
-        var total = 0;
-        $(listPrice).each(function(index,item){
-            let rawPrice = $(item).text().replaceAll('.','');
-            total += Number.parseFloat(rawPrice);
-        });
-        $("#totalPrice").text((total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
-    }
-
-    function reset() {
-        $("#name").val('');
-        $("#phone").val('');
-        $("#address").val('');
-        $("#payment").val(0);
-        $("#release").val('');
-        $("#note").val('');
-        $("#tb_data tbody").empty();
-        let template = $("#templateRow");
-        $("#tb_data tbody").append(template.html());
-        $("#totalPrice").text("0");
-    }
 
     function save() {
         if(!validate()) return;
-        var details = getDetails();
-        if(!details) return;
 
         var data = {
-            "name"   : $("#name").val(),
-            "phone"  : $("#phone").val(),
-            "address": $("#address").val(),
-            "payment": Number.parseInt($("#payment").val()),
-            "release": $("#release").val(),
-            "note"   : $("#note").val(),
-            "detail" : details
+            "oldPW"   : $("#oldPw").val(),
+            "newPW"  : $("#newPW").val(),
         }
 
         return $.ajax({
-            url : "{{ url('api/order') }}",
+            url : "{{ url('api/password') }}",
             type : "POST",
             dataType:"json",
             data: data,
             success : function(data) {
                 alert(data.message)
-                reset();
+                window.location.href = "{{url('/logout')}}";
             },
             error : function(xhr) {
                 if(xhr.responseJSON && xhr.responseJSON.message!='') {
@@ -312,79 +115,28 @@
         });
     }
 
-    function getDetails() {
-        var rows = $("#tb_data tbody tr");
-        var rowSize = rows.length;
-        if(rowSize == 0){
-            alert('Vui lòng thêm chi tiết đơn hàng!');
-            return false;
-        }
-        var result = [];
-        $(rows).each(function (index,item) {
-            let print_id = $(item).find('select[name=print]')[0].value;
-            let film     = $(item).find('select[name=film]')[0].value;
-            let width    = $(item).find('input[name=width]')[0].value;
-            let height   = $(item).find('input[name=height]')[0].value;
-            let quantity = $(item).find('input[name=quantity]')[0].value;
-
-            if(COMMON._isNullOrEmpty($(item).find('select[name=print]'))){
-                alert('Vui lòng chọn loại in!');
-                $(item).find('select[name=print]')[0].focus();
-                return false;
-            }
-
-            if(COMMON._isNullOrEmpty($(item).find('select[name=film]'))){
-                alert('Vui lòng chọn màng!');
-                $(item).find('select[name=film]')[0].focus();
-                return false;
-            }
-
-            if(COMMON._isNullOrEmpty($(item).find('input[name=width]'))){
-                alert('Vui lòng nhập chiều rộng!');
-                $(item).find('input[name=width]')[0].focus();
-                return false;
-            }
-
-            if(COMMON._isNullOrEmpty($(item).find('input[name=height]'))){
-                alert('Vui lòng nhập chiều dài!');
-                $(item).find('input[name=height]')[0].focus();
-                return false;
-            }
-
-            if(COMMON._isNullOrEmpty($(item).find('input[name=quantity]'))){
-                alert('Vui lòng nhập số lượng!');
-                $(item).find('input[name=quantity]')[0].focus();
-                return false;
-            }
-
-            var data = {
-                "print_id"  : print_id,
-                "width"     : width,
-                "heigth"    : height,
-                "quantity"  : quantity,
-                "film_type" : film,
-            }
-            result.push(data);
-        });
-        return result;
-    }
-
     function validate() {
-        if(COMMON._isNullOrEmpty($("#name"))){
-            alert('Tên khách hàng không được để trống!');
-            $("#name").focus();
+        if(COMMON._isNullOrEmpty($("#oldPw"))){
+            alert('Vui lòng kiểm tra mật khẩu!');
+            $("#oldPw").focus();
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($("#phone"))){
-            alert('Số điện thoại không được để trống!');
-            $("#phone").focus();
+        if(COMMON._isNullOrEmpty($("#newPW"))){
+            alert('Vui lòng kiểm tra mật khẩu!');
+            $("#newPW").focus();
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($("#address"))){
-            alert('Địa chỉ không được để trống!');
-            $("#address").focus();
+        if(COMMON._isNullOrEmpty($("#rePW"))){
+            alert('Vui lòng kiểm tra mật khẩu!');
+            $("#rePW").focus();
+            return false;
+        }
+
+        if($("#newPW").val() != $("#rePW").val()){
+            alert('Mật khẩu không khớp!');
+            $("#rePW").focus();
             return false;
         }
 

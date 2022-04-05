@@ -97,3 +97,12 @@ Route::group([
 ], function ($router) {
     Route::get('/',[ChartController::class, 'getDatas']);
 });
+
+//CHART
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'password'
+
+], function ($router) {
+    Route::post('/',[AuthController::class, 'changePW']);
+});

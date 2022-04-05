@@ -5,12 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+     /**
+     * 
+     * SHOW VIEW LIST MEMBER
+     *
+     * @param Request $request 
+     * @return view member
+     */
+    public function viewChangePW(Request $request)
+    {
+        return view('pages.auth.updatePass');
+    }
 
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
@@ -67,5 +80,36 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
+    }
+
+    public function changePW(Request $request){
+    	$validator = Validator::make($request->all(), [
+            'oldPW' => 'required',
+            'newPW' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $user = auth()->user();
+
+        if(Hash::check($request->oldPW,$user->password)){
+
+            $newPw = User::find($user->id);
+            $newPw->password = bcrypt($request->newPW);
+            $newPw->save();
+            
+            return response()->json([
+                'status' => '200',
+                'message' => "Cập nhật thành công!"
+            ],200);
+        }else{
+            return response()->json([
+                'status' => '400',
+                'message' => "Sai mật khẩu!"
+            ],400);
+        }
+       
     }
 }

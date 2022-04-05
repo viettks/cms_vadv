@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="account-dropdown__body">
                                     <div class="account-dropdown__item">
-                                        <a href="#">
+                                        <a href="{{ url('/settings/changePW') }}">
                                             <i class="zmdi zmdi-account"></i>Tài khoản</a>
                                     </div>
                                 </div>
