@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="account-dropdown__footer">
-                                    <a href="{{ url('/api/auth/logout') }}">
+                                    <a href="{{ url('/logout') }}">
                                         <i class="zmdi zmdi-power"></i>Đăng xuất</a>
                                 </div>
                             </div>

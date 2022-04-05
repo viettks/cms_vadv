@@ -217,7 +217,7 @@
         };
 
     function callback(settings){
-        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         $("#total").text(total);
     }
 

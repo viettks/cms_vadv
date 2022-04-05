@@ -9,7 +9,7 @@
         width: 185px;
     }
     .modal-lg{
-        min-width: 60%;
+        min-width: 80%;
     }
     .switch-label{
         border-color: #ff182b !important;
@@ -291,7 +291,7 @@
         };
 
     function callback(settings){
-        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         $("#total").text(total);
     }
 
@@ -333,16 +333,17 @@
                     $('#payment').val(data[0].payment);
                     $('#release').val(data[0].release_dt);
                     $('#note').val(data[0].note);
-                    $("#totalPrice").text(data[0].total);
+                    $("#totalPrice").text((data[0].total+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
                     $("#orderID").val(data[0].id)
                     $("#tb_data_sub tbody").empty();
                     data.forEach((element,index) => {
+                        let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
                         var row = `<tr> <td>${element.print}</td>
                                         <td>${element.film_type}</td>
                                         <td>${element.width}</td>
                                         <td>${element.heigth}</td>
                                         <td>${element.quantity}</td>
-                                        <td>${element.amount}</td></tr>`;
+                                        <td>${amountTemp}</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
                     $('#payment').off('change');
