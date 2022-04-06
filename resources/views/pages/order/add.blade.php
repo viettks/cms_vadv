@@ -208,9 +208,7 @@
         });
 
         $("#btnSaveBack").click(function(){
-            $.when(save()).done(function(data){
-                window.location.href = "{{url('/order/list')}}";
-            });
+            save(true);
         });
     });
 
@@ -287,7 +285,7 @@
         $("#totalPrice").text("0");
     }
 
-    function save() {
+    function save(isback=false) {
         if(!validate()) return;
         var details = getDetails();
         if(details.length == 0) return;
@@ -309,7 +307,11 @@
             data: data,
             success : function(data) {
                 alert(data.message)
-                reset();
+                if(isback){
+                    window.location.href = '{{url("/order/list")}}';
+                }else{
+                    reset();
+                }
             },
             error : function(xhr) {
                 if(xhr.responseJSON && xhr.responseJSON.message!='') {
