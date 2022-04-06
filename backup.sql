@@ -96,19 +96,16 @@ CREATE TABLE IF NOT EXISTS `tb_debt` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_debt: ~3 rows (approximately)
+-- Dumping data for table vadv_cms.tb_debt: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_debt` DISABLE KEYS */;
-INSERT INTO `tb_debt` (`id`, `order_id`, `amount`, `payment`, `status`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1000, 0, 0, NULL, 7, 7, '2022-04-02 07:06:27', '2022-04-02 07:06:27'),
-	(2, 2, 4000, 0, 0, NULL, 3, 3, '2022-04-02 19:31:37', '2022-04-02 19:31:37'),
-	(3, 3, 45, 1, 0, NULL, 7, 7, '2022-04-02 19:42:37', '2022-04-02 19:42:37');
 /*!40000 ALTER TABLE `tb_debt` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order
 CREATE TABLE IF NOT EXISTS `tb_order` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `bill_code` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `address` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -122,14 +119,10 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order: ~3 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_order` DISABLE KEYS */;
-INSERT INTO `tb_order` (`id`, `name`, `phone`, `address`, `payment`, `release`, `amount`, `note`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, '2022-04-02 00:00:00', 1000, '1', 1, 3, 3, '2022-04-02 07:06:27', '2022-04-02 07:06:27'),
-	(2, 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, '2022-04-04 00:00:00', 4000, '1', 0, 3, 3, '2022-04-02 19:31:37', '2022-04-02 19:31:37'),
-	(3, '2', '0123456789', 'Khối Phố Xuân Tây', 1, '2022-04-13 00:00:00', 45, '1', 0, 7, 7, '2022-04-02 19:42:37', '2022-04-02 19:42:37');
 /*!40000 ALTER TABLE `tb_order` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order_detail
@@ -141,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   `heigth` float DEFAULT NULL,
   `quantity` int DEFAULT NULL,
   `unit_price` float DEFAULT NULL,
+  `is_fix_price` tinyint(1) DEFAULT '0',
   `film_type` bigint DEFAULT NULL,
   `amount` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
@@ -152,17 +146,10 @@ CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   KEY `FK_tb_order_detail_tb_print` (`print_id`),
   CONSTRAINT `FK_tb_order_detail_tb_order` FOREIGN KEY (`order_id`) REFERENCES `tb_order` (`id`),
   CONSTRAINT `FK_tb_order_detail_tb_print` FOREIGN KEY (`print_id`) REFERENCES `tb_print` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order_detail: ~6 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order_detail: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_order_detail` DISABLE KEYS */;
-INSERT INTO `tb_order_detail` (`id`, `order_id`, `print_id`, `width`, `heigth`, `quantity`, `unit_price`, `film_type`, `amount`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, 1, 1, 1, 1000, 1, 1000, 7, 7, '2022-04-02 07:06:27', '2022-04-02 07:06:27'),
-	(2, 2, 1, 1, 1, 1, 1000, 1, 1000, 3, 3, '2022-04-02 19:31:37', '2022-04-02 19:31:37'),
-	(3, 2, 1, 1, 1, 1, 2000, 2, 2000, 3, 3, '2022-04-02 19:31:37', '2022-04-02 19:31:37'),
-	(4, 2, 1, 1, 1, 1, 1000, 1, 1000, 3, 3, '2022-04-02 19:31:37', '2022-04-02 19:31:37'),
-	(5, 3, 2, 1, 1, 1, 5, 1, 5, 7, 7, '2022-04-02 19:42:37', '2022-04-02 19:42:37'),
-	(6, 3, 2, 2, 2, 2, 20, 1, 40, 7, 7, '2022-04-02 19:42:37', '2022-04-02 19:42:37');
 /*!40000 ALTER TABLE `tb_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print
@@ -178,13 +165,10 @@ CREATE TABLE IF NOT EXISTS `tb_print` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print: ~2 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_print` DISABLE KEYS */;
-INSERT INTO `tb_print` (`id`, `name`, `pe_film_1`, `pe_film_2`, `pe_film_3`, `is_delete`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 'Westen Union', 0, 1000, 10000, 1, 3, 3, '2022-04-01 15:41:09', '2022-04-01 15:41:09'),
-	(2, 'Buffgem', 2, 1, 1, 0, 3, 3, '2022-04-01 15:58:51', '2022-04-02 06:58:53');
 /*!40000 ALTER TABLE `tb_print` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print_price
@@ -200,14 +184,10 @@ CREATE TABLE IF NOT EXISTS `tb_print_price` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print_price: ~3 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print_price: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_print_price` DISABLE KEYS */;
-INSERT INTO `tb_print_price` (`id`, `print_id`, `from`, `to`, `price`, `order_num`, `updated_by`, `created_by`, `created_at`, `updated_at`) VALUES
-	(1, 1, 0, 100, 1000, 1, 3, 3, '2022-04-01 15:41:09', '2022-04-01 15:41:09'),
-	(3, 2, 0, 10, 3, 1, 3, 3, '2022-04-02 06:58:53', '2022-04-02 06:58:53'),
-	(4, 2, 10, 9999, 500, 2, 3, 3, '2022-04-02 06:58:53', '2022-04-02 06:58:53');
 /*!40000 ALTER TABLE `tb_print_price` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_revenue
@@ -274,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table vadv_cms.users: ~5 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `user_name`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_delete`, `role_id`) VALUES
-	(3, 'admin', 'admin', NULL, '$2y$10$/arheh07YGZvqKsd6.5qcuW3roU.196Bu7wd5nkxUWWP.cjq6/u42', NULL, '2022-03-19 10:45:47', '2022-03-19 10:45:47', 0, 1),
+	(3, 'admin', 'admin', NULL, '$2y$10$qdYvNoUBf1RIYApEDlV5Yu7ypkqD1C1xVtS/WiJWA/8yM1KP93JpK', NULL, '2022-03-19 10:45:47', '2022-04-05 18:05:01', 0, 1),
 	(4, 'Westen Union', 'abc', NULL, '$2y$10$x2vqngAftpLpduTkynPYTelD48BKH9VmWhNBOQY9ojZFMPSlkZNNu', NULL, '2022-04-01 11:07:41', '2022-04-01 15:11:48', 0, 1),
 	(5, 'test', 'abc1', NULL, '$2y$10$8lnpdZXmy6wXOwJ6lf6wPulEoqtwgNCegyJn3hNf/LhFfvDxc19EO', NULL, '2022-04-01 11:10:15', '2022-04-01 15:06:16', 0, 2),
 	(6, 'Westen Union', '24', NULL, '$2y$10$iS3zwffiTMQoEBvK.ObGiuJU/Jfm88rHuXKUOCf6YNOEldKBJf1ha', NULL, '2022-04-01 11:12:26', '2022-04-01 15:18:33', 1, 2),

@@ -10,14 +10,12 @@ use Illuminate\Support\Facades\Log;
 class OrderRepository
 {
 
-    //ROW PER PAGE
-    const ROW_PER_PAGE = 1;
-
     //GET LIST ORDER
     public function getListOrders($param,$pagging = true)
     {
         $sql = "
             o.id,
+            o.bill_code,
             DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
             o.name AS customer,
             o.phone,
@@ -48,7 +46,8 @@ class OrderRepository
                         $query->where('created_by', '=',$param['staff']);
                     }
                     if(isset($param['value'])){
-                        $query->where('name', '=',$param['value']);
+                        $query->where('name', 'like','%'.$param['value'].'%');
+                        $query->orWhere('bill_code', 'like','%'.$param['value'].'%');
                     }
                     if(isset($param['is_admin'])){
                         if(!$param['is_admin']){
@@ -85,6 +84,7 @@ class OrderRepository
     {
         $sql = "
             o.id,
+            o.bill_code,
             o.name AS customer,
             o.phone,
             o.address,

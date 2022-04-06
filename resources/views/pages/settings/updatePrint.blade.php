@@ -157,7 +157,7 @@
     function savePrint(isback=false){
         if(!validatePrint()) return;
         var price = getPrice();
-        if(!price) return;
+        if(price.length == 0) return;
 
         var data = {
             "id" : '{{$printing->id}}',
@@ -218,6 +218,7 @@
             if(COMMON._isNullOrEmpty($(item).find('input[name=from]'))){
                 alert('Giá trị bắt đầu không được để trống!');
                 $(item).find('input[name=from]')[0].focus();
+                result = [];
                 return false;
             }
 
@@ -226,21 +227,31 @@
             if(index != rowSize && toIsOk){
                 alert('Giá trị kết thúc không được để trống!');
                 $(item).find('input[name=to]')[0].focus();
+                result = [];
                 return false;
             }
 
             if(COMMON._isNullOrEmpty($(item).find('input[name=price]'))){
                 alert('Giá tiền không được để trống!');
                 $(item).find('input[name=price]')[0].focus();
+                result = [];
                 return false;
             }
 
             if(index != 0 && from != $(rows[index-1]).find('input[name=to]')[0].value){
                 alert('Giá trị bắt đầu sau phải bằng giá trị kết thúc ở trước!');
                 $(item).find('input[name=from]')[0].focus();
+                result = [];
                 return false;
             }
             to = toIsOk ? 9999 : to;
+
+            if(Number.parseInt(to) < Number.parseInt(from)){
+                alert('Giá trị kết thúc phải lớn hơn giá trị bắt đầu!');
+                $(item).find('input[name=to]')[0].focus();
+                result = [];
+                return false; 
+            }
             var data = {
                 "from"      : Number.parseInt(from),
                 "to"        : Number.parseInt(to),

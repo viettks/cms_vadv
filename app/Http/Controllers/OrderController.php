@@ -53,8 +53,6 @@ class OrderController extends Controller
             'phone'   => 'required',
             'address' => 'required',
             'payment' => 'required|integer',
-            'release' => 'required|date',
-            'note'    => 'required',
             'detail'  => 'array',
             'detail.*.print_id'  => 'required',
             'detail.*.width'  => 'required',

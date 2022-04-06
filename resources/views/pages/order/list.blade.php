@@ -123,6 +123,16 @@
                             <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
                         </div>
                         <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="note" class=" form-control-label">Mã vận đơn</label>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="text" disabled id="billId" name="billId" placeholder="Tên khách hàng" class="form-control">
+                            </div>
+                            <div class="col col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row form-group">
                             <div class="col col-sm-2">
                                 <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
                             </div>
@@ -327,6 +337,7 @@
             dataType: "json",
             success: function(data) {
                 if(data.length > 0){
+                    $('#billId').val(data[0].bill_code);
                     $('#name').val(data[0].customer);
                     $('#phone').val(data[0].phone);
                     $('#address').val(data[0].address);

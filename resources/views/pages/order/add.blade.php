@@ -112,6 +112,7 @@
                                     <td><input type="number" name="width"   placeholder="Chiều ngang" class="form-control-sm" onchange="changeData(this);"></td>
                                     <td><input type="number" name="height" placeholder="Chiều dọc" class="form-control-sm" onchange="changeData(this);"></td>
                                     <td><input type="number" name="quantity" placeholder="Số lượng" class="form-control-sm" onchange="changeData(this);"></td>
+                                    <td><input type="number" name="fixPrice" placeholder="Đơn giá" class="form-control-sm" onchange="changeData(this);"></td>
                                     <td><span class="rowPriceData">0</span></td>
                                     <td>
                                         <div class="table-data-feature">
@@ -173,6 +174,7 @@
         <td><input type="number" name="width"   placeholder="Chiều ngang" class="form-control-sm" onchange="changeData(this);"></td>
         <td><input type="number" name="height" placeholder="Chiều dọc" class="form-control-sm" onchange="changeData(this);"></td>
         <td><input type="number" name="quantity" placeholder="Số lượng" class="form-control-sm" onchange="changeData(this);"></td>
+        <td><input type="number" name="fixPrice" placeholder="Đơn giá" class="form-control-sm" onchange="changeData(this);"></td>
         <td><span class="rowPriceData">0</span></td>
         <td>
             <div class="table-data-feature">
@@ -227,28 +229,39 @@
             getPrice();
             return;
         }
+        var quantity = $(row).find('input[name=quantity]')[0].value;
+        if(!COMMON._isNullOrEmpty($(row).find('input[name=fixPrice]'))){
+            var fixPrice = $(row).find('input[name=fixPrice]').val();
+            let amount = Math.round(quantity * fixPrice);
+            let amountWithFormat = (amount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            $(row).find('.rowPriceData').text(amountWithFormat);
+            getPrice();
+       
+        }else{
+            let print_id = $(row).find('select[name=print]')[0].value;
+            let film     = $(row).find('select[name=film]')[0].value;
+            let width    = $(row).find('input[name=width]')[0].value;
+            let height   = $(row).find('input[name=height]')[0].value;
 
-        let print_id = $(row).find('select[name=print]')[0].value;
-        let film     = $(row).find('select[name=film]')[0].value;
-        let width    = $(row).find('input[name=width]')[0].value;
-        let height   = $(row).find('input[name=height]')[0].value;
-        let quantity = $(row).find('input[name=quantity]')[0].value;
 
-        var size = Number.parseFloat(width) * Number.parseFloat(height) * Number.parseInt(quantity);
-        var select = print.filter(function( item ) {
-                        return item.id == print_id && item.from <= size;
-                     });
-        if(select.length == 0){
-            select = print.filter(function( item ) {
-                        return item.id == print_id;
-                     });
+            var size = Number.parseFloat(width) * Number.parseFloat(height) * Number.parseInt(quantity);
+            var select = print.filter(function( item ) {
+                            return item.id == print_id && item.from <= size;
+                        });
+            if(select.length == 0){
+                select = print.filter(function( item ) {
+                            return item.id == print_id;
+                        });
+            }
+            var matching = select[0];
+            var priceFilm = film == 1 ? matching.pe_film_1 : (film == 2 ? matching.pe_film_2 : matching.pe_film_3);
+            var amount = Math.round(size * (priceFilm + matching.price));
+            var amountWithFormat = (amount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            $(row).find('.rowPriceData').text(amountWithFormat);
+            getPrice();
         }
-        var matching = select[0];
-        var priceFilm = film == 1 ? matching.pe_film_1 : (film == 2 ? matching.pe_film_2 : matching.pe_film_3);
-        var amount = Math.round(size * (priceFilm + matching.price));
-        var amountWithFormat = (amount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        $(row).find('.rowPriceData').text(amountWithFormat);
-        getPrice();
+
+
     }
 
     function getPrice() {
@@ -277,7 +290,7 @@
     function save() {
         if(!validate()) return;
         var details = getDetails();
-        if(!details) return;
+        if(details.length == 0) return;
 
         var data = {
             "name"   : $("#name").val(),
@@ -315,11 +328,12 @@
     function getDetails() {
         var rows = $("#tb_data tbody tr");
         var rowSize = rows.length;
+        var result = [];
         if(rowSize == 0){
             alert('Vui lòng thêm chi tiết đơn hàng!');
-            return false;
+            return result;
         }
-        var result = [];
+
         $(rows).each(function (index,item) {
             let print_id = $(item).find('select[name=print]')[0].value;
             let film     = $(item).find('select[name=film]')[0].value;
@@ -330,31 +344,39 @@
             if(COMMON._isNullOrEmpty($(item).find('select[name=print]'))){
                 alert('Vui lòng chọn loại in!');
                 $(item).find('select[name=print]')[0].focus();
-                return false;
+                return result = [];
             }
 
             if(COMMON._isNullOrEmpty($(item).find('select[name=film]'))){
                 alert('Vui lòng chọn màng!');
                 $(item).find('select[name=film]')[0].focus();
-                return false;
+                return result = [];
             }
 
             if(COMMON._isNullOrEmpty($(item).find('input[name=width]'))){
                 alert('Vui lòng nhập chiều rộng!');
                 $(item).find('input[name=width]')[0].focus();
-                return false;
+                return result = [];
             }
 
             if(COMMON._isNullOrEmpty($(item).find('input[name=height]'))){
                 alert('Vui lòng nhập chiều dài!');
                 $(item).find('input[name=height]')[0].focus();
-                return false;
+                return result = [];
             }
 
             if(COMMON._isNullOrEmpty($(item).find('input[name=quantity]'))){
                 alert('Vui lòng nhập số lượng!');
                 $(item).find('input[name=quantity]')[0].focus();
-                return false;
+                return result = [];
+            }
+
+            var fixPrice = 0;
+            var isFixPrice = false;
+
+            if(!COMMON._isNullOrEmpty($(item).find('input[name=fixPrice]'))){
+                var fixPrice = $(item).find('input[name=fixPrice]')[0].value;
+                var isFixPrice = true;
             }
 
             var data = {
@@ -363,6 +385,8 @@
                 "heigth"    : height,
                 "quantity"  : quantity,
                 "film_type" : film,
+                "is_fix_price" : isFixPrice,
+                "fix_price" : fixPrice,
             }
             result.push(data);
         });
