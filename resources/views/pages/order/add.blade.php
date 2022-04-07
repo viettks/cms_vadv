@@ -490,8 +490,8 @@ var table;
 
     function setCustomer(name,phone,address) {
         $("#name").val(name);
-        $("#name").val(phone);
-        $("#name").val(address);
+        $("#phone").val(phone);
+        $("#address").val(address);
         $("#modal1").modal('hide');
     }
 </script>
