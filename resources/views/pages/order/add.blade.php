@@ -23,7 +23,7 @@
             <strong class="card-title" v-if="headerText">Tạo mới đơn hàng</strong>
         </div>
         <div class="card-body">
-            <form action="" method="post" class="form-horizontal">
+            <form action="" method="post" class="form-horizontal" onsubmit="return false;">
                 <div class="row form-group">
                     <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
                 </div>
@@ -35,6 +35,7 @@
                         <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control">
                     </div>
                     <div class="col col-sm-6">
+                        <button id="btnSelect"><i class="fa fa-user"></i></button>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -186,12 +187,73 @@
     </tr>
 </template>
 @section('modal')
+
+<!-- modal medium -->
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="mediumModalLabel">
+                <i class="mr-2 fa fa-align-justify"></i>
+                Danh sách khách hàng</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" class="form-horizontal">
+                <div class="row form-group">
+                    <div class="table-responsive table-data">
+                        <table class="table" id="tb_data_sub">
+                            <thead>
+                                <tr>
+                                    <td>TÊN</td>
+                                    <td>SỐ ĐIỆN THOẠI</td>
+                                    <td>ĐỊA CHỈ</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- end modal medium -->
 @endsection
 
 @endsection
 @section('extend_script')
 <script>
     const print = @json($details);
+
+    //FOR DATATABLE
+
+var columns = [
+    {"data" : "name", "orderable": false,},
+    {"data" : "phone", "orderable": false,},
+    {"data" : "address", "orderable": false,},
+    {"data" : "name", "orderable": false, "render": function ( data, type, row, meta ) {
+        return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.address}')"><i class="fa fa-location-arrow"></i></a>`;
+    }},
+];
+    
+    var ajax = {
+    'url' : '{{url("api/order/customer")}}',
+    "type": "GET",
+    "data": {
+        "value" : function() { return $('#sValue').val() },
+        },
+    };
+
+var table;
 
     $(document).ready(function(){
         $("#addRow").click(function(){
@@ -209,6 +271,17 @@
 
         $("#btnSaveBack").click(function(){
             save(true);
+        });
+
+        $("#btnSelect").click(function(){
+            $("#modal1").modal('show');
+        });
+
+        $('#modal1').on('shown.bs.modal', function () {
+            //debugger
+            if(!table){
+                table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
+            }
         });
     });
 
@@ -258,8 +331,6 @@
             $(row).find('.rowPriceData').text(amountWithFormat);
             getPrice();
         }
-
-
     }
 
     function getPrice() {
@@ -415,6 +486,13 @@
         }
 
         return true;
+    }
+
+    function setCustomer(name,phone,address) {
+        $("#name").val(name);
+        $("#name").val(phone);
+        $("#name").val(address);
+        $("#modal1").modal('hide');
     }
 </script>
 @endsection

@@ -115,5 +115,31 @@ class OrderRepository
                ->get();
 
         return $data;
-       }
+    }
+
+    //GET LIST ORDER
+    public static function getCustomeres($param,$pagging = true){
+        $sql = "
+        o.name,
+        o.phone,
+        address
+        ";
+        $eloquent = Order::where(function($query) use ($param){
+                    if(isset($param['value'])){
+                        $query->where('name', 'like','%'.$param['value'].'%');
+                        $query->orWhere('phone', 'like','%'.$param['value'].'%');
+                    }
+                });
+        $count = $eloquent->select(['name','phone','address'])->distinct()->count();
+        if($pagging){
+            $data = $eloquent->select(['name','phone','address'])->distinct()->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
+        }else{
+            $data = $eloquent->select(['name','phone','address'])->distinct()->get()->toArray();
+        }
+
+        $result['recordsTotal'] = $count;
+        $result['recordsFiltered'] = $count;
+        $result['data'] = $data;
+        return $result;
+    }
 }

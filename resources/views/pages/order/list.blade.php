@@ -225,6 +225,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
+                    @can('ADMIN', null)
+                        <button type="button" class="btn btn-danger" onclick="deleteOrder();"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
+                    @endcan
                     <button type="button" class="btn btn-primary" onclick="update();"><i class="fa fa-save"></i>&nbsp;Lưu</button>
                 </div>
             </div>
@@ -417,5 +420,30 @@
             };
         window.open('{{url('order/download')}}?' + $.param(data), '_blank').focus();
     }
+
 </script>
+@can('ADMIN', null)
+<script>
+function deleteOrder() {
+    if(confirm("Bạn có muốn xóa hóa đơn hiện tại?")){
+        $.ajax({
+            type: "DELETE",
+            url: "{{url('/api/order')}}",
+            data: {
+                'id': $("#orderID").val(),
+            },
+            dataType: "json",
+            success: function(data) {
+                alert('Xóa thành công!')
+                $('#modal1').modal('hide');
+                $('#btnSeach').click();
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
+        });
+    }
+}
+</script>
+@endcan
 @endsection

@@ -52,8 +52,10 @@ Route::group([
 ], function ($router) {
     Route::get('/',    [OrderController::class, 'getOne']);
     Route::get('/list',[OrderController::class, 'getListOrder']);
+    Route::get('/customer', [OrderController::class, 'getCustomeres']);
     Route::post('/',   [OrderController::class, 'createOrder']);
-    Route::patch('/',  [OrderController::class, 'update'])->middleware('can:ADMIN');
+    Route::patch('/',  [OrderController::class, 'update']);
+    Route::delete('/',  [OrderController::class, 'delete'])->middleware('can:ADMIN');
 });
 
 //DEBT

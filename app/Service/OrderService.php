@@ -15,6 +15,12 @@ class OrderService
 {
 
     public const BILL_PARTENT = "VAV000000000";
+    
+    //GET LIST CUSTOMER
+    public static function getCustomeres($param)
+    {
+        return OrderRepository::getCustomeres($param);
+    }
 
     //CREATE ORDER AND MORE
     public function createOrder($order,$details)
@@ -107,6 +113,23 @@ class OrderService
             $order->save();
             DB::commit();
             return $order;
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw new Exception("Lỗi cập nhật order");
+        }
+    }
+
+    //DELETE ORDER
+    public static function delete($id)
+    {
+        try {
+            DB::beginTransaction();
+            Debt::where("order_id",$id)->delete();
+            OrderDetail::where("order_id",$id)->delete();
+            Order::destroy($id);
+            DB::commit();
+            return $id;
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());

@@ -44,6 +44,46 @@ class OrderController extends Controller
     //API
 
     /*
+    *
+    * GET LIST ORDER
+    */
+    public function getListOrder(Request $request)
+    {
+        $param = $request->all();
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
+
+        $orderSvc = new OrderService(); 
+        $result = $orderSvc->getListOrder($param);
+
+        return response()->json($result, 200);
+    }
+
+    /*
+    *
+    * GET ORDER
+    */
+    public function getOne(Request $request)
+    {
+        $id = $request->id;
+
+        $orderSvc = new OrderService(); 
+        $result = $orderSvc->getOne($id);
+
+        return response()->json($result, 200);
+    }
+        
+    /*
+    *
+    * GET LIST CUSTOMER ORDER
+    */
+    public function getCustomeres(Request $request)
+    {
+        return response()->json(OrderService::getCustomeres($request->all()), 200);
+    }
+
+    /*
      * Create ORDER
      */
     public function createOrder(Request $request)
@@ -101,44 +141,11 @@ class OrderController extends Controller
         }
     }
 
-    /*
-    *
-    * GET LIST ORDER
-    */
-
-    public function getListOrder(Request $request)
-    {
-        $param = $request->all();
-        $user = auth()->user();
-        $param['is_admin'] = $user->hasRole('ADMIN');
-        $param['user'] = $user->id;
-
-        $orderSvc = new OrderService(); 
-        $result = $orderSvc->getListOrder($param);
-
-        return response()->json($result, 200);
-    }
-
-        /*
-    *
-    * GET LIST ORDER
-    */
-
-    public function getOne(Request $request)
-    {
-        $id = $request->id;
-
-        $orderSvc = new OrderService(); 
-        $result = $orderSvc->getOne($id);
-
-        return response()->json($result, 200);
-    }
 
     /*
     *
-    * GET LIST ORDER
+    * UPDATE ORDER
     */
-
     public function update(Request $request)
     {
         $param = $request->all();
@@ -147,5 +154,19 @@ class OrderController extends Controller
         $result = $orderSvc->update($param);
 
         return response()->json($result, 200);
+    }
+
+    /*
+    *
+    * DELETE ORDER
+    */
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        return response()->json([
+            'status' => "OK",
+            'data' => OrderService::delete($id), 
+            'message' => 'Xóa thành công.'
+        ]);
     }
 }
