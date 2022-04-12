@@ -37,11 +37,11 @@ Route::group([
     'prefix' => 'print'
 
 ], function ($router) {
-    Route::get('/',    [PrintController::class, 'listPrint']);
+    Route::get('/',    [PrintController::class, 'getAll']);
     Route::post('/',   [PrintController::class, 'createPrint'])->middleware('can:ADMIN');
-    Route::put('/',    [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
+    Route::patch('/',  [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
     Route::delete('/', [PrintController::class, 'deletePrint'])->middleware('can:ADMIN');
-    Route::get('/list/pagging',[PrintController::class, 'listPaggingPrint'])->middleware('can:ADMIN');
+    Route::get('/list/pagging',[PrintController::class, 'getAllPagging'])->middleware('can:ADMIN');
 });
 
 //ORDER

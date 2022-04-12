@@ -7,7 +7,7 @@
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="header-wrap">
-                <div>
+                <div class="d-flex">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/">Dashboard</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,15 +16,8 @@
                       
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                           <ul class="navbar-nav mr-auto">
-     
-                            <li class="nav-item dropdown active">
-                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-expanded="false">
-                                Quản lý đơn hàng
-                              </a>
-                              <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <a class="dropdown-item" href="{{ url('order/add') }}">Tạo mới đơn hàng</a>
-                                <a class="dropdown-item" href="{{ url('order/list') }}">Danh sách đơn hàng</a>
-                              </div>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ url('order/list') }}">Danh sách đơn hàng</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ url('revenue') }}">Quản lý chi</a>
@@ -48,6 +41,9 @@
                         </div>
                       </nav>
                 </div>
+                <a href="{{ url('order/add') }}" class="ml-auto mr-5" style="width: 250px;">
+                    <img src="{{ url('images/icon/tao-ke-hoach-in.png')}}" alt="tao-ke-hoach-in">
+                </a>
                 <div class="header-button">
                     <div class="account-wrap">
                         <div class="account-item clearfix js-item-menu">

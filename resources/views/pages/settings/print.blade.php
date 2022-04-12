@@ -38,60 +38,58 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-2">
-                        <label for="text-input" class=" form-control-label">Cán màng ? (<span class="required">*</span>)</label>
+                    <div class="col col-sm-2">
+                        <label for="input-normal" class=" form-control-label">Tên phụ chi tiết</label>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_1" name="pe_film_1" placeholder="Không cán màng" class="form-control">
-                        <small class="help-block form-text">Không cán màng</small>
+                    <div class="col col-sm-4">
+                        <input type="text" id="subName" name="subName" placeholder="Tên phụ chi tiết" class="form-control" maxlength="200">
                     </div>
-                    <div class="col col-md-6"></div>
-                    <div class="col col-md-2"></div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_2" name="pe_film_2" placeholder="Cán màng bóng" class="form-control">
-                        <small class="help-block form-text">Cán màng bóng</small>
-                    </div>
-                    <div class="col col-md-6"></div>
-                    <div class="col col-md-2"></div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" id="pe_film_3" name="pe_film_3" placeholder="Cán màng mờ" class="form-control">
-                        <small class="help-block form-text">Cán màng mờ</small>
-                    </div>
-                    <div class="col col-md-6"></div>
-                </div>
-                <div class="row form-group">
-                    <h6 class="title-5 m-b-30 ml-3">Giá tiền</h6>
-                </div>
-                <div class="row form-group">
-                    <div class="table-responsive table-data">
-                        <table class="table" id="tb_price">
-                            <thead>
-                                <tr>
-                                    <td>TỪ</td>
-                                    <td>ĐẾN</td>
-                                    <td>Giá tiền (m2)</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="number" name="from"  placeholder="Từ" class="form-control-sm"></td>
-                                    <td><input type="number" name="to"    placeholder="Đến" class="form-control-sm"></td>
-                                    <td><input type="number" name="price" placeholder="Giá tiền" class="form-control-sm"></td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" onclick="deleteRow(this);">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col col-sm-6">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <button type="button" class="btn btn-outline-primary btn-sm ml-5" id="addRow">Thêm dòng</button>
+                    <div class="col col-sm-2">
+                        <label for="input-normal" class=" form-control-label">Đơn vị tính (<span class="required">*</span>)</label>
+                    </div>
+                    <div class="col col-sm-2">
+                        <select id="priceType" name="priceType" class="form-control-sm form-control">
+                            <option value="1">m<sup>2</sup></option>
+                            <option value="2">Đơn vị</option>
+                        </select>
+                    </div>
+                    <div class="col col-sm-2">
+                        <input type="text" id="typeText" name="typeText" placeholder="Đơn vị" class="form-control" maxlength="50" value="m2" disabled>
+                    </div>
+                    <div class="col col-sm-6">
+                    </div>
+                </div>
+                <div id="groupManu1">
+                    <div class="row manu-wrap form-group">
+                        <div class="col col-sm-2">
+                            <label for="input-normal" class=" form-control-label">Gia công</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control" maxlength="100">
+                        </div>
+                        <div class="col col-sm-6">
+                            <button type="button" class="btn btn-outline-success" onclick="addManu(1);">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="groupManu2">
+                    <div class="row manu-wrap form-group">
+                        <div class="col col-sm-2">
+                            <label for="input-normal" class=" form-control-label">Hỗ trợ</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <input type="text" id="manufacture2" name="manufacture2" placeholder="Hỗ trợ" class="form-control" maxlength="100">
+                        </div>
+                        <div class="col col-sm-6">
+                            <button type="button" class="btn btn-outline-success" onclick="addManu(2);">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
                 </div>
             </form>
             <!-- END USER DATA-->
@@ -122,6 +120,36 @@
         </td>
     </tr>
 </template>
+<!-- DÀNH CHO GIA CÔNG -->
+<template id="tmpManu1">
+    <div class="row manu-wrap form-group">
+        <div class="col col-sm-2">
+        </div>
+        <div class="col col-sm-4">
+            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control" maxlength="100">
+        </div>
+        <div class="col col-sm-6">
+            <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
+                <i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+</template>
+<!-- END GIA CÔNG -->
+
+<!-- DÀNH CHO HỖ TRỢ -->
+<template id="tmpManu2">
+    <div class="row manu-wrap form-group">
+        <div class="col col-sm-2">
+        </div>
+        <div class="col col-sm-4">
+            <input type="text" name="manufacture2" placeholder="Hỗ trợ" class="form-control" maxlength="100">
+        </div>
+        <div class="col col-sm-6">
+            <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
+                <i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+</template>
 @section('modal')
 @endsection
 
@@ -129,6 +157,18 @@
 @section('extend_script')
 <script>
     $(document).ready(function(){
+
+        $("#priceType").change(function(){
+            var value = this.value;
+            if(value == 1){
+                $("#typeText").val("m2");
+                $("#typeText").prop("disabled",true);
+            }else{
+                $("#typeText").val("");
+                $("#typeText").prop("disabled",false);
+            }
+        });
+
         $("#addRow").click(function(){
             let template = $("#dataRow");
             $("#tb_price tbody").append(template.html());
@@ -153,15 +193,16 @@
 
     function savePrint(isback=false){
         if(!validatePrint()) return;
-        var price = getPrice();
-        if(price.length == 0) return;
 
+        var dataSet1 = getManufac('manufacture1');
+        var dataSet2 = getManufac('manufacture2');
         var data = {
             "name" : $("#name").val(),
-            "pe_film_1" : Number.parseInt($("#pe_film_1").val()),
-            "pe_film_2" : Number.parseInt($("#pe_film_2").val()),
-            "pe_film_3" : Number.parseInt($("#pe_film_3").val()),
-            "price" : price
+            "sub_name" : $("#subName").val(),
+            "price_type" : $("#priceType").val(),
+            "type_name" : $("#typeText").val(),
+            "manufac_1" : dataSet1,
+            "manufac_2" : dataSet2,
         }
 
         return $.ajax({
@@ -267,24 +308,36 @@
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($('#pe_film_1'))){
-            alert('Vui lòng nhập giá không cán màng!');
-            $('#pe_film_1').focus();
-            return false;
-        }
-
-        if(COMMON._isNullOrEmpty($('#pe_film_2'))){
-            alert('Vui lòng nhập giá cán màng mờ!');
-            $('#pe_film_2').focus();
-            return false;
-        }
-
-        if(COMMON._isNullOrEmpty($('#pe_film_3'))){
-            alert('Vui lòng nhập giá cán màng bóng!');
-            $('#pe_film_3').focus();
+        if(COMMON._isNullOrEmpty($('#typeText'))){
+            alert('Vui lòng nhập đơn vị tính!');
+            $('#typeText').focus();
             return false;
         }
         return true;
+    }
+
+    function addManu(info) {
+        if(info == 1){
+            let template = $("#tmpManu1");
+            $("#groupManu1").append(template.html());
+        }else{
+            let template = $("#tmpManu2");
+            $("#groupManu2").append(template.html());
+        }
+    }
+
+    function deleteManu(item){
+        $(item).closest('.manu-wrap').remove()
+    }
+
+    function getManufac(name) {
+        var result = [];
+        $('input[name='+ name+']').each((index, item) =>{
+            if(item.value != ''){
+                result.push({"name" : item.value});
+            }
+        });
+        return result;
     }
 </script>
 @endsection
