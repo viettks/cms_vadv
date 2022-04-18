@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PrintManufacture extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $table = 'tb_print_sub_manufacture';
 
     protected $fillable = [

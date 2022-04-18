@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exports\ExportOrder;
 use App\Models\Order;
-use App\Models\Printing;
+use App\Models\OrderDetail;
+use App\Models\PrintSub;
 use App\Service\OrderService;
-use App\Service\PrintService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,15 +21,23 @@ class OrderController extends Controller
         return view('pages.order.list')->with(compact('memberes'));
     }
 
-    public function add(Request $request)
+    //VIEW TẠO ĐƠN HÀNG
+    public function viewCreate(Request $request)
     {
-
-        $printes = Printing::where('is_delete','!=','1')->get();
-        $priceService = new PrintService();
-        $details = $priceService->getPriceDetails();
+        $printes = PrintSub::where('is_delete','!=','1')->get();
         return view('pages.order.add')
-             ->with(compact('printes'))
-             ->with(compact('details'));
+             ->with(compact('printes'));
+    }
+
+    //VIEW TẠO ĐƠN HÀNG
+    public function viewDetail(Request $request)
+    {
+        $id = $request->id;
+        $printes = PrintSub::where('is_delete', '!=', '1')->get();
+        $order = Order::find($id);
+        $details = OrderDetail::where('order_id', '=', $id)->get();
+        return view('pages.order.detail')
+        ->with(compact(['printes','order','details']));
     }
 
     public function export(Request $request) 
@@ -54,9 +62,7 @@ class OrderController extends Controller
         $param['is_admin'] = $user->hasRole('ADMIN');
         $param['user'] = $user->id;
 
-        $orderSvc = new OrderService(); 
-        $result = $orderSvc->getListOrder($param);
-
+        $result = OrderService::getListOrder($param);
         return response()->json($result, 200);
     }
 
@@ -93,12 +99,7 @@ class OrderController extends Controller
             'phone'   => 'required',
             'address' => 'required',
             'payment' => 'required|integer',
-            'detail'  => 'array',
-            'detail.*.print_id'  => 'required',
-            'detail.*.width'  => 'required',
-            'detail.*.heigth'  => 'required',
-            'detail.*.quantity'  => 'required',
-            'detail.*.film_type'  => 'required',
+            'detail'  => 'array|required',
         ]);
 
         if($validator->fails()){
@@ -106,41 +107,27 @@ class OrderController extends Controller
         }
 
         $printDetails = $request->detail;
-
-        $paramIds = array_unique(array_column($printDetails,'print_id'));
-
-        $resultIds = array_unique(array_column(Printing::whereIn('id',$paramIds)->get()->toarray(),'id'));
-
-        if(sizeof($paramIds) != sizeof($resultIds)){
-            return response()->json([
-                'status'  => 404,
-                'message' => 'Loại in không tồn tại trên hệ thống.'
-            ], 400);
-        }else{
             
-            $author = auth()->user();
+        $author = auth()->user();
 
-            $order = $request->except(['detail']);
-            $order['created_by'] = $author->id;
-            $order['updated_by'] = $author->id;
-            $order['amount']     = 0;
-            try {
-                $orderService = new OrderService();
-                $result = $orderService->createOrder($order,$printDetails);
-                return response()->json([
-                    'status' => "OK",
-                    'data' => $result, 
-                    'message' => 'Tạo mới thành công.'
-                ]);
-            } catch (Exception $e) {
-                return response()->json([
-                    'status'  => 500,
-                    'message' => 'Đã xảy ra lỗi hệ thống.',
-                ], 500);
-            }
+        $order = $request->except(['detail']);
+        $order['created_by'] = $author->id;
+        $order['updated_by'] = $author->id;
+        try {
+            $result = OrderService::createOrder($order,$printDetails);
+            return response()->json([
+                'status' => "OK",
+                'data' => $result, 
+                'message' => 'Tạo mới thành công.'
+            ]);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Đã xảy ra lỗi hệ thống.',
+            ], 500);
         }
     }
-
 
     /*
     *
@@ -148,12 +135,39 @@ class OrderController extends Controller
     */
     public function update(Request $request)
     {
-        $param = $request->all();
-        $param['update_by'] = auth()->user()->id;
-        $orderSvc = new OrderService(); 
-        $result = $orderSvc->update($param);
+        $validator = Validator::make($request->all(), [
+            'name'    => 'required|string',
+            'phone'   => 'required',
+            'address' => 'required',
+            'payment' => 'required|integer',
+            'detail'  => 'array|required',
+        ]);
 
-        return response()->json($result, 200);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $printDetails = $request->detail;
+            
+        $author = auth()->user();
+
+        $order = $request->except(['detail']);
+        $order['created_by'] = $author->id;
+        $order['updated_by'] = $author->id;
+        try {
+            $result = OrderService::updateOrder($order,$printDetails);
+            return response()->json([
+                'status' => "OK",
+                'data' => $result, 
+                'message' => 'Cập nhật thành công.'
+            ]);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Đã xảy ra lỗi hệ thống.',
+            ], 500);
+        }
     }
 
     /*

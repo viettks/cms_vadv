@@ -19,18 +19,15 @@ class OrderRepository
             DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
             o.name AS customer,
             o.phone,
-            CONCAT(p.name,', ',
-                (
-                CASE d.film_type 
-                WHEN  '1' THEN 'không cán' 
-                WHEN  '2' THEN 'cán bóng'
-                WHEN  '3' THEN 'cán mờ'
-                ELSE 'không xác định' END)
-                ) AS detail,
+            d.print_name as name,
+            d.manufac1,
+            d.manufac2,
             d.width,
             d.heigth,
             d.quantity,
+            d.quantity as unit_total,
             d.unit_price,
+            d.unit_name,
             d.amount,
             o.amount AS total,
             o.status
@@ -66,11 +63,9 @@ class OrderRepository
         
         $data =  DB::table('tb_order AS o')
         ->join('tb_order_detail AS d','o.id','=','d.order_id')
-        ->join('tb_print AS p','p.id','=','d.print_id')
         ->whereIn('o.id', $orderIds)
         ->selectRaw($sql)
         ->get();
-        ;
 
         $result['recordsTotal'] = $count;
         $result['recordsFiltered'] = $count;
@@ -93,14 +88,6 @@ class OrderRepository
             o.note,
             o.amount AS total,
             o.status,
-            p.name AS print,
-            (CASE d.film_type
-			 WHEN '1' THEN 'Không cán màng'
-			 WHEN '2' THEN 'Cán màng bóng'
-			 WHEN '3' THEN 'Cán màng mờ'
-             ELSE 'Chưa xác định'
-			 END
-			) AS film_type,
 			d.width,
 			d.heigth,
             d.quantity,
@@ -109,7 +96,6 @@ class OrderRepository
         
         $data =  DB::table('tb_order AS o')
                ->join('tb_order_detail AS d','o.id','=','d.order_id')
-               ->join('tb_print AS p','p.id','=','d.print_id')
                ->where('o.id','=', $id)
                ->selectRaw($sql)
                ->get();

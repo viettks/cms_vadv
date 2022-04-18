@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Tạo mới đơn hàng')
+@section('title','Chi tiết đơn hàng')
 @section('style')
 <style>
     .mh-76 {
@@ -41,13 +41,22 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
+                        <label for="billCd" class=" form-control-label">Mã đơn hàng</label>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" id="billCd" name="billCd" disabled placeholder="Mã đơn hàng" class="form-control" value="{{$order->bill_code}}" disabled>
+                    </div>
+                    <div class="col col-sm-6">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-sm-2">
                         <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control">
+                        <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control" value="{{$order->name}}">
                     </div>
                     <div class="col col-sm-6">
-                        <button id="btnSelect"><i class="fa fa-user"></i></button>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -55,13 +64,13 @@
                         <label for="phone" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" class="form-control">
+                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" class="form-control" value="{{$order->phone}}">
                     </div>
                     <div class="col col-md-2">
                         <label for="address" class=" form-control-label">Địa chỉ (<span class="required">*</span>)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="text" id="address" name="address" placeholder="Địa chỉ" class="form-control">
+                        <input type="text" id="address" name="address" placeholder="Địa chỉ" class="form-control" value="{{$order->address}}">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -69,13 +78,13 @@
                         <label for="payment" class=" form-control-label">Trả trước</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
+                        <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="{{$order->payment}}">
                     </div>
                     <div class="col col-md-2">
                         <label for="release" class=" form-control-label">Ngày hoàn thành</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control">
+                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control" value="{{$order->release}}">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -83,7 +92,7 @@
                         <label for="note" class=" form-control-label">Ghi chú</label>
                     </div>
                     <div class="col-12 col-md-10">
-                        <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                        <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control">{{$order->note}}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -120,39 +129,43 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($details as $detail)
                                 <tr>
                                     <td>
-                                        <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn loại in</option>
-                                            @foreach ($printes as $pr)
-                                            <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}" data-subunit="{{$pr->type_name}}">{{$pr->name . " / " .$pr->sub_name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="hidden" name="flg" value="U">
+                                        <input type="hidden" name="unit" value="{{$detail->width == 0 ? "2" : "1"}}">
+                                        <input type="hidden" name="unit_name" value="{{$detail->unit_name}}">
+                                        <input disabled type="hidden" name="print" value="{{$detail['print_name']}}" class="form-control-sm">
+                                        {{$detail['print_name']}}
                                     </td>
-                                    <td>                                        
-                                        <select name="manufac1" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn gia công</option>
-                                        </select>
-                                    </td>
-                                    <td>                                        
-                                        <select name="manufac2" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn hỗ trợ</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" name="width" value="0" class="form-control-sm print-size" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="height" value="0" class="form-control-sm print-size" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="quantity" value="0" class="form-control-sm print-quant" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="unitPrice" value="0" placeholder="Đơn giá" class="form-control-sm" onchange="changeData(this);"></td>
-                                    <td><span class="rowQuantity">0</span>&nbsp;<span class="row-unit">m2</span></td>
-                                    <td><span class="rowPriceData">0</span>&nbsp;<span>VNĐ</span></td>
                                     <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" onclick="deleteRow(this);">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                        </div>
+                                        <input disabled type="hidden" name="manufac1" value="{{$detail->manufac1}}" class="form-control-sm">       
+                                        {{$detail->manufac1}}                          
+                                    </td>
+                                    <td>                                        
+                                        <input disabled type="hidden" name="manufac2" value="{{$detail->manufac2}}" class="form-control-sm"> 
+                                        {{$detail->manufac2}}
+                                    </td>
+                                    <td>
+                                        @if ($detail->width == 0)
+                                        <input type="hidden" name="width" value="{{$detail->width}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
+                                        @else
+                                        <input type="number" name="width" value="{{$detail->width}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
+                                        @endif
+                                    <td>
+                                        @if ($detail->heigth == 0)
+                                        <input type="hidden" name="height" value="{{$detail->heigth}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
+                                        @else
+                                        <input type="number" name="height" value="{{$detail->heigth}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
+                                        @endif
+                                    <td><input type="number" name="quantity" value="{{$detail->quantity}}" class="form-control-sm print-quant" onchange="changeData(this);"></td>
+                                    <td><input type="number" name="unitPrice" value="{{$detail->unit_price}}" placeholder="Đơn giá" class="form-control-sm" onchange="changeData(this);"></td>
+                                    <td><span class="rowQuantity">{{$detail->total}}</span>&nbsp;<span class="row-unit">{{$detail->unit_name}}</span></td>
+                                    <td><span class="rowPriceData">{{$detail->amount}}</span>&nbsp;<span>VNĐ</span></td>
+                                    <td>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -164,7 +177,7 @@
                     <div class="table-data__tool-left w-100">
                         <span class="text-danger text-strong">
                             <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
-                        <span class="text-danger text-strong" id="totalPrice">0</span>
+                        <span class="text-danger text-strong" id="totalPrice">{{$order->amount}}</span>
                         <span class="text-danger text-strong"> VNĐ.</span>
                     </div>
                     <hr>
@@ -187,6 +200,7 @@
 <template id="templateRow">
     <tr>
         <td>
+            <input type="hidden" name="flg" value="I">
             <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
                 <option value=''>Chọn loại in</option>
                 @foreach ($printes as $pr)
@@ -275,7 +289,7 @@
         });
 
         $("#btnReset").click(function(){
-            reset();
+            window.location.reload();
         });
 
         $("#btnSave").click(function(){
@@ -291,7 +305,6 @@
         });
 
         $('#modal1').on('shown.bs.modal', function () {
-            //debugger
             if(!table){
                 table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
             }
@@ -330,7 +343,6 @@
                         $(row).find('input[name=height]').prop('type','number');
                     }
                     $(row).find('.row-unit').text(unit);
-                    
                 });
             }
         }
@@ -339,11 +351,15 @@
         let height = COMMON._isNullOrEmpty($(row).find('input[name=height]')) ? 0 : Number.parseFloat($(row).find('input[name=height]')[0].value);
         let quantity = COMMON._isNullOrEmpty($(row).find('input[name=quantity]')) ? 0 : Number.parseInt($(row).find('input[name=quantity]')[0].value);
         let unitPrice = COMMON._isNullOrEmpty($(row).find('input[name=unitPrice]')) ? 0 : Number.parseFloat($(row).find('input[name=unitPrice]')[0].value);
-        let print = $(row).find('select[name=print]')[0].value;
+        
+        var isIns = $(row).find('input[name=flg]')[0].value == 'I' ? true :false;
+        
+        let print = isIns ? $(row).find('select[name=print]')[0].value : $(row).find('input[name=print]')[0].value;
+
         if(print == ''){
             $(row).find('span.rowPriceData').text(0);
         }else{
-            let unit = $(row).find('select[name=print] option:selected').data('subtype');
+            let unit = isIns ? $(row).find('select[name=print] option:selected').data('subtype') : $(row).find('input[name=unit]')[0].value;
             if(unit == 1){
                 var size = width * height * quantity;
                 let price = size * unitPrice;
@@ -359,16 +375,7 @@
     }
 
     function reset() {
-        $("#name").val('');
-        $("#phone").val('');
-        $("#address").val('');
-        $("#payment").val(0);
-        $("#release").val('');
-        $("#note").val('');
-        $("#tb_data tbody").empty();
-        let template = $("#templateRow");
-        $("#tb_data tbody").append(template.html());
-        $("#totalPrice").text("0");
+        window.location.reload();
     }
 
     function save(isback=false) {
@@ -383,6 +390,7 @@
         if(details.length == 0) return;
 
         var data = {
+            'id' : '{{$order->id}}',
             "name"   : $("#name").val(),
             "phone"  : $("#phone").val(),
             "address": $("#address").val(),
@@ -395,7 +403,7 @@
 
         return $.ajax({
             url : "{{ url('api/order') }}",
-            type : "POST",
+            type : "PATCH",
             dataType:"json",
             data: data,
             success : function(data) {
@@ -426,26 +434,46 @@
         var result = [];
 
         $(rows).each(function (index,row) {
-            let print_name = $(row).find('select[name=print] option:selected')[0].text;
-            let manufac1 = $(row).find('select[name=manufac1]')[0].value;
-            let manufac2 = $(row).find('select[name=manufac2]')[0].value;
-            let width = COMMON._isNullOrEmpty($(row).find('input[name=width]')) ? 0 :  Number.parseFloat($(row).find('input[name=width]')[0].value);
-            let height = COMMON._isNullOrEmpty($(row).find('input[name=height]')) ? 0 : Number.parseFloat($(row).find('input[name=height]')[0].value);
-            let quantity = COMMON._isNullOrEmpty($(row).find('input[name=quantity]')) ? 0 : Number.parseInt($(row).find('input[name=quantity]')[0].value);
-            let unitPrice = COMMON._isNullOrEmpty($(row).find('input[name=unitPrice]')) ? 0 : Number.parseFloat($(row).find('input[name=unitPrice]')[0].value);
 
-            let amount = Number.parseFloat($(row).find('span.rowPriceData').text().replaceAll('.',''));
-            let total = Number.parseInt($(row).find('span.rowQuantity').text());
+            let flg = $(row).find('input[name=flg]')[0].value;
 
-            if(COMMON._isNullOrEmpty($(row).find('select[name=print]'))){
-                alert('Vui lòng chọn loại in!');
-                $(item).find('select[name=print]')[0].focus();
-                result = [];
-                return false;
+            var print_name,
+                manufac1,
+                manufac2,
+                unit,
+                unit_name;
+
+            var width = COMMON._isNullOrEmpty($(row).find('input[name=width]')) ? 0 :  Number.parseFloat($(row).find('input[name=width]')[0].value);
+            var height = COMMON._isNullOrEmpty($(row).find('input[name=height]')) ? 0 : Number.parseFloat($(row).find('input[name=height]')[0].value);
+            var quantity = COMMON._isNullOrEmpty($(row).find('input[name=quantity]')) ? 0 : Number.parseInt($(row).find('input[name=quantity]')[0].value);
+            var unitPrice = COMMON._isNullOrEmpty($(row).find('input[name=unitPrice]')) ? 0 : Number.parseFloat($(row).find('input[name=unitPrice]')[0].value);
+            var amount = Number.parseFloat($(row).find('span.rowPriceData').text().replaceAll('.',''));
+            var total = Number.parseInt($(row).find('span.rowQuantity').text());
+
+            if(flg == 'I'){
+                print_name = $(row).find('select[name=print] option:selected')[0].text;
+                manufac1 = $(row).find('select[name=manufac1]')[0].value;
+                manufac2 = $(row).find('select[name=manufac2]')[0].value;
+
+                if(COMMON._isNullOrEmpty($(row).find('select[name=print]'))){
+                    alert('Vui lòng chọn loại in!');
+                    $(item).find('select[name=print]')[0].focus();
+                    result = [];
+                    return false;
+                }
+
+                unit = $(row).find('select[name=print] option:selected').data('subtype');
+                unit_name = $(row).find('select[name=print] option:selected').data('subunit');
+  
+
+            }else{
+                print_name =  $(row).find('input[name=print]')[0].value;
+                manufac1 = $(row).find('input[name=manufac1]')[0].value;
+                manufac2 = $(row).find('input[name=manufac2]')[0].value;
+                unit = $(row).find('input[name=unit]')[0].value;
+                unit_name = $(row).find('input[name=unit_name]')[0].value;
             }
 
-            let unit = $(row).find('select[name=print] option:selected').data('subtype');
-            let unit_name = $(row).find('select[name=print] option:selected').data('subunit');
             if(unit == 1){
                 if(width == 0){
                     alert('Vui lòng chọn nhập chiều rộng!');
@@ -477,18 +505,19 @@
             }
 
             var data = {
-                "print_name"  : print_name,
-                "manufac1"  : manufac1,
-                "manufac2"  : manufac2,
-                "width"     : width,
-                "heigth"    : height,
-                "quantity"  : quantity,
-                "unit_price" : unitPrice,
-                "unit_name" : unit_name,
-                "amount"    : amount,
-                "total" : total,
-            }
-            result.push(data);
+                    "print_name"  : print_name,
+                    "manufac1"  : manufac1,
+                    "manufac2"  : manufac2,
+                    "width"     : width,
+                    "heigth"    : height,
+                    "quantity"  : quantity,
+                    "unit_price" : unitPrice,
+                    "unit_name" : unit_name,
+                    "amount"    : amount,
+                    "total" : total,
+                }
+                result.push(data);
+            
         });
         return result;
     }

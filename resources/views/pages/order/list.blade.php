@@ -87,7 +87,7 @@
                                 <th>Chi tiết</th>
                                 <th>KT ngang</th>
                                 <th>KT dọc</th>
-                                <th>Số lượng</th>
+                                <th>Tổng</th>
                                 <th>Đơn giá</th>
                                 <th>Thành tiền</th>
                                 <th>Tổng tiền</th>
@@ -173,7 +173,7 @@
                                 <label for="payment" class=" form-control-label">Trả trước</label>
                             </div>
                             <div class="col-12 col-md-4">
-                                <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
+                                <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0" disabled>
                             </div>
                             <div class="col col-md-2">
                                 <label for="release" class=" form-control-label">Ngày hoàn thành</label>
@@ -187,31 +187,10 @@
                                 <label for="note" class=" form-control-label">Ghi chú</label>
                             </div>
                             <div class="col-12 col-md-10">
-                                <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                                <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
                             </div>
                         </div>
                         <hr>
-                        <div class="row form-group">
-                            <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
-                        </div>
-                        <div class="row form-group">
-                            <div class="table-responsive table-data">
-                                <table class="table" id="tb_data_sub">
-                                    <thead>
-                                        <tr>
-                                            <td>LOẠI IN</td>
-                                            <td>CÁN MÀNG</td>
-                                            <td>KÍCH THƯỚC NGANG</td>
-                                            <td>KÍCH THƯỚC DỌC</td>
-                                            <td>SỐ LƯỢNG</td>
-                                            <td>GIÁ TIỀN</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                         <div class="table-data__tool">
                             <div class="table-data__tool-left w-100">
                                 <span class="text-danger text-strong">
@@ -228,7 +207,7 @@
                     @can('ADMIN', null)
                         <button type="button" class="btn btn-danger" onclick="deleteOrder();"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
                     @endcan
-                    <button type="button" class="btn btn-primary" onclick="update();"><i class="fa fa-save"></i>&nbsp;Lưu</button>
+                    <a type="button" class="btn btn-primary" href="#" onclick="updateOrder();"><i class="fa fa-pencil"></i>&nbsp;Chỉnh sửa</a>
                 </div>
             </div>
         </div>
@@ -264,10 +243,22 @@
                     return data;
                 }
             }},
-            {"data" : "detail", "orderable": false,},
-            {"data" : "width", "orderable": false,},
-            {"data" : "heigth", "orderable": false,},
-            {"data" : "quantity", "orderable": false,},
+            {"data" : "width", "orderable": false, "render": function ( data, type, row, meta ) {
+                let text = '';
+                text += row.manufac1 ? row.manufac1 + ',':'';
+                text += row.manufac2 ? row.manufac2 :'';
+                text = text == '' ? row.name : row.name + '(' + text + ')';
+                return text;
+            }},
+            {"data" : "width", "orderable": false, "render": function ( data, type, row, meta ) {
+                return data == 0 ? "" : data;
+            }},
+            {"data" : "heigth", "orderable": false, "render": function ( data, type, row, meta ) {
+                return data == 0 ? "" : data;
+            }},
+            {"data" : "unit_total", "orderable": false, "render": function ( data, type, row, meta ) {
+                return data + ' ' + row.unit_name;
+            }},
             {"data" : "unit_price", "orderable": false,},
             {"data" : "amount", "orderable": false,},
             {"data" : "total", "orderable": false, "render": function ( data, type, full, meta ) {
@@ -419,6 +410,10 @@
                 "value" : $('#sValue').val()
             };
         window.open('{{url('order/download')}}?' + $.param(data), '_blank').focus();
+    }
+
+    function updateOrder() {
+        window.location.href = '{{url('order/info')}}' + "/" + $("#orderID").val();
     }
 
 </script>

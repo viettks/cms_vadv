@@ -61,6 +61,27 @@ class PrintController extends Controller
         return response()->json(PrintService::getAllPagging($request->all()), 200);
     }
 
+    /*
+     * List Of Print WITH PAGGING
+     */
+    public function getInfo(Request $request)
+    {
+        $id = $request->id;
+
+        $manufac1 = PrintManufacture::where(["print_id"=>$id,"sub_type" =>1])->get();
+        $manufac2 = PrintManufacture::where(["print_id"=>$id,"sub_type" =>2])->get();
+
+        return response()->json([
+            'status' => 200,
+            'data'   => [
+                "id" =>$id,
+                "manufac1" => $manufac1,
+                "manufac2" => $manufac2
+                ],
+            'message'=> "Lấy thông tin thành công.", 
+        ],200);
+    }
+
      /*
      * Create Print
      */

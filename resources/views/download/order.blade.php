@@ -27,14 +27,16 @@
             <th>Ngày</th>
             <th>Tên khách hàng</th>
             <th>Số điện thoại</th>
-            <th>Chi tiết</th>
-            <th>KT ngang</th>
-            <th width="150px">KT dọc</th>
-            <th width="150px">Số lượng</th>
-            <th width="150px">Đơn giá</th>
-            <th width="150px">Thành tiền</th>
-            <th width="150px">Tổng tiền</th>
-            <th width="150px">Tình trạng</th></tr>
+            <td>LOẠI IN</td>
+            <td>GIA CÔNG</td>
+            <td>HỖ TRỢ</td>
+            <td>NGANG</td>
+            <td>DỌC</td>
+            <td>SỐ LƯỢNG</td>
+            <td>ĐƠN GIÁ</td>
+            <td>TỔNG</td>
+            <td>THÀNH TIỀN</td>
+            </tr>
     </thead>
     <tbody>
         @php
@@ -58,7 +60,6 @@
                 {{$item->phone}}
                 @endif
             </td>
-            <td>{{$item->detail}}</td>
             <td>{{$item->width}}</td>
             <td>{{$item->heigth}}</td>
             <td>{{$item->quantity}}</td>

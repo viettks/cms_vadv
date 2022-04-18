@@ -31,8 +31,9 @@ Route::group([
 ],function(){
     // ORDER
     Route::get('/order/list', [OrderController::class,'viewListOrder'])->name('listOrder');
-    Route::get('/order/add', [OrderController::class,'add'])->name('addOrder');
+    Route::get('/order/add', [OrderController::class,'viewCreate'])->name('addOrder');
     Route::get('/order/download', [OrderController::class,'export'])->name('exportOrder');
+    Route::get('/order/info/{id}', [OrderController::class,'viewDetail'])->name('detailOrder');
     // CHI
     Route::get('/revenue', [RevenueController::class,'index'])->name('revenue');
     Route::get('/revenue/{file}', [RevenueController::class,'getFile'])->name('getFile');

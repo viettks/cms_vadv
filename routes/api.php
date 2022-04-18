@@ -38,6 +38,7 @@ Route::group([
 
 ], function ($router) {
     Route::get('/',    [PrintController::class, 'getAll']);
+    Route::get('/info/{id}',[PrintController::class, 'getInfo']);
     Route::post('/',   [PrintController::class, 'createPrint'])->middleware('can:ADMIN');
     Route::patch('/',  [PrintController::class, 'updatePrint'])->middleware('can:ADMIN');
     Route::delete('/', [PrintController::class, 'deletePrint'])->middleware('can:ADMIN');
