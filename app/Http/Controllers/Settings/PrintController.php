@@ -170,7 +170,7 @@ class PrintController extends Controller
         try {
             $id = $request->id;
             PrintManufacture::where(["print_id"=>$id])->delete();
-            PrintSub::where('id','!=',$id)->delete();
+            PrintSub::where('id','=',$id)->delete();
 
             return response()->json([
                 'status' => 200,
