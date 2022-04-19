@@ -65,6 +65,19 @@ class OrderService
             DB::beginTransaction();
             $result = Order::find($order["id"]);
 
+            $status = $order['status'];
+            if($status == 1){
+                $result->status = 1;
+                $result->payment = $result->amount;
+
+                Debt::where('order_id','=',$order['id'])
+                ->update(['payment'=>$result->amount, 'status' => 1]);
+
+            }else{
+                $result->status = 0;
+                $result->payment =  $order['payment'];
+            }
+
             $result->name   =$order["name"];
             $result->phone  =$order["phone"];
             $result->address=$order["address"];

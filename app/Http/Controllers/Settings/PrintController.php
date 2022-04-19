@@ -166,12 +166,15 @@ class PrintController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $prService = new PrintService();
+        
         try {
-            $result = $prService->deletePrint($request->id);
+            $id = $request->id;
+            PrintManufacture::where(["print_id"=>$id])->delete();
+            PrintSub::where('id','!=',$id)->delete();
+
             return response()->json([
                 'status' => 200,
-                'data'   => $result,
+                'message'   => "Xóa thành công", 
             ]);
         } catch (Exception $e) {
             return response()->json([

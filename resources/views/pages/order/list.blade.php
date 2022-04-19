@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <table class="table table-borderless table-striped table-earning" id="tb_data">
+                    <table class="table table-bordered" id="tb_data">
                         <thead>
                             <tr>
                                 <th>Ngày</th>
@@ -144,15 +144,18 @@
                                 <label for="name" class=" form-control-label">Trạng thái (<span class="required">*</span>)</label>
                             </div>
                             <div class="col col-sm-4">
-                                <label for="">Chưa hoàn thành</label>
+                                <span id="status">
+                                    <span class="badge badge-success">Hoàn thành</span>
+                                    <span class="badge badge-danger">Chưa hoàn thành</span>
+                                </span>
+                                {{-- <label for="">Chưa hoàn thành</label>
                                 <label class="switch switch-default switch-pill switch-danger mr-2">
                                     <input type="checkbox" id="status" class="switch-input" checked="true">
                                     <span class="switch-label"></span>
                                     <span class="switch-handle"></span>
                                 </label>
-                                <label for="">hoàn thành</label>
+                                <label for="">hoàn thành</label> --}}
                             </div>
-
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-2">
@@ -191,6 +194,30 @@
                             </div>
                         </div>
                         <hr>
+                        <div class="row form-group">
+                            <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
+                        </div>
+                        <div class="row form-group">
+                            <div class="table-responsive table-data">
+                                <table class="table" id="tb_data_sub">
+                                    <thead>
+                                        <tr>
+                                            <td>LOẠI IN</td>
+                                            <td>GIA CÔNG</td>
+                                            <td>HỖ TRỢ</td>
+                                            <td>NGANG</td>
+                                            <td>DỌC</td>
+                                            <td>SỐ LƯỢNG</td>
+                                            <td>ĐƠN GIÁ</td>
+                                            <td>TỔNG</td>
+                                            <td>THÀNH TIỀN</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="table-data__tool">
                             <div class="table-data__tool-left w-100">
                                 <span class="text-danger text-strong">
@@ -273,9 +300,9 @@
                     return "";
                 }else{
                     if(data == 1){
-                        return '<p class="text-success">Hoàn thành.</p>';
+                        return '<span class="badge badge-success">Hoàn thành</span>';
                     }else{
-                        return '<p class="text-danger">Chưa hoàn thành.</p>';
+                        return '<span class="badge badge-danger">Chưa hoàn thành</span>';
                     }
                     return data;
                 }
@@ -343,34 +370,29 @@
                     $("#tb_data_sub tbody").empty();
                     data.forEach((element,index) => {
                         let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                        var row = `<tr> <td>${element.print}</td>
-                                        <td>${element.film_type}</td>
-                                        <td>${element.width}</td>
-                                        <td>${element.heigth}</td>
+                        var row = `<tr> <td>${element.print_name}</td>
+                                        <td>${element.manufac1 ? '' : element.manufac1}</td>
+                                        <td>${element.manufac2 ? '' : element.manufac2}</td>
+                                        <td>${element.width == 0 ? '' : element.width}</td>
+                                        <td>${element.heigth == 0 ? '' : element.heigth}</td>
                                         <td>${element.quantity}</td>
-                                        <td>${amountTemp}</td></tr>`;
+                                        <td>${element.unit_price}</td>
+                                        <td>${element.unit_total}</td>
+                                        <td>${amountTemp} VNĐ</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
-                    $('#payment').off('change');
-                    $('#payment').change(function(e){
-                        if(this.value < data[0].payment){
-                            alert('Giá trị trả trước không được nhỏ hơn giá trị hiện tại!');
-                            this.value = data[0].payment;
-                            this.focus();
-                        }
-                    });
-                    $('#status').off('change');
+
                     if(data[0].status == 1){
-                        $('#status').attr("checked", true);
+                        $('#status .badge-success').show();
+                        $('#status .badge-danger ').hide();
                     }else{
-                        $('#status').attr("checked", false);
+                        $('#status .badge-success').hide();
+                        $('#status .badge-danger ').show();
                     }
-               
                     $('#modal1').modal('show');
                 }else{
                     alert('Đã xảy ra lỗi!')
                 }
-                
             },
             error: function(xhr) {
                 alert('Đã xảy ra lỗi!')

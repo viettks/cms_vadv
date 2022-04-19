@@ -24,6 +24,11 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+    .table-data input.form-control-sm,
+    .table-data select.form-control:not([size]):not([multiple]) {
+        height: calc(2.25rem + 2px);
+    }
 </style>
 @endsection
 @section('content')
@@ -234,6 +239,16 @@
             </button>
         </div>
         <div class="modal-body">
+            <div class="m-b-45 mr-2 seach-box">
+                <div class="form-group mr-2">
+                    <label></label>
+                    <input class="form-control" type="text" name="sValue" id="sValue" placeholder="Tìm kiếm...">
+                </div>
+                <div class="form-group mr-2">
+                    <label></label>
+                    <button type="button" class="btn btn-primary" id="btnSeach">Tra cứu</button>
+                </div>
+            </div>
             <form action="" method="post" class="form-horizontal">
                 <div class="row form-group">
                     <div class="table-responsive table-data">
@@ -268,6 +283,24 @@
 
 //FOR DATATABLE
 
+var columns = [
+    {"data" : "name", "orderable": false,},
+    {"data" : "phone", "orderable": false,},
+    {"data" : "address", "orderable": false,},
+    {"data" : "name", "orderable": false, "render": function ( data, type, row, meta ) {
+        return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.address}')"><i class="fa fa-location-arrow"></i></a>`;
+    }},
+];
+    
+    var ajax = {
+    'url' : '{{url("api/order/customer")}}',
+    "type": "GET",
+    "data": {
+        "value" : function() { return $('#sValue').val() },
+        },
+    };
+    var table;
+
     $(document).ready(function(){
         $("#addRow").click(function(){
             let template = $("#templateRow");
@@ -291,10 +324,13 @@
         });
 
         $('#modal1').on('shown.bs.modal', function () {
-            //debugger
             if(!table){
                 table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
             }
+        });
+
+        $("#btnSeach").click(function(){
+            table.ajax.reload(null,true);
         });
     });
 
@@ -330,7 +366,6 @@
                         $(row).find('input[name=height]').prop('type','number');
                     }
                     $(row).find('.row-unit').text(unit);
-                    
                 });
             }
         }
@@ -436,6 +471,7 @@
 
             let amount = Number.parseFloat($(row).find('span.rowPriceData').text().replaceAll('.',''));
             let total = Number.parseInt($(row).find('span.rowQuantity').text());
+            let unit = $(row).find('select[name=print] option:selected').data('subtype');
 
             if(COMMON._isNullOrEmpty($(row).find('select[name=print]'))){
                 alert('Vui lòng chọn loại in!');
@@ -444,7 +480,6 @@
                 return false;
             }
 
-            let unit = $(row).find('select[name=print] option:selected').data('subtype');
             let unit_name = $(row).find('select[name=print] option:selected').data('subunit');
             if(unit == 1){
                 if(width == 0){
@@ -487,6 +522,7 @@
                 "unit_name" : unit_name,
                 "amount"    : amount,
                 "total" : total,
+                "unit_type" : unit,
             }
             result.push(data);
         });

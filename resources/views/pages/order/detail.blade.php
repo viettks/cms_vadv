@@ -24,6 +24,10 @@
         -webkit-appearance: none;
         margin: 0;
     }
+    .table-data input.form-control-sm,
+    .table-data select.form-control:not([size]):not([multiple]) {
+        height: calc(2.25rem + 2px);
+    }
 </style>
 @endsection
 @section('content')
@@ -32,7 +36,7 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Tạo mới đơn hàng</strong>
+            <strong class="card-title" v-if="headerText">Chỉnh sửa đơn hàng</strong>
         </div>
         <div class="card-body">
             <form action="" method="post" class="form-horizontal" onsubmit="return false;">
@@ -56,7 +60,17 @@
                     <div class="col col-sm-4">
                         <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control" value="{{$order->name}}">
                     </div>
-                    <div class="col col-sm-6">
+                    <div class="col col-sm-2">
+                        <label for="name" class=" form-control-label">Trạng thái</label>
+                    </div>
+                    <div class="col col-sm-4">
+                        <label for="">Chưa hoàn thành</label>
+                            <label class="switch switch-default switch-pill switch-danger mr-2">
+                            <input type="checkbox" id="status" class="switch-input">
+                            <span class="switch-label"></span>
+                            <span class="switch-handle"></span>
+                            </label>
+                        <label for="">hoàn thành</label>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -84,7 +98,7 @@
                         <label for="release" class=" form-control-label">Ngày hoàn thành</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control" value="{{$order->release}}">
+                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control" value="{{$order->release_dt}}">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -133,7 +147,7 @@
                                 <tr>
                                     <td>
                                         <input type="hidden" name="flg" value="U">
-                                        <input type="hidden" name="unit" value="{{$detail->width == 0 ? "2" : "1"}}">
+                                        <input type="hidden" name="unit" value="{{$detail->unit_type}}">
                                         <input type="hidden" name="unit_name" value="{{$detail->unit_name}}">
                                         <input disabled type="hidden" name="print" value="{{$detail['print_name']}}" class="form-control-sm">
                                         {{$detail['print_name']}}
@@ -147,13 +161,13 @@
                                         {{$detail->manufac2}}
                                     </td>
                                     <td>
-                                        @if ($detail->width == 0)
+                                        @if ($detail->unit_type == 2)
                                         <input type="hidden" name="width" value="{{$detail->width}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
                                         @else
                                         <input type="number" name="width" value="{{$detail->width}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
                                         @endif
                                     <td>
-                                        @if ($detail->heigth == 0)
+                                        @if ($detail->unit_type == 2)
                                         <input type="hidden" name="height" value="{{$detail->heigth}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
                                         @else
                                         <input type="number" name="height" value="{{$detail->heigth}}" class="form-control-sm print-size" onchange="changeData(this);"></td>
@@ -283,6 +297,16 @@
 //FOR DATATABLE
 
     $(document).ready(function(){
+
+        setTimeout(function(){
+            if('{{$order->status}}' == '0'){
+                $('#status').attr("checked", false);
+            }else{
+                $('#status').attr("checked", true);
+            }
+        }, 1000);
+
+
         $("#addRow").click(function(){
             let template = $("#templateRow");
             $("#tb_data tbody").append(template.html());
@@ -398,7 +422,8 @@
             "release": $("#release").val(),
             "note"   : $("#note").val(),
             "detail" : details,
-            "amount"  : $("#totalPrice").text().replaceAll('.','')
+            "amount" : $("#totalPrice").text().replaceAll('.',''),
+            "status" :  $('#status').prop("checked") ? 1 : 0,
         }
 
         return $.ajax({
@@ -515,6 +540,7 @@
                     "unit_name" : unit_name,
                     "amount"    : amount,
                     "total" : total,
+                    "unit_type" : unit,
                 }
                 result.push(data);
             

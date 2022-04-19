@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <table class="table table-borderless table-striped table-earning" id="tb_data">
+                    <table class="table table-bordered" id="tb_data">
                         <thead>
                             <tr>
                                 <th>NGÀY</th>
@@ -188,11 +188,14 @@
                                     <thead>
                                         <tr>
                                             <td>LOẠI IN</td>
-                                            <td>CÁN MÀNG</td>
-                                            <td>KÍCH THƯỚC NGANG</td>
-                                            <td>KÍCH THƯỚC DỌC</td>
+                                            <td>GIA CÔNG</td>
+                                            <td>HỖ TRỢ</td>
+                                            <td>NGANG</td>
+                                            <td>DỌC</td>
                                             <td>SỐ LƯỢNG</td>
-                                            <td>GIÁ TIỀN</td>
+                                            <td>ĐƠN GIÁ</td>
+                                            <td>TỔNG</td>
+                                            <td>THÀNH TIỀN</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -305,6 +308,7 @@
             dataType: "json",
             success: function(data) {
                 if(data.length > 0){
+                    $('#billId').val(data[0].bill_code);
                     $('#name').val(data[0].customer);
                     $('#phone').val(data[0].phone);
                     $('#address').val(data[0].address);
@@ -316,34 +320,29 @@
                     $("#tb_data_sub tbody").empty();
                     data.forEach((element,index) => {
                         let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                        var row = `<tr> <td>${element.print}</td>
-                                        <td>${element.film_type}</td>
-                                        <td>${element.width}</td>
-                                        <td>${element.heigth}</td>
+                        var row = `<tr> <td>${element.print_name}</td>
+                                        <td>${element.manufac1 ? '' : element.manufac1}</td>
+                                        <td>${element.manufac2 ? '' : element.manufac2}</td>
+                                        <td>${element.width == 0 ? '' : element.width}</td>
+                                        <td>${element.heigth == 0 ? '' : element.heigth}</td>
                                         <td>${element.quantity}</td>
-                                        <td>${amountTemp}</td></tr>`;
+                                        <td>${element.unit_price}</td>
+                                        <td>${element.unit_total}</td>
+                                        <td>${amountTemp} VNĐ</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
-                    $('#payment').off('change');
-                    $('#payment').change(function(e){
-                        if(this.value < data[0].payment){
-                            alert('Giá trị trả trước không được nhỏ hơn giá trị hiện tại!');
-                            this.value = data[0].payment;
-                            this.focus();
-                        }
-                    });
-                    $('#status').off('change');
+
                     if(data[0].status == 1){
-                        $('#status').attr("checked", true);
+                        $('#status .badge-success').show();
+                        $('#status .badge-danger ').hide();
                     }else{
-                        $('#status').attr("checked", false);
+                        $('#status .badge-success').hide();
+                        $('#status .badge-danger ').show();
                     }
-               
                     $('#modal1').modal('show');
                 }else{
                     alert('Đã xảy ra lỗi!')
                 }
-                
             },
             error: function(xhr) {
                 alert('Đã xảy ra lỗi!')

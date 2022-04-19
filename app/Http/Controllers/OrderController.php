@@ -34,7 +34,18 @@ class OrderController extends Controller
     {
         $id = $request->id;
         $printes = PrintSub::where('is_delete', '!=', '1')->get();
-        $order = Order::find($id);
+        $select = "
+            id,
+            bill_code,
+            name,
+            phone,
+            address,
+            payment,
+            DATE_FORMAT(o.release, '%Y-%m-%d') AS release_dt,
+            note,
+            amount,
+            status";
+        $order = Order::from('tb_order as o')->selectRaw($select)->where('o.id', '=', $id)->first();
         $details = OrderDetail::where('order_id', '=', $id)->get();
         return view('pages.order.detail')
         ->with(compact(['printes','order','details']));

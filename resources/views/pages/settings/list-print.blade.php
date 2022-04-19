@@ -38,12 +38,13 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <table class="table table-borderless table-striped table-earning" id="tb_data">
+                    <table class="table table-bordered" id="tb_data">
                         <thead>
                             <tr>
                                 <th>TÊN LOẠI</th>
                                 <th>TÊN PHỤ CHI TIẾT</th>
                                 <th>ĐƠN VỊ TÍNH</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,9 @@
             }},
             {"data" : "sub_name", "orderable": false,},
             {"data" : "type_name", "orderable": false,},
+            {"data" : "name", "orderable": false,"render": function ( data, type, row, meta ) {
+                return `<button type="button" class="btn btn-danger" onclick="deletePrint('${row.id}');"><i class="fa fa-trash"></i>&nbsp;Xóa</button>`;
+            }},
         ];
 
     var ajax = {
@@ -87,5 +91,34 @@
         var table = CMTBL.init($('#tb_data'),columns,ajax,null);
     });
 
+    function deletePrint(id) {
+    if(confirm('Bạn có muốn xóa loại in đã chọn?')){
+        
+        var data = {
+            "id" : id,
+        }
+        return $.ajax({
+            url : "{{ url('api/print') }}",
+            type : "DELETE",
+            dataType:"json",
+            data: data,
+            success : function(data) {
+                alert(data.message);
+                $("#btnSeach").click();
+            },
+            error : function(xhr) {
+                if(xhr.responseJSON && xhr.responseJSON.message!='') {
+                    alert(xhr.responseJSON.message);
+                }
+            },
+            beforeSend: function() {
+                $("#overlay").show();
+            },
+            complete: function() {
+                $("#overlay").hide();
+            }
+        });
+    }
+}
 </script>
 @endsection

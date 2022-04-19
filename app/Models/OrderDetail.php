@@ -21,6 +21,7 @@ class OrderDetail extends Model
         "total",
         "unit_name",
         'unit_price',
+        "unit_type",
         'film_type',
         'amount',
     ];

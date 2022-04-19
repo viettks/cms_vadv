@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <table class="table table-borderless table-striped table-earning" id="tb_data">
+                    <table class="table table-bordered" id="tb_data">
                         <thead>
                             <tr>
                                 <th>NGÀY</th>

@@ -53,17 +53,19 @@ class OrderRepository
                     }
                 });
         if($pagging){
-            $orderIds = $eloquent->select('id')->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
+            $orderIds = $eloquent->orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->select('id')->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
         }else{
-            $orderIds = $eloquent->select('id')->get()->toArray();
+            $orderIds = $eloquent->orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->select('id')->get()->toArray();
         }
-        
+
         $count = $eloquent->count();
         $total = $eloquent->sum('amount');
         
         $data =  DB::table('tb_order AS o')
         ->join('tb_order_detail AS d','o.id','=','d.order_id')
         ->whereIn('o.id', $orderIds)
+        ->orderBy('o.created_at', 'DESC')
+        ->orderBy('o.id', 'DESC')
         ->selectRaw($sql)
         ->get();
 
@@ -88,10 +90,15 @@ class OrderRepository
             o.note,
             o.amount AS total,
             o.status,
-			d.width,
-			d.heigth,
+            d.print_name,
+            d.manufac1,
+            d.manufac2,
+            d.width,
+            d.heigth,
             d.quantity,
-			d.amount
+            d.unit_price,
+            CONCAT(d.total,d.unit_name) AS unit_total,
+            d.amount
             ";
         
         $data =  DB::table('tb_order AS o')
