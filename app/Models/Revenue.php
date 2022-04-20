@@ -12,6 +12,7 @@ class Revenue extends Model
 
     protected $fillable = [
         'name',
+        'phone',
         'note',
         'amount',
         'url',

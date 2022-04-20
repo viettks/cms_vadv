@@ -13,6 +13,7 @@ class RevenueRepository
             DATE_FORMAT(r.created_at,'%d/%m/%Y') AS create_date,
             r.id,
             r.name,
+            r.phone,
             r.note,
             r.amount,
             r.file_name,

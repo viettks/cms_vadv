@@ -53,8 +53,8 @@
                         <label>Tình trạng</label>
                         <select class="form-control" name="sStatus" id="sStatus">
                             <option value="" selected="selected">Tất cả</option>
-                            <option value="0">Đang xử lý</option>
-                            <option value="1">Đã giao hàng</option>
+                            <option value="0">Chưa hoàn thành</option>
+                            <option value="1">Hoàn thành</option>
                         </select>
                     </div>
                     @can('ADMIN')

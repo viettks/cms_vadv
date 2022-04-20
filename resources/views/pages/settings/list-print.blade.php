@@ -26,6 +26,16 @@
             <strong class="card-title" v-if="headerText">Danh sách loại in</strong>
         </div>
         <div class="card-body">
+            <div class="table-data__tool">
+                <div class="table-data__tool-left w-100">
+
+                </div>
+                <div class="table-data__tool-right">
+                    <a type="button" class="btn btn btn-outline-success" href="{{ url('settings/add-print') }}">
+                        <i class="fa fa fa-plus"></i>&nbsp; Tạo mới</a>
+                </div>
+                <hr>
+            </div>
             <div class="m-b-30">
                 <div class="m-b-45 mr-2 seach-box">
                     <div class="form-group mr-2">

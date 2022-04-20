@@ -55,7 +55,7 @@
                             <option value="" selected="selected">Tất cả</option>
                             <option value="0">Đang xử lý</option>
                             <option value="1">Từ chối</option>
-                            <option value="2">Đã chi</option>
+                            <option value="2">Hoàn thành</option>
                         </select>
                     </div>
                     @can('ADMIN')
@@ -90,6 +90,7 @@
                             <tr>
                                 <th>NGÀY</th>
                                 <th>TÊN ĐỐI TÁC</th>
+                                <th>SỐ ĐIỆN THOẠI</th>
                                 <th>LÝ DO CHI</th>
                                 <th>SỐ TIỀN</th>
                                 <th>HÓA ĐƠN</th>
@@ -132,6 +133,14 @@
                             </div>
                             <div class="col col-sm-8">
                                 <input type="text" id="crName" name="name" placeholder="Tên đối tác" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-sm-4">
+                                <label for="name" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
+                            </div>
+                            <div class="col col-sm-8">
+                                <input type="text" id="crPhone" name="phone" placeholder="Số điện thoại" class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -179,6 +188,7 @@
     var columns = [
             {"data" : "create_date", "orderable": false,},
             {"data" : "name", "orderable": false,},
+            {"data" : "phone", "orderable": false,},
             {"data" : "note", "orderable": false,},
             {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
                 return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
@@ -273,6 +283,11 @@
             $('#crName').focus();
             return false;
         }
+        if(COMMON._isNullOrEmpty($('#crPhone'))){
+            alert('Vui lòng nhập số điện thoại!');
+            $('#crPhone').focus();
+            return false;
+        }
         if(COMMON._isNullOrEmpty($('#crAmount'))){
             alert('Vui lòng nhập số tiền!');
             $('#crAmount').focus();
@@ -294,6 +309,7 @@
     $('#modal1').on('show.bs.modal', function (event) {
         $('#crName').val('');
         $('#crAmount').val('');
+        $('#crPhone').val('');
         $('#crFile').val('');
         $('#crNote').val('');
     });
@@ -336,6 +352,7 @@
     var columns = [
             {"data" : "create_date", "orderable": false,},
             {"data" : "name", "orderable": false,},
+            {"data" : "phone", "orderable": false,},
             {"data" : "note", "orderable": false,},
             {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
                 return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
@@ -427,6 +444,11 @@
             $('#crName').focus();
             return false;
         }
+        if(COMMON._isNullOrEmpty($('#crPhone'))){
+            alert('Vui lòng nhập số điện thoại!');
+            $('#crPhone').focus();
+            return false;
+        }
         if(COMMON._isNullOrEmpty($('#crAmount'))){
             alert('Vui lòng nhập số tiền!');
             $('#crAmount').focus();
@@ -448,6 +470,7 @@
     $('#modal1').on('show.bs.modal', function (event) {
         $('#crName').val('');
         $('#crAmount').val('');
+        $('#crPhone').val('');
         $('#crFile').val('');
         $('#crNote').val('');
     });

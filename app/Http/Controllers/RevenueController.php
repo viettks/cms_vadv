@@ -40,6 +40,7 @@ class RevenueController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'phone' => 'required',
             'amount' => 'required',
             'file' => 'required',
             'note'=> 'required',
@@ -52,7 +53,7 @@ class RevenueController extends Controller
         $file = $request->file;
         $fileName =  $file->getClientOriginalName();
         $url =  $file->move('upload/revenue', now()->timestamp.$fileName);
-        $revenue = $request->only(['name','amount','note']);
+        $revenue = $request->only(['name','amount','note',"phone"]);
         $revenue['url'] = now()->timestamp.$fileName;
         $revenue['file_name'] = $fileName;
         $author = auth()->user();
