@@ -6,7 +6,7 @@
 <table>
     <thead>
         <tr>
-            <td colspan="11" style="text-align: center"><h1>Danh sách đơn hàng</h1></td>
+            <td colspan="12" style="text-align: center"><h1>Danh sách đơn hàng</h1></td>
         </tr>
         <tr>
             <td width="150px">Ngày bắt đầu</td>
@@ -27,16 +27,15 @@
             <th>Ngày</th>
             <th>Tên khách hàng</th>
             <th>Số điện thoại</th>
-            <td>LOẠI IN</td>
-            <td>GIA CÔNG</td>
-            <td>HỖ TRỢ</td>
-            <td>NGANG</td>
-            <td>DỌC</td>
-            <td>SỐ LƯỢNG</td>
-            <td>ĐƠN GIÁ</td>
-            <td>TỔNG</td>
-            <td>THÀNH TIỀN</td>
-            </tr>
+            <th>Chi tiết</th>
+            <th>KT ngang</th>
+            <th width="150px" style="">KT dọc</th>
+            <th width="150px">Tổng</th>
+            <th width="150px">Đơn giá</th>
+            <th width="150px">Thành tiền</th>
+            <th width="150px">Tổng tiền</th>
+            <th width="150px">Tình trạng</th>
+        </tr>
     </thead>
     <tbody>
         @php
@@ -60,9 +59,16 @@
                 {{$item->phone}}
                 @endif
             </td>
-            <td>{{$item->width}}</td>
-            <td>{{$item->heigth}}</td>
-            <td>{{$item->quantity}}</td>
+            @php
+                $chitiet = '';
+                $chitiet .= $item->manufac1 ? $item->manufac2 . ',':'';
+                $chitiet .= $item->manufac2 ? $item->manufac2 :'';
+                $chitiet = $chitiet == '' ? $item->name : $item->name . '(' .$chitiet .')';
+            @endphp
+            <td>{{$chitiet}}</td>
+            <td>{{$item->width == 0 ? "" : $item->width}}</td>
+            <td>{{$item->heigth == 0 ? "" : $item->heigth}}</td>
+            <td>{{$item->unit_total .' ' .$item->unit_name}}</td>
             <td>{{$item->unit_price}}</td>
             <td>{{$item->amount}}</td>
             <td>                
