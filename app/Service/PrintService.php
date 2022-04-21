@@ -33,14 +33,14 @@ class PrintService
         try {
             DB::beginTransaction();
             $result = PrintSub::create($print);
-            if(sizeof($manufac1) > 0){
+            if(isset($manufac1) && sizeof($manufac1) > 0){
                 foreach ($manufac1 as $manu) {
                     $manu["print_id"] = $result->id;
                     $manu["sub_type"] = "01";
                     PrintManufacture::create($manu);
                 }
             }
-            if(sizeof($manufac2) > 0){
+            if(isset($manufac1) && sizeof($manufac2) > 0){
                 foreach ($manufac2 as $manu) {
                     $manu["print_id"] = $result->id;
                     $manu["sub_type"] = "02";

@@ -117,7 +117,7 @@ class PrintController extends Controller
             return response()->json([
                 'status' => 500,
                 'message'   => "Đã xảy ra lỗi.", 
-            ]);
+            ],500);
         }
     }
 
