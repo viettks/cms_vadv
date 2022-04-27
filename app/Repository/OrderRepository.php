@@ -135,4 +135,54 @@ class OrderRepository
         $result['data'] = $data;
         return $result;
     }
+
+    //GET LIST ORDER CODE
+    public static function getOrderCode($param, $pagging = true){
+        $sql = "
+        o.name,
+        o.phone,
+        o.bill_code
+        ";
+        $eloquent = DB::table('tb_order as o')
+                    ->leftJoin('tb_debt AS d','o.id','=','d.order_id')
+                    ->where(function($query) use ($param){
+                        $query->whereNull('d.id');
+                        if(isset($param['value'])){
+                            $query->where('name', 'like','%'.$param['value'].'%');
+                            $query->orWhere('phone', 'like','%'.$param['value'].'%');
+                        }
+                    });
+        $count = $eloquent->selectRaw($sql)->count();
+        if($pagging){
+            $data = $eloquent->selectRaw($sql)->skip($param['length'] * $param['start'])->take($param['length'])->get()->toArray();
+        }else{
+            $data = $eloquent->selectRaw($sql)->get()->toArray();
+        }
+
+        $result['recordsTotal'] = $count;
+        $result['recordsFiltered'] = $count;
+        $result['data'] = $data;
+        return $result;
+    }
+
+    //GET LIST ORDER HISTORY
+    public static function getOrderHistory($param, $pagging = true)
+    {
+        $sql = "
+            o.id,
+            o.bill_code,
+            DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
+            o.name AS customer,
+            o.phone,
+            o.address,
+            o.amount,
+            o.status
+            ";
+        $data = DB::table('tb_order as o')
+        ->leftJoin('tb_debt AS d', 'o.id', '=', 'd.order_id')
+        ->where('o.phone',"=",$param['phone'])
+        ->selectRaw($sql)
+        ->get();
+        return $data;
+    }
 }

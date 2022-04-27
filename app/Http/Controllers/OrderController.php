@@ -101,6 +101,36 @@ class OrderController extends Controller
     }
 
     /*
+    *
+    * GET ORDER CODE
+    */
+    public function getOrderCode(Request $request)
+    {
+        return response()->json(OrderService::getOrderCode($request->all()), 200);
+    }
+
+    /*
+    *
+    * GET ORDER HISTORY
+    */
+    public function getOrderHistory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone'   => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        return response()->json([
+            'status' => "OK",
+            'data' => OrderService::getOrderHistory($request->all()), 
+            'message' => 'Thành công.'
+        ]);
+    }
+
+    /*
      * Create ORDER
      */
     public function createOrder(Request $request)

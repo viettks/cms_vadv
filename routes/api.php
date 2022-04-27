@@ -52,27 +52,28 @@ Route::group([
 
 ], function ($router) {
     Route::get('/',    [OrderController::class, 'getOne']);
-    Route::get('/list',[OrderController::class, 'getListOrder']);
+    Route::get('/list', [OrderController::class, 'getListOrder']);
     Route::get('/customer', [OrderController::class, 'getCustomeres']);
-    Route::post('/',   [OrderController::class, 'createOrder']);
-    Route::patch('/',  [OrderController::class, 'update']);
-    Route::delete('/',  [OrderController::class, 'delete'])->middleware('can:ADMIN');
+    Route::get('/billcode', [OrderController::class, 'getOrderCode']);
+    Route::get('/history', [OrderController::class, 'getOrderHistory']);
+    Route::post('/', [OrderController::class, 'createOrder']);
+    Route::patch('/', [OrderController::class, 'update']);
+    Route::delete('/', [OrderController::class, 'delete'])->middleware('can:ADMIN');
 });
 
 //DEBT
 Route::group([
     'middleware' => 'auth:api',
     'prefix' => 'debt'
-
 ], function ($router) {
     Route::get('/',[DebtController::class, 'getDebtes']);
+    Route::post('/', [DebtController::class, 'createDebt']);
 });
 
 //REVENUES
 Route::group([
     'middleware' => 'auth:api',
     'prefix' => 'revenue'
-
 ], function ($router) {
     Route::get('/list',[RevenueController::class, 'getRevenues']);
     Route::post('/',[RevenueController::class, 'create']);
@@ -83,7 +84,6 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api,can:ADMIN',
     'prefix' => 'member'
-
 ], function ($router) {
     Route::get('/list',[MemberController::class, 'getListMember']);
     Route::get('/info',[MemberController::class, 'getInfo']);
@@ -96,7 +96,6 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api',
     'prefix' => 'chart'
-
 ], function ($router) {
     Route::get('/',[ChartController::class, 'getDatas']);
 });
@@ -105,7 +104,6 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api',
     'prefix' => 'password'
-
 ], function ($router) {
     Route::post('/',[AuthController::class, 'changePW']);
 });

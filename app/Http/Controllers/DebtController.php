@@ -15,7 +15,13 @@ class DebtController extends Controller
     public function index(Request $request)
     {
         $memberes = DB::table('users AS u')->get();
-        return view('pages.debt')->with(compact('memberes'));
+        return view('pages.debt.index')->with(compact('memberes'));
+    }
+
+    public function viewCreate(Request $request)
+    {
+        $memberes = DB::table('users AS u')->get();
+        return view('pages.debt.create')->with(compact('memberes'));
     }
 
     public function export(Request $request) 
@@ -31,6 +37,13 @@ class DebtController extends Controller
         $param = $request->all();
         $user = auth()->user();
         $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
+        return response()->json(DebtService::getDebtes($param), 200);
+    }
+
+    function createDebt(Request $request){
+        $param = $request->all();
+        $user = auth()->user();
         $param['user'] = $user->id;
         return response()->json(DebtService::getDebtes($param), 200);
     }

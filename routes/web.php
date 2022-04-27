@@ -40,6 +40,7 @@ Route::group([
     Route::get('/revenue/download/excel', [RevenueController::class,'export'])->name('exportRevenue');
     //NỢ
     Route::get('/debt', [DebtController::class,'index'])->name('debt');
+    Route::get('/debt/create', [DebtController::class,'viewCreate'])->name('createDebt');
     Route::get('/debt/download', [DebtController::class,'export'])->name('exportDebt');
     //LOẠI IN
     Route::get('/settings/add-print', [PrintController::class,'viewCreate'])->name('addPrint')->middleware('can:ADMIN');

@@ -9,16 +9,15 @@ class Debt extends Model
 {
     use HasFactory;
 
-    public const UNDER_15  = 0;
-    public const OVER_15   = 1;
-    public const LONG_TIME = 2;
-    public const PAY_OFF   = 3;
+    public const ON_DEBT   = 0;
+    public const PAY_OFF   = 1;
 
     protected $table = 'tb_debt';
 
     protected $fillable = [
         'order_id',
         'amount',
+        "bill_code",
         'payment',
         'note',
         'status',

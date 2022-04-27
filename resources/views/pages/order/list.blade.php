@@ -2,19 +2,22 @@
 @section('title','Danh sách đơn hàng')
 @section('style')
 <style>
-    .mh-76{
+    .mh-76 {
         min-height: 76vh;
     }
-    .input-date-wrap{
+
+    .input-date-wrap {
         width: 185px;
     }
-    .modal-lg{
+
+    .modal-lg {
         min-width: 80%;
     }
-    .switch-label{
+
+    .switch-label {
         border-color: #ff182b !important;
         background-color: #ff182b !important;
-    }   
+    }
 </style>
 @endsection
 @section('content')
@@ -43,7 +46,8 @@
                 <div class="m-b-45 mr-2 seach-box">
                     <div class="form-group mr-2">
                         <label>Ngày bắt đầu</label>
-                        <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Ngày bắt đầu">
+                        <input type="date" class="form-control" id="fromDate" name="fromDate"
+                            placeholder="Ngày bắt đầu">
                     </div>
                     <div class="form-group mr-2">
                         <label>Ngày kết thúc</label>
@@ -105,141 +109,226 @@
 </div>
 @section('modal')
 <!-- modal medium -->
-    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">
-                        <i class="mr-2 fa fa-align-justify"></i>
-                        Chi tiết hóa đơn</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" class="form-horizontal">
-                        <div class="row form-group">
-                            <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">
+                    <i class="mr-2 fa fa-align-justify"></i>
+                    Chi tiết hóa đơn
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="note" class=" form-control-label">Mã vận đơn</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="note" class=" form-control-label">Mã vận đơn</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="billId" name="billId" placeholder="Tên khách hàng" class="form-control">
-                            </div>
-                            <div class="col col-sm-6">
-                            </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="billId" name="billId" placeholder="Tên khách hàng"
+                                class="form-control">
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-sm-2">
-                                <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col col-sm-4">
-                                <input type="text" disabled id="name" name="name" placeholder="Tên khách hàng" class="form-control">
-                                <input type="hidden" id="orderID"/>
-                            </div>
-                            <div class="col col-sm-2">
-                                <label for="name" class=" form-control-label">Trạng thái (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col col-sm-4">
-                                <span id="status">
-                                    <span class="badge badge-success">Hoàn thành</span>
-                                    <span class="badge badge-danger">Chưa hoàn thành</span>
-                                </span>
-                                {{-- <label for="">Chưa hoàn thành</label>
-                                <label class="switch switch-default switch-pill switch-danger mr-2">
-                                    <input type="checkbox" id="status" class="switch-input" checked="true">
-                                    <span class="switch-label"></span>
-                                    <span class="switch-handle"></span>
-                                </label>
-                                <label for="">hoàn thành</label> --}}
-                            </div>
+                        <div class="col col-sm-6">
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="phone" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="phone" name="phone" placeholder="Số điện thoại" class="form-control">
-                            </div>
-                            <div class="col col-md-2">
-                                <label for="address" class=" form-control-label">Địa chỉ (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="address" name="address" placeholder="Địa chỉ" class="form-control">
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-sm-2">
+                            <label for="name" class=" form-control-label">Tên khách hàng (<span
+                                    class="required">*</span>)</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="payment" class=" form-control-label">Trả trước</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0" disabled>
-                            </div>
-                            <div class="col col-md-2">
-                                <label for="release" class=" form-control-label">Ngày hoàn thành</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="release" name="release" placeholder="Ngày hoàn thành" class="form-control">
-                            </div>
+                        <div class="col col-sm-4">
+                            <input type="text" disabled id="name" name="name" placeholder="Tên khách hàng"
+                                class="form-control">
+                            <input type="hidden" id="orderID" />
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="note" class=" form-control-label">Ghi chú</label>
-                            </div>
-                            <div class="col-12 col-md-10">
-                                <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
-                            </div>
+                        <div class="col col-sm-2">
+                            <label for="name" class=" form-control-label">Trạng thái (<span
+                                    class="required">*</span>)</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <span id="status">
+                                <span class="badge badge-success">Hoàn thành</span>
+                                <span class="badge badge-danger">Chưa hoàn thành</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="phone" class=" form-control-label">Số điện thoại (<span
+                                    class="required">*</span>)</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="phone" name="phone" placeholder="Số điện thoại"
+                                class="form-control">
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="address" class=" form-control-label">Địa chỉ (<span
+                                    class="required">*</span>)</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="address" name="address" placeholder="Địa chỉ"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="payment" class=" form-control-label">Trả trước</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước"
+                                class="form-control" value="0" disabled>
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="release" class=" form-control-label">Ngày hoàn thành</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="release" name="release" placeholder="Ngày hoàn thành"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="note" class=" form-control-label">Ghi chú</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..."
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="table-responsive table-data">
+                            <table class="table" id="tb_data_sub">
+                                <thead>
+                                    <tr>
+                                        <td>LOẠI IN</td>
+                                        <td>GIA CÔNG</td>
+                                        <td>HỖ TRỢ</td>
+                                        <td>NGANG</td>
+                                        <td>DỌC</td>
+                                        <td>SỐ LƯỢNG</td>
+                                        <td>ĐƠN GIÁ</td>
+                                        <td>TỔNG</td>
+                                        <td>THÀNH TIỀN</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-data__tool">
+                        <div class="table-data__tool-left w-100">
+                            <span class="text-danger text-strong">
+                                <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
+                            <span class="text-danger text-strong" id="totalPrice">0</span>
+                            <span class="text-danger text-strong"> VNĐ.</span>
                         </div>
                         <hr>
-                        <div class="row form-group">
-                            <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
-                        </div>
-                        <div class="row form-group">
-                            <div class="table-responsive table-data">
-                                <table class="table" id="tb_data_sub">
-                                    <thead>
-                                        <tr>
-                                            <td>LOẠI IN</td>
-                                            <td>GIA CÔNG</td>
-                                            <td>HỖ TRỢ</td>
-                                            <td>NGANG</td>
-                                            <td>DỌC</td>
-                                            <td>SỐ LƯỢNG</td>
-                                            <td>ĐƠN GIÁ</td>
-                                            <td>TỔNG</td>
-                                            <td>THÀNH TIỀN</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="table-data__tool">
-                            <div class="table-data__tool-left w-100">
-                                <span class="text-danger text-strong">
-                                    <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
-                                <span class="text-danger text-strong" id="totalPrice">0</span>
-                                <span class="text-danger text-strong"> VNĐ.</span>
-                            </div>
-                            <hr>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
-                    @can('ADMIN', null)
-                        <button type="button" class="btn btn-danger" onclick="deleteOrder();"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
-                    @endcan
-                    <a type="button" class="btn btn-primary" href="#" onclick="updateOrder();"><i class="fa fa-pencil"></i>&nbsp;Chỉnh sửa</a>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa fa-times"></i>&nbsp;Hủy</button>
+                @can('ADMIN', null)
+                <button type="button" class="btn btn-danger" onclick="deleteOrder();"><i
+                        class="fa fa-trash"></i>&nbsp;Xóa</button>
+                @endcan
+                <a type="button" class="btn btn-primary" href="#" onclick="updateOrder();"><i
+                        class="fa fa-pencil"></i>&nbsp;Chỉnh sửa</a>
             </div>
         </div>
     </div>
-    <!-- end modal medium -->
+</div>
+<!-- end modal medium -->
+
+<!-- MODAL HISTORY -->
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">
+                    <i class="mr-2 fa fa-align-justify"></i>
+                    Lịch sử đặt hàng
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="hisName" class=" form-control-label">Tên khách hàng</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="hisName" name="hisName" placeholder="Tên khách hàng"
+                                class="form-control">
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="hisPhone" class=" form-control-label">Tên khách hàng</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="hisPhone" name="hisPhone" placeholder="Số điện thoại"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="hisAdd" class=" form-control-label">Địa chỉ</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <input type="text" disabled id="hisAdd" name="hisAdd" placeholder="Địa chỉ"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Danh sách đơn hàng</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="table-responsive table-data">
+                            <table class="table" id="tb_data_his">
+                                <thead>
+                                    <tr>
+                                        <td>MÃ ĐƠN</td>
+                                        <td>NGÀY ĐẶT</td>
+                                        <td>TỔNG TIỀN</td>
+                                        <td>TÌNH TRẠNG</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-data__tool">
+                        <div class="table-data__tool-left w-100">
+                        </div>
+                        <hr>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa fa-times"></i>&nbsp;Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal medium -->
 @endsection
 
 @endsection
@@ -259,7 +348,7 @@
                 if(meta.row > 0 && meta.settings.aoData[meta.row-1]._aData.id == row.id){
                     return "";
                 }else{
-                    return '<a href="#" onclick="showInfo(\''+row.id+'\')">'+ data + '</a>';
+                    return '<a href="#" onclick="showHistory(\''+row.phone+'\')">'+ data + '</a>';
                 }
 
             }},
@@ -324,8 +413,15 @@
     function callback(settings){
         var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         $("#total").text(total);
-    }
 
+        $('#tb_data').on('click dblclick', 'td', function () {
+            var id = table.row(this).data().id;
+            var row = this._DT_CellIndex;
+            if(row.column == 1) return;
+            showInfo(id);
+        })
+    }
+    var table ;
     $(document).ready(function(){
         init();
 
@@ -337,7 +433,7 @@
             }
         });
 
-        var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+        table = CMTBL.init($('#tb_data'),columns,ajax,callback);
     });
 
     function init() {
@@ -400,6 +496,48 @@
         });
     }
 
+    function showHistory(phone) {
+        $.ajax({
+            type: "GET",
+            url: "{{url('/api/order/history')}}",
+            data: {
+                'phone': phone,
+            },
+            dataType: "json",
+            success: function(data) {
+                var dataSet = data.data;
+                $("#tb_data_his tbody").empty();
+                if(dataSet.length > 0){
+                    $('#hisName').val(dataSet[0].customer);
+                    $('#hisPhone').val(dataSet[0].phone);
+                    $('#hisAdd').val(dataSet[0].address);
+
+                    dataSet.forEach((element,index) => {
+                        var status = "";
+                        if(element.status == 1){
+                            status = '<span class="badge badge-success">Hoàn thành</span>';
+                        }else{
+                            status = '<span class="badge badge-danger">Chưa hoàn thành</span>';
+                        }
+                        let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+                        var row = `<tr><td><a href='{{url('order/info')}}/${element.id}'>${element.bill_code}</a></td>
+                                        <td>${element.create_date}</td>
+                                        <td>${element.amount} VNĐ</td>
+                                        <td>${status}</td></tr>`;
+                        $("#tb_data_his tbody").append(row);
+                    });
+
+                    $('#modal2').modal('show');
+                }else{
+                    alert('Đã xảy ra lỗi!')
+                }
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
+        });
+    }
+
     function update() {
         $.ajax({
             type: "PATCH",
@@ -415,7 +553,6 @@
                 alert('Lưu thành công!')
                 $('#modal1').modal('hide');
                 $('#btnSeach').click();
-
             },
             error: function(xhr) {
                 alert('Đã xảy ra lỗi!')
@@ -441,7 +578,7 @@
 </script>
 @can('ADMIN', null)
 <script>
-function deleteOrder() {
+    function deleteOrder() {
     if(confirm("Bạn có muốn xóa hóa đơn hiện tại?")){
         $.ajax({
             type: "DELETE",

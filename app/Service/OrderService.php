@@ -21,6 +21,18 @@ class OrderService
     {
         return OrderRepository::getCustomeres($param);
     }
+    
+    //GET LIST CUSTOMER
+    public static function getOrderCode($param)
+    {
+        return OrderRepository::getOrderCode($param);
+    }
+
+    //GET LIST HISTORY
+    public static function getOrderHistory($param)
+    {
+        return OrderRepository::getOrderHistory($param);
+    }
 
     //CREATE ORDER AND MORE
     public function createOrder($order,$details)
@@ -41,9 +53,10 @@ class OrderService
             if($result->payment < $result->amount){
                 Debt::create([
                     "order_id"   => $result->id,
+                    "bill_code"  => $billId,
                     "amount"     => $result->amount,
                     "payment"    => $result->payment,
-                    "status"     => Debt::UNDER_15,
+                    "status"     => Debt::ON_DEBT,
                     "created_by" => $result->created_by,
                     "updated_by" => $result->created_by,
                 ]);

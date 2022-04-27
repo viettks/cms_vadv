@@ -33,7 +33,10 @@
                     <span class="text-danger text-strong" id="total">0</span>
                     <span class="text-danger text-strong"> VNĐ.</span>
                 </div>
-                <div class="table-data__tool-right">
+                <div class="table-data__tool-right d-flex">
+                    <a type="button" class="btn btn btn-outline-success mr-2" href="{{url('/debt/create')}}">
+                        <i class="fa fa fa-plus"></i>&nbsp; Tạo mới</a>
+                    
                     <button type="button" class="btn btn-outline-primary" onclick="exportExcel();">
                         <i class="fa fa-download"></i>&nbsp; Xuất file excel</button>
                 </div>
