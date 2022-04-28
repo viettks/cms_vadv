@@ -41,10 +41,11 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="name" class="form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
+                        <label for="name" class="form-control-label">Tên khách hàng</label>
                     </div>
                     <div class="col col-sm-4">
                         <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control" maxlength="200" disabled>
+                        <input type="hidden" id="orderId" name="orderId" placeholder="Tên khách hàng" class="form-control" maxlength="200" disabled>
                     </div>
                     <div class="col col-sm-6">
                     </div>
@@ -61,7 +62,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="amount" class=" form-control-label">Tổng giá trị</label>
+                        <label for="amount" class=" form-control-label">Tổng giá trị (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
                         <input type="number" id="amount" name="amount" placeholder="Tổng giá trị" class="form-control" maxlength="200">
@@ -71,17 +72,17 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="payment" class=" form-control-label">Số tiền chi trả</label>
+                        <label for="payment" class=" form-control-label">Số tiền chi trả (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="number" id="payment" name="payment" placeholder="Số tiền chi trả" class="form-control" maxlength="200" value="0">
+                        <input type="number" id="payment" name="payment" placeholder="Số tiền chi trả" class="form-control" maxlength="200">
                     </div>
                     <div class="col col-sm-6">
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="fromdate" class=" form-control-label">Ngày bắt đầu nợ</label>
+                        <label for="fromdate" class=" form-control-label">Ngày bắt đầu nợ (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
                         <input type="date" id="fromdate" name="fromdate" placeholder="Ngày bắt đầu" class="form-control" maxlength="200" value="0">
@@ -97,7 +98,7 @@
                 <i class="fa fa-save"></i>&nbsp; Lưu</button>
             <button type="button" class="btn btn-outline-primary mr-2" id="btnSaveBack">
                 <i class="fa fa-reply"></i>&nbsp; Lưu và quay lại</button>
-            <button type="button" class="btn btn-outline-warning mr-2" id="btnReset">
+            <button type="button" class="btn btn-outline-warning mr-2" onclick="reset();">
                 <i class="fa fa-undo"></i>&nbsp; Reset</button>
             <a type="button" class="btn btn-outline-secondary" href="{{url('/settings/list-print')}}">
                 <i class="fa fa-times"></i>&nbsp; Hủy</a>
@@ -168,7 +169,7 @@ var columns = [
     {"data" : "name", "orderable": false,},
     {"data" : "phone", "orderable": false,},
     {"data" : "name", "orderable": false, "render": function ( data, type, row, meta ) {
-        return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.bill_code}')"><i class="fa fa fa-magic"></i></a>`;
+        return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.bill_code}','${row.id}')"><i class="fa fa fa-magic"></i></a>`;
     }},
 ];
 
@@ -215,21 +216,21 @@ $(document).ready(function(){
         if(!validateDebt()) return;
 
         var data = {
-            "bill_code" : $("#bill_code").val(),
+            "id" : $("#orderId").val(),
             "amount" : $("#amount").val(),
             "payment" : $("#payment").val(),
             "fromdate" : $("#fromdate").val(),
         }
 
         return $.ajax({
-            url : "{{ url('api/print') }}",
+            url : "{{ url('api/debt') }}",
             type : "POST",
             dataType:"json",
             data: data,
             success : function(data) {
                 alert(data.message);
                 if(isback){
-                    window.location.href = '{{url("/settings/list-print")}}';
+                    window.location.href = '{{url("/debt")}}';
                 }else{
                     reset();
                 }
@@ -249,101 +250,41 @@ $(document).ready(function(){
     }
 
     function reset() {
+        $("#billcode").val("");
         $("#name").val("");
-        $("#pe_film_1").val("");
-        $("#pe_film_2").val("");
-        $("#pe_film_3").val("");
-        $("#tb_price tbody").empty();
-        let template = $("#dataRow");
-        $("#tb_price tbody").append(template.html());
-    }
-
-    function getPrice(){
-        var rows = $("#tb_price tbody tr");
-        var rowSize = rows.length;
-        if(rowSize == 0) return false;
-        var result = [];
-        rowSize --;
-        $(rows).each(function (index,item) {
-            var from = $(item).find('input[name=from]')[0].value;
-            var to = $(item).find('input[name=to]')[0].value;
-            var price = $(item).find('input[name=price]')[0].value;
-
-            if(COMMON._isNullOrEmpty($(item).find('input[name=from]'))){
-                alert('Giá trị bắt đầu không được để trống!');
-                $(item).find('input[name=from]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            var toIsOk = COMMON._isNullOrEmpty($(item).find('input[name=to]'));
-
-            if(index != rowSize && toIsOk){
-                alert('Giá trị kết thúc không được để trống!');
-                $(item).find('input[name=to]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            if(COMMON._isNullOrEmpty($(item).find('input[name=price]'))){
-                alert('Giá tiền không được để trống!');
-                $(item).find('input[name=price]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            if(index != 0 && from != $(rows[index-1]).find('input[name=to]')[0].value){
-                alert('Giá trị bắt đầu sau phải bằng giá trị kết thúc ở trước!');
-                $(item).find('input[name=from]')[0].focus();
-                result = [];
-                return false;
-            }
-            to = toIsOk ? 9999 : to;
-            if(Number.parseInt(to) < Number.parseInt(from)){
-                alert('Giá trị kết thúc phải lớn hơn giá trị bắt đầu!');
-                $(item).find('input[name=to]')[0].focus();
-                result = [];
-                return false; 
-            }
-
-            var data = {
-                "from"      : Number.parseInt(from),
-                "to"        : Number.parseInt(to),
-                "price"     : Number.parseInt(price),
-                "order_num" : index + 1,
-            }
-            result.push(data);
-        });
-        return result;
+        $("#phone").val("");
+        $("#amount").val("");
+        $("#payment").val("");
+        $("#fromdate").val("");
     }
 
     function validateDebt() {
         if(COMMON._isNullOrEmpty($('#billcode'))){
-            alert('Vui lòng nhập tên loại in!');
+            alert('Vui lòng nhập mã hóa đơn!');
             $('#billcode').focus();
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($('#name'))){
-            alert('Vui lòng nhập đơn vị tính!');
-            $('#name').focus();
+        if(COMMON._isNullOrEmpty($('#amount')) || Number.parseInt($('#amount').val() <= 0)){
+            alert('Vui lòng kiểm tra giá trị đơn!');
+            $('#amount').focus();
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($('#phone'))){
-            alert('Vui lòng nhập đơn vị tính!');
-            $('#phone').focus();
+        if(COMMON._isNullOrEmpty($('#payment')) || Number.parseInt($('#payment').val() <= 0)){
+            alert('Vui lòng kiểm tra số tiền đã trả!');
+            $('#payment').focus();
             return false;
         }
 
-        if(COMMON._isNullOrEmpty($('#payment'))){
-            alert('Vui lòng nhập đơn vị tính!');
+        if(Number.parseInt($('#payment').val()) > Number.parseInt($('#amount').val())){
+            alert('Vui lòng kiểm tra số tiền đã trả!');
             $('#payment').focus();
             return false;
         }
 
         if(COMMON._isNullOrEmpty($('#fromdate'))){
-            alert('Vui lòng nhập đơn vị tính!');
+            alert('Vui lòng nhập ngày bắt đầu nợ!');
             $('#fromdate').focus();
             return false;
         }
@@ -360,24 +301,11 @@ $(document).ready(function(){
         }
     }
 
-    function deleteManu(item){
-        $(item).closest('.manu-wrap').remove()
-    }
-
-    function getManufac(name) {
-        var result = [];
-        $('input[name='+ name+']').each((index, item) =>{
-            if(item.value != ''){
-                result.push({"name" : item.value});
-            }
-        });
-        return result;
-    }
-
-    function setCustomer(name,phone,billcode) {
-        $("#billcode").val(name);
+    function setCustomer(name,phone,billcode,id) {
+        $("#billcode").val(billcode);
+        $("#name").val(name);
         $("#phone").val(phone);
-        $("#address").val(address);
+        $("#orderId").val(id);
         $("#modal1").modal('hide');
     }
 </script>

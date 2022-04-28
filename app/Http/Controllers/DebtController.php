@@ -7,6 +7,8 @@ use App\Service\DebtService;
 use App\Service\MemberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 
@@ -42,9 +44,26 @@ class DebtController extends Controller
     }
 
     function createDebt(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id'   => 'required',
+            'amount'   => 'required',
+            'payment'   => 'required',
+            'fromdate'   => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        Log::info($request->all());
+
         $param = $request->all();
         $user = auth()->user();
         $param['user'] = $user->id;
-        return response()->json(DebtService::getDebtes($param), 200);
+        
+        return response()->json([
+            'status' => "OK",
+            'data' => DebtService::createDebt($param), 
+            'message' => 'Thành công.'
+        ]);
     }
 }

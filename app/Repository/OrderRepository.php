@@ -139,6 +139,7 @@ class OrderRepository
     //GET LIST ORDER CODE
     public static function getOrderCode($param, $pagging = true){
         $sql = "
+        o.id,
         o.name,
         o.phone,
         o.bill_code
