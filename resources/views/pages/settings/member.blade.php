@@ -2,19 +2,26 @@
 @section('title','Quản lý thành viên')
 @section('style')
 <style>
-    .mh-76{
+    .mh-76 {
         min-height: 76vh;
     }
-    .input-date-wrap{
+
+    .input-date-wrap {
         width: 185px;
     }
-    .modal-lg{
+
+    .modal-lg {
         min-width: 60%;
     }
-    .switch-label{
+
+    .modal-md {
+        min-width: 40%;
+    }
+
+    .switch-label {
         border-color: #ff182b !important;
         background-color: #ff182b !important;
-    }   
+    }
 </style>
 @endsection
 @section('content')
@@ -38,12 +45,20 @@
                     </div>
                     <div class="form-group mr-2 w-100 d-flex justify-content-end">
                         <label></label>
-                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1" id="btnCreate">
+                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1"
+                            id="btnCreate">
                             <i class="fa fa-plus"></i> Thêm mới</button>
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
                     <table class="table table-bordered" id="tb_data">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col class="text-center">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th>TÊN THÀNH VIÊN</th>
@@ -84,28 +99,34 @@
                                     class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="crName" name="name" placeholder="Tên thành viên" class="form-control">
+                            <input type="text" id="crName" name="name" placeholder="Tên thành viên"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="crUserName" class=" form-control-label">Tên đăng nhập (<span class="required">*</span>)</label>
+                            <label for="crUserName" class=" form-control-label">Tên đăng nhập (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="crUserName" name="crUserName" placeholder="Tên đăng nhập" class="form-control" maxlength="20">
+                            <input type="text" id="crUserName" name="crUserName" placeholder="Tên đăng nhập"
+                                class="form-control" maxlength="20">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="crPassword" class=" form-control-label">Mật khẩu (<span class="required">*</span>)</label>
+                            <label for="crPassword" class=" form-control-label">Mật khẩu (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="crPassword" name="crPassword" placeholder="Mật khẩu" class="form-control" maxlength="50">
+                            <input type="text" id="crPassword" name="crPassword" placeholder="Mật khẩu"
+                                class="form-control" maxlength="50">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="crRole" class=" form-control-label">Quyền hạn (<span class="required">*</span>)</label>
+                            <label for="crRole" class=" form-control-label">Quyền hạn (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
                             <select id="crRole" name="crRole" class="form-control-sm form-control">
@@ -146,32 +167,39 @@
                 <form action="" id="upForm" method="post" class="form-horizontal">
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="upName" class=" form-control-label">Tên thành viên (<span class="required">*</span>)</label>
+                            <label for="upName" class=" form-control-label">Tên thành viên (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="upName" name="upName" placeholder="Tên thành viên" class="form-control" disabled>
+                            <input type="text" id="upName" name="upName" placeholder="Tên thành viên"
+                                class="form-control" disabled>
                             <input type="hidden" id="upId" name="upId">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="upUserName" class=" form-control-label">Tên đăng nhập (<span class="required">*</span>)</label>
+                            <label for="upUserName" class=" form-control-label">Tên đăng nhập (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="upUserName" name="upUserName" placeholder="Tên đăng nhập" class="form-control" maxlength="20" disabled>
+                            <input type="text" id="upUserName" name="upUserName" placeholder="Tên đăng nhập"
+                                class="form-control" maxlength="20" disabled>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="upPassword" class=" form-control-label">Mật khẩu (<span class="required">*</span>)</label>
+                            <label for="upPassword" class=" form-control-label">Mật khẩu (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
-                            <input type="text" id="upPassword" name="upPassword" placeholder="Mật khẩu" class="form-control" maxlength="50">
+                            <input type="text" id="upPassword" name="upPassword" placeholder="Mật khẩu"
+                                class="form-control" maxlength="50">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-4">
-                            <label for="upRole" class=" form-control-label">Quyền hạn (<span class="required">*</span>)</label>
+                            <label for="upRole" class=" form-control-label">Quyền hạn (<span
+                                    class="required">*</span>)</label>
                         </div>
                         <div class="col col-sm-8">
                             <select id="upRole" name="upRole" class="form-control-sm form-control">
@@ -200,7 +228,9 @@
 @section('extend_script')
 <script>
 
-//SETTINGS DATATABLE
+/*
+ * SETTINGS DATATABLE
+ */
 
 var columns = [
         
@@ -210,7 +240,7 @@ var columns = [
         {"data" : "user_name", "orderable": false,},
         {"data" : "role_name", "orderable": false,},
         {"data" : "create_date", "orderable": false,},
-        {"data" : "id", "orderable": false,"render": function ( data, type, row, meta ) {
+        {"data" : "id", "className" : "text-center", "orderable": false,"render": function ( data, type, row, meta ) {
             return `<div class="table-data-feature text-center">
                         <button class="item" onclick="deleteUser(${data});">
                             <i class="zmdi zmdi-delete"></i>
@@ -231,8 +261,14 @@ function callback(settings){
     $("#total").text(settings.json.total);
 }
 
+/*
+ * END SETTINGS DATATABLE
+ */
+ var table;
 $(document).ready(function(){
-    var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+
+    table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+
     $("#btnSeach").click(function(){
         table.ajax.reload(null,true);
     });

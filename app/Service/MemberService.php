@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\MemberRepository;
+use Illuminate\Support\Facades\Log;
 
 /**
  * MemberService
@@ -22,6 +23,7 @@ class MemberService
      */
     public static function getListMember($param)
     {
+        Log::info("GET LIST MEMBER WITH : ", $param);
         return MemberRepository::getListOrders($param);
     }
 }

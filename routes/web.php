@@ -21,33 +21,35 @@ use Illuminate\Support\Facades\Route;
 */
 
 //default page
-Route::get('/', [HomeController::class,'homePage'])->name('home');
+Route::get('/', [HomeController::class, 'homePage'])->name('home');
 
-Route::get('/login', [HomeController::class,'loginPage'])->name('login');
-Route::get('/logout', [AuthController::class,'logout'])->name('logout');
+Route::get('/login', [HomeController::class, 'loginPage'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group([
-'middleware' => 'auth:api'
-],function(){
+    'middleware' => 'auth:api'
+], function () {
     // ORDER
-    Route::get('/order/list', [OrderController::class,'viewListOrder'])->name('listOrder');
-    Route::get('/order/add', [OrderController::class,'viewCreate'])->name('addOrder');
-    Route::get('/order/download', [OrderController::class,'export'])->name('exportOrder');
-    Route::get('/order/info/{id}', [OrderController::class,'viewDetail'])->name('detailOrder');
+    Route::get('/order/list', [OrderController::class, 'viewListOrder'])->name('listOrder');
+    Route::get('/order/add', [OrderController::class, 'viewCreate'])->name('addOrder');
+    Route::get('/order/download', [OrderController::class, 'export'])->name('exportOrder');
+    Route::get('/order/info/{id}', [OrderController::class, 'viewDetail'])->name('detailOrder');
     // CHI
-    Route::get('/revenue', [RevenueController::class,'index'])->name('revenue');
-    Route::get('/revenue/{file}', [RevenueController::class,'getFile'])->name('getFile');
-    Route::get('/revenue/download/excel', [RevenueController::class,'export'])->name('exportRevenue');
+    Route::get('/revenue', [RevenueController::class, 'index'])->name('revenue');
+    Route::get('/revenue/{file}', [RevenueController::class, 'getFile'])->name('getFile');
+    Route::get('/revenue/download/excel', [RevenueController::class, 'export'])->name('exportRevenue');
     //NỢ
-    Route::get('/debt', [DebtController::class,'index'])->name('debt');
-    Route::get('/debt/create', [DebtController::class,'viewCreate'])->name('createDebt');
-    Route::get('/debt/download', [DebtController::class,'export'])->name('exportDebt');
+    Route::get('/debt', [DebtController::class, 'index'])->name('debt');
+    Route::get('/debt/create', [DebtController::class, 'viewCreate'])->name('createDebt');
+    Route::get('/debt/download', [DebtController::class, 'export'])->name('exportDebt');
     //LOẠI IN
-    Route::get('/settings/add-print', [PrintController::class,'viewCreate'])->name('addPrint')->middleware('can:ADMIN');
-    Route::get('/settings/list-print', [PrintController::class,'viewList'])->name('listPrint')->middleware('can:ADMIN');
-    Route::get('/settings/print/update/{id}', [PrintController::class,'viewUpdate'])->name('updatePrint')->middleware('can:ADMIN');
-    //THÀNH VIÊN
-    Route::get('/settings/member', [MemberController::class,'viewList'])->name('listMember')->middleware('can:ADMIN');
-    Route::get('/settings/changePW', [AuthController::class,'viewChangePW'])->name('changePW');
+    Route::get('/settings/add-print', [PrintController::class, 'viewCreate'])->name('addPrint')->middleware('can:ADMIN');
+    Route::get('/settings/list-print', [PrintController::class, 'viewList'])->name('listPrint')->middleware('can:ADMIN');
+    Route::get('/settings/print/update/{id}', [PrintController::class, 'viewUpdate'])->name('updatePrint')->middleware('can:ADMIN');
 
+    //LOẠI IN SUB
+    Route::get('/settings/add-print-1', [PrintController::class, 'viewCreate1'])->name('addPrint1')->middleware('can:ADMIN');
+    //THÀNH VIÊN
+    Route::get('/settings/member', [MemberController::class, 'viewList'])->name('listMember')->middleware('can:ADMIN');
+    Route::get('/settings/changePW', [AuthController::class, 'viewChangePW'])->name('changePW');
 });

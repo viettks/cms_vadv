@@ -56,7 +56,6 @@ class MemberController extends Controller
     public function getInfo(Request $request)
     {
         $id = $request->id;
-
         $user = User::find($id);
 
         return response()->json([

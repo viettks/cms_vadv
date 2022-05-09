@@ -20,11 +20,11 @@ USE `vadv_cms`;
 -- Dumping structure for table vadv_cms.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -37,24 +37,19 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 -- Dumping structure for table vadv_cms.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table vadv_cms.migrations: ~4 rows (approximately)
+-- Dumping data for table vadv_cms.migrations: ~0 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-	(1, '2014_10_12_000000_create_users_table', 1),
-	(2, '2014_10_12_100000_create_password_resets_table', 1),
-	(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-	(4, '2019_12_14_000001_create_personal_access_tokens_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -66,11 +61,11 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Dumping structure for table vadv_cms.personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -87,10 +82,11 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 CREATE TABLE IF NOT EXISTS `tb_debt` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int DEFAULT NULL,
+  `bill_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
   `payment` bigint DEFAULT NULL,
   `status` int DEFAULT NULL,
-  `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -98,30 +94,30 @@ CREATE TABLE IF NOT EXISTS `tb_debt` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_debt: ~4 rows (approximately)
+-- Dumping data for table vadv_cms.tb_debt: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_debt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_debt` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order
 CREATE TABLE IF NOT EXISTS `tb_order` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `bill_code` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `address` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bill_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `payment` bigint DEFAULT NULL,
   `release` datetime DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
-  `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order: ~13 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_order` ENABLE KEYS */;
 
@@ -129,14 +125,14 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
 CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int DEFAULT NULL,
-  `print_name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `manufac1` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `manufac2` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `print_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `manufac1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `manufac2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `width` float DEFAULT NULL,
   `heigth` float DEFAULT NULL,
   `quantity` int DEFAULT NULL,
   `total` float DEFAULT NULL,
-  `unit_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `unit_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `unit_price` float DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
   `unit_type` bigint DEFAULT NULL,
@@ -145,28 +141,9 @@ CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   CONSTRAINT `FK_tb_order_detail_tb_order` FOREIGN KEY (`order_id`) REFERENCES `tb_order` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order_detail: ~20 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order_detail: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_order_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_order_detail` ENABLE KEYS */;
-
--- Dumping structure for table vadv_cms.tb_print_price
-CREATE TABLE IF NOT EXISTS `tb_print_price` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `print_id` int NOT NULL,
-  `from` int NOT NULL,
-  `to` int DEFAULT NULL,
-  `price` bigint NOT NULL,
-  `order_num` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dumping data for table vadv_cms.tb_print_price: ~0 rows (approximately)
-/*!40000 ALTER TABLE `tb_print_price` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_print_price` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print_sub
 CREATE TABLE IF NOT EXISTS `tb_print_sub` (
@@ -181,12 +158,10 @@ CREATE TABLE IF NOT EXISTS `tb_print_sub` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print_sub: ~3 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print_sub: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_print_sub` DISABLE KEYS */;
-INSERT INTO `tb_print_sub` (`id`, `name`, `sub_name`, `price_type`, `type_name`, `is_delete`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(3, 'Westen Union', 'Rand', 1, 'm2', 0, 3, 3, '2022-04-12 17:02:21', '2022-04-12 17:02:21');
 /*!40000 ALTER TABLE `tb_print_sub` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print_sub_manufacture
@@ -196,41 +171,31 @@ CREATE TABLE IF NOT EXISTS `tb_print_sub_manufacture` (
   `sub_type` tinyint(1) DEFAULT NULL,
   `print_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print_sub_manufacture: ~9 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print_sub_manufacture: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_print_sub_manufacture` DISABLE KEYS */;
-INSERT INTO `tb_print_sub_manufacture` (`id`, `name`, `sub_type`, `print_id`) VALUES
-	(14, 'test1', 1, 2),
-	(15, 'test', 2, 2);
 /*!40000 ALTER TABLE `tb_print_sub_manufacture` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_revenue
 CREATE TABLE IF NOT EXISTS `tb_revenue` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `note` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
-  `url` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `file_name` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` int DEFAULT NULL,
   `created_by` int DEFAULT '0',
   `updated_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_revenue: ~7 rows (approximately)
+-- Dumping data for table vadv_cms.tb_revenue: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_revenue` DISABLE KEYS */;
-INSERT INTO `tb_revenue` (`id`, `name`, `note`, `amount`, `url`, `file_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, NULL, '3', 2, 'upload/revenue\\1648750949Phần quản lý.xlsx', '1648750949Phần quản lý.xlsx', 0, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:22:29'),
-	(2, NULL, '3', 2, 'upload/revenue\\1648750996Phần quản lý.xlsx', '1648750996Phần quản lý.xlsx', 0, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:23:16'),
-	(3, '1', '3', 2, 'upload/revenue\\1648751012Phần quản lý.xlsx', '1648751012Phần quản lý.xlsx', 0, NULL, NULL, '2022-04-01 18:22:29', '2022-03-31 18:23:32'),
-	(4, '1241', '2', 2, 'upload/revenue\\1648751250Phần quản lý.xlsx', '1648751250Phần quản lý.xlsx', 1, 3, 3, '2022-04-01 18:22:29', '2022-04-02 19:03:08'),
-	(5, 'Westen Union', '123', 1000, 'upload/revenue\\1648885942Phần quản lý.xlsx', '1648885942Phần quản lý.xlsx', 2, 7, 3, '2022-04-02 07:52:22', '2022-04-02 19:03:11'),
-	(6, 'Westen Union1', '1', 1, '1648927073CMC-Global-Onboarding-Guideline-Da-Nang.xlsx', 'CMC-Global-Onboarding-Guideline-Da-Nang.xlsx', NULL, 3, NULL, '2022-04-02 19:17:53', '2022-04-02 19:17:53'),
-	(7, 'Westen Union', '1', 2, '1648927458CMC-Global-Onboarding-Guideline-Da-Nang.xlsx', 'CMC-Global-Onboarding-Guideline-Da-Nang.xlsx', NULL, 7, NULL, '2022-04-02 19:24:18', '2022-04-02 19:24:18');
 /*!40000 ALTER TABLE `tb_revenue` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_role
@@ -241,11 +206,8 @@ CREATE TABLE IF NOT EXISTS `tb_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_role: ~2 rows (approximately)
+-- Dumping data for table vadv_cms.tb_role: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_role` DISABLE KEYS */;
-INSERT INTO `tb_role` (`id`, `name`, `decription`) VALUES
-	(1, 'ADMIN', 'Quản trị viên'),
-	(2, 'USER', 'Thành viên');
 /*!40000 ALTER TABLE `tb_role` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.users
@@ -266,14 +228,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `FK_tb_user_tb_role` FOREIGN KEY (`role_id`) REFERENCES `tb_role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table vadv_cms.users: ~4 rows (approximately)
+-- Dumping data for table vadv_cms.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `name`, `user_name`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_delete`, `role_id`) VALUES
-	(3, 'admin', 'admin', NULL, '$2y$10$qdYvNoUBf1RIYApEDlV5Yu7ypkqD1C1xVtS/WiJWA/8yM1KP93JpK', NULL, '2022-03-19 10:45:47', '2022-04-05 18:05:01', 0, 1),
-	(4, 'Westen Union', 'abc', NULL, '$2y$10$x2vqngAftpLpduTkynPYTelD48BKH9VmWhNBOQY9ojZFMPSlkZNNu', NULL, '2022-04-01 11:07:41', '2022-04-01 15:11:48', 0, 1),
-	(5, 'test', 'abc1', NULL, '$2y$10$8lnpdZXmy6wXOwJ6lf6wPulEoqtwgNCegyJn3hNf/LhFfvDxc19EO', NULL, '2022-04-01 11:10:15', '2022-04-01 15:06:16', 0, 2),
-	(6, 'Westen Union', '24', NULL, '$2y$10$iS3zwffiTMQoEBvK.ObGiuJU/Jfm88rHuXKUOCf6YNOEldKBJf1ha', NULL, '2022-04-01 11:12:26', '2022-04-01 15:18:33', 1, 2),
-	(7, 'member', 'member', NULL, '$2y$10$nelDszcqkbU6MJqYIkoJ7Omhm1kZk.E88B6kAlLoOEA4dbsz6vzGe', NULL, '2022-04-02 07:03:01', '2022-04-02 07:03:01', 0, 2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

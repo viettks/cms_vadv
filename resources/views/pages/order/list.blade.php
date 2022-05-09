@@ -467,8 +467,8 @@
                     data.forEach((element,index) => {
                         let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
                         var row = `<tr> <td>${element.print_name}</td>
-                                        <td>${element.manufac1 ? '' : element.manufac1}</td>
-                                        <td>${element.manufac2 ? '' : element.manufac2}</td>
+                                        <td>${element.manufac1 ? element.manufac1 : ''}</td>
+                                        <td>${element.manufac2 ? element.manufac2 : ''}</td>
                                         <td>${element.width == 0 ? '' : element.width}</td>
                                         <td>${element.heigth == 0 ? '' : element.heigth}</td>
                                         <td>${element.quantity}</td>
