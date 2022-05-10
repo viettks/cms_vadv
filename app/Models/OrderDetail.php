@@ -12,18 +12,20 @@ class OrderDetail extends Model
 
     protected $fillable = [
         'order_id',
+        'print_id',
         'print_name',
-        'manufac1',
-        "manufac2",
+        "print_type",
+        'machine1',
+        'machine2',
         'width',
-        'heigth',
+        "heigth",
+        "size",
         'quantity',
-        "total",
-        "unit_name",
-        'unit_price',
-        "unit_type",
-        'film_type',
+        "unit_price",
+        'total_size',
+        'unit',
         'amount',
+        'amount_display',
     ];
 
     public $timestamps = false;

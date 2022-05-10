@@ -57,39 +57,40 @@ class PrintService
     }
 
    //CREATE PRINT WITH SECOND TYPE
-   public static function createPrintType2($print, $subPrint, $manufac1, $manufac2)
+   public static function createPrintType2($print,$manufac1, $manufac2,$machine3)
    {
        try {
-           DB::beginTransaction();
-           Log::info("CREATE PRINT TYPE 2: ",[$print,$subPrint,$manufac1,$manufac2]);
-           if (isset($subPrint) && sizeof($subPrint) > 0) {
+            DB::beginTransaction();
+            Log::info("CREATE PRINT TYPE 2: ",[$print,$manufac1,$manufac2,$machine3]);
+            if (isset($machine3) && sizeof($machine3) > 0) {
                 $print["price_type"] = 3;
-           }else{
+            }else{
                 $print["price_type"] = 4;
-           }
-
-           $result = PrintSub::create($print);
-           if (isset($subPrint) && sizeof($subPrint) > 0) {
-                foreach ($subPrint as $manu) {
-                    $manu["print_id"] = $result->id;
-                    $manu["sub_type"] = "03";
-                    PrintManufacture::create($manu);
-                }
             }
+
+            $result = PrintSub::create($print);
+
             if (isset($manufac1) && sizeof($manufac1) > 0) {
                 foreach ($manufac1 as $manu) {
                     $manu["print_id"] = $result->id;
-                    $manu["sub_type"] = "04";
+                    $manu["sub_type"] = "01";
                     PrintManufacture::create($manu);
                 }
             }
             if (isset($manufac1) && sizeof($manufac2) > 0) {
                 foreach ($manufac2 as $manu) {
                     $manu["print_id"] = $result->id;
-                    $manu["sub_type"] = "05";
+                    $manu["sub_type"] = "02";
                     PrintManufacture::create($manu);
                 }
             }
+            if (isset($machine3) && sizeof($machine3) > 0) {
+                foreach ($machine3 as $manu) {
+                    $manu["print_id"] = $result->id;
+                    $manu["sub_type"] = "03";
+                    PrintManufacture::create($manu);
+                }
+        }
            DB::commit();
            return $result;
        } catch (Exception $e) {

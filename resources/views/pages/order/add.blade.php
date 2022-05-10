@@ -95,6 +95,15 @@
                 <div class="row form-group">
                     <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
                 </div>
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left w-100">
+                    </div>
+                    <div class="table-data__tool-right">
+                        <button type="button" class="btn btn-outline-primary btn-sm ml-5" data-toggle="modal" data-target="#mdDetail">
+                            Thêm dòng
+                        </button>
+                    </div>
+                </div>
                 <div class="row form-group">
                     <div class="table-data w-100">
                         <table class="table table-responsive" id="tb_data">
@@ -162,9 +171,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="row form-group">
-                    <button type="button" class="btn btn-outline-primary btn-sm ml-5" id="addRow">Thêm dòng</button>
-                </div>
+
                 <div class="table-data__tool">
                     <div class="table-data__tool-left w-100">
                         <span class="text-danger text-strong">
@@ -180,9 +187,6 @@
         <div class="card-footer">
             <button type="button" class="btn btn-outline-primary mr-2" id="btnSave">
                 <i class="fa fa-save"></i>&nbsp; Lưu</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdDetail">
-                    Open modal
-                  </button>
             <button type="button" class="btn btn-outline-primary mr-2" id="btnSaveBack">
                 <i class="fa fa-reply"></i>&nbsp; Lưu và quay lại</button>
             <button type="button" class="btn btn-outline-warning mr-2" id="btnReset">
@@ -338,7 +342,7 @@
 <!-- For print type 3-->
 
 <!-- For print type 4-->
-<template id="tmpPrintType3">
+<template id="tmpPrintType4">
     <div class="row form-group">
         <div class="col col-md-4">
             <label for="machine1" class=" form-control-label">Gia công :</label>
@@ -361,18 +365,13 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="size" class=" form-control-label">Kích thước :</label>
+            <label for="width" class=" form-control-label">Kích thước :</label>
         </div>
-        <div class="row form-group">
-            <div class="col col-md-4">
-                <label for="width" class=" form-control-label">Kích thước :</label>
-            </div>
-            <div class="col-12 col-md-4">
-                <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control">
-            </div>
-            <div class="col-12 col-md-4">
-                <input type="number" id="heigth" name="heigth" placeholder="Dọc(m2)" class="form-control">
-            </div>
+        <div class="col-12 col-md-4">
+            <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control">
+        </div>
+        <div class="col-12 col-md-4">
+            <input type="number" id="heigth" name="heigth" placeholder="Dọc(m2)" class="form-control">
         </div>
     </div>
     <div class="row form-group">
@@ -380,7 +379,7 @@
             <label for="quantity" class=" form-control-label">Số lượng :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -388,7 +387,7 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -639,13 +638,13 @@ var detailData = [];
     function save(isback=false) {
         if(!validate()) return;
 
-        if($("#tb_data tbody tr").length == 0){
-            alert('Vui lòng kiểm tra chi tiết.');
+
+        detailData.length
+
+        if(detailData.length == 0){
+            alert('Vui lòng kiểm tra chi tiết đơn hàng.');
             return;
         }
-        var details = getDetails();
-
-        if(details.length == 0) return;
 
         var data = {
             "name"   : $("#name").val(),
@@ -654,7 +653,7 @@ var detailData = [];
             "payment": Number.parseInt($("#payment").val()),
             "release": $("#release").val(),
             "note"   : $("#note").val(),
-            "detail" : details,
+            "detail" : detailData,
             "amount"  : $("#totalPrice").text().replaceAll('.','')
         }
 
@@ -951,33 +950,36 @@ var detailData = [];
 
     function addPrintDetail() {
         var printType = $("#dPrintType option:selected").data('subtype');
-        switch (printType) {
-            case 1:
-                applyData1();
-                break;
-            case 2:
-                applyData2();
-                break;
-            case 3:
-                applyData3();
-                break;
-            case 4:
-                applyData1();
-                break;
-            default:
-                break;
-        }
+        applyData(printType);
+
         loadDetail();
         $("#mdDetail").modal('hide');
     }
 
-    function applyData1() {
-        var width = Number.parseFloat($("#width").val());
-        var heigth = Number.parseFloat($("#heigth").val());
+    function applyData(print_type) {
+        var width = 0;
+        var heigth = 0;
         var quantity = Number.parseInt($("#quantity").val());
         var unitPrice = Number.parseInt($("#unitPrice").val());
         var machine1 = $("#machine1 option:selected").text();
         var machine2 = $("#machine2 option:selected").text()
+
+        var print_id = $("#dPrintType").val();
+        var size = '';
+
+        if(print_type == 1){
+            width = Number.parseFloat($("#width").val());
+            heigth = Number.parseFloat($("#heigth").val());
+            size = width + unit + ' x ' + heigth + unit;
+        }else if(print_type == 2){
+        
+        }else if(print_type == 3){
+            size = $("#size option:selected").text();
+        }else if(print_type == 4){
+            width = Number.parseFloat($("#width").val());
+            heigth = Number.parseFloat($("#heigth").val());
+            size = width + 'm2' + ' x ' + heigth + 'm2';
+        }
 
         var totalSize = $("#spTotal").text();
         var unit = $("#spunit").text();
@@ -986,16 +988,17 @@ var detailData = [];
         var object = {
             print_id : $("#dPrintType").val(),
             print_name : $("#dPrintType option:selected").text(),
+            print_type : print_type,
             machine1 : machine1,
             machine2 : machine2,
-            width : $("#dPrintType option:selected").val(),
-            height : $("#dPrintType option:selected").val(),
-            size : width + unit + ' x ' + heigth + unit,
+            width : width,
+            heigth : heigth,
+            size : size,
             quantity : quantity,
             unit_price : unitPrice,
             total_size : totalSize,
             unit : unit,
-            amount : amount,
+            amount : amount.replaceAll('.',''),
             amount_display : amount,
         }
 
@@ -1015,6 +1018,7 @@ var detailData = [];
         var object = {
             print_id : $("#dPrintType").val(),
             print_name : $("#dPrintType option:selected").text(),
+            print_type : 2,
             machine1 : machine1,
             machine2 : machine2,
             width : 0,
@@ -1024,7 +1028,7 @@ var detailData = [];
             unit_price : unitPrice,
             total_size : totalSize,
             unit : unit,
-            amount : amount,
+            amount : amount.replaceAll('.',''),
             amount_display : amount,
         }
 
@@ -1045,6 +1049,7 @@ var detailData = [];
         var object = {
             print_id : $("#dPrintType").val(),
             print_name : $("#dPrintType option:selected").text(),
+            print_type : 3,
             machine1 : machine1,
             machine2 : machine2,
             width : 0,
@@ -1054,7 +1059,39 @@ var detailData = [];
             unit_price : unitPrice,
             total_size : totalSize,
             unit : unit,
-            amount : amount,
+            amount : amount.replaceAll('.',''),
+            amount_display : amount,
+        }
+
+        detailData.push(object);
+    }
+
+    function applyData4() {
+        var width = Number.parseFloat($("#width").val());
+        var heigth = Number.parseFloat($("#heigth").val());
+        var quantity = Number.parseInt($("#quantity").val());
+        var unitPrice = Number.parseInt($("#unitPrice").val());
+        var machine1 = $("#machine1 option:selected").text();
+        var machine2 = $("#machine2 option:selected").text()
+
+        var totalSize = $("#spTotal").text();
+        var unit = $("#spunit").text();
+        var amount = $("#spAmount").text();
+
+        var object = {
+            print_id : $("#dPrintType").val(),
+            print_name : $("#dPrintType option:selected").text(),
+            print_type : 4,
+            machine1 : machine1,
+            machine2 : machine2,
+            width : width,
+            height : heigth,
+            size : width + 'm2' + ' x ' + heigth + 'm2',
+            quantity : quantity,
+            unit_price : unitPrice,
+            total_size : totalSize,
+            unit : unit,
+            amount : amount.replaceAll('.',''),
             amount_display : amount,
         }
 

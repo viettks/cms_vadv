@@ -106,20 +106,20 @@ class PrintController extends Controller
         }
         $author = auth()->user();
 
-        $printing = $request->except(["manufac_1", "manufac_2", "subPrint"]);
+        $printing = $request->except(["manufac_1", "manufac_2", "machine3"]);
         $printing['created_by'] = $author->id;
         $printing['updated_by'] = $author->id;
 
         $scId = $request->SCID;
 
-        $subPrint = $request->subPrint;
+        $machine3 = $request->machine3;
         $manufac1 = $request->manufac_1;
         $manufac2 = $request->manufac_2;
 
         try {
             $result = null;
             if ($scId === "ADDSUBPRINT") {
-                $result = PrintService::createPrintType2($printing, $subPrint, $manufac1, $manufac2);
+                $result = PrintService::createPrintType2($printing, $manufac1, $manufac2, $machine3);
             } else {
                 $result = PrintService::createPrint($printing, $manufac1, $manufac2);
             }

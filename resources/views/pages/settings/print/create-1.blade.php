@@ -42,6 +42,16 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
+                        <label for="input-normal" class=" form-control-label">Tên phụ chi tiết</label>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" id="subName" name="subName" placeholder="Tên phụ chi tiết" class="form-control" maxlength="200">
+                    </div>
+                    <div class="col col-sm-6">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-sm-2">
                         <label for="input-normal" class=" form-control-label">Đơn vị tính (<span
                                 class="required">*</span>)</label>
                     </div>
@@ -50,7 +60,9 @@
                             maxlength="50">
                     </div>
                     <div class="col col-sm-2">
-
+                        <label for="handleInput" class=" form-control-label">
+                            <input type="checkbox" id="handleInput"/>
+                             Tự nhập kích thước?</label>
                     </div>
                     <div class="col col-sm-6">
                     </div>
@@ -58,10 +70,10 @@
                 <div id="subPrintWrap">
                     <div class="row manu-wrap form-group">
                         <div class="col col-sm-2">
-                            <label for="subPrint" class=" form-control-label">Tên loại</label>
+                            <label for="subPrint" class=" form-control-label">Kích thước:</label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" name="subPrint" placeholder="Tên loại" class="form-control"
+                            <input type="text" name="machine3" placeholder="Tên loại" class="form-control"
                                 maxlength="100">
                         </div>
                         <div class="col col-sm-6">
@@ -137,7 +149,7 @@
         <div class="col col-sm-2">
         </div>
         <div class="col col-sm-4">
-            <input type="text" name="subPrint" placeholder="Tên loại" class="form-control" maxlength="100">
+            <input type="text" name="machine3" placeholder="Tên loại" class="form-control" maxlength="100">
         </div>
         <div class="col col-sm-6">
             <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
@@ -196,7 +208,42 @@
             savePrint(true);
         });
     });
-
+    
+    $("#handleInput").change(function(){
+        if(this.checked){
+            $("#subPrintWrap").empty();
+            $("#subPrintWrap").append(`
+                <div class="row manu-wrap form-group">
+                    <div class="col col-sm-2">
+                        <label for="subPrint" class=" form-control-label">Kích thước:</label>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" name="machine3" disabled placeholder="Tên loại" class="form-control"
+                            maxlength="100">
+                    </div>
+                    <div class="col col-sm-6">
+                        <button type="button" class="btn btn-outline-success">
+                            <i class="fa fa-plus"></i></button>
+                        </div>
+                </div>`);
+        }else{
+            $("#subPrintWrap").empty();
+            $("#subPrintWrap").append(`
+                <div class="row manu-wrap form-group">
+                    <div class="col col-sm-2">
+                        <label for="subPrint" class=" form-control-label">Kích thước:</label>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" name="machine3" placeholder="Tên loại" class="form-control"
+                            maxlength="100">
+                    </div>
+                    <div class="col col-sm-6">
+                        <button type="button" class="btn btn-outline-success" onclick="addManu(3);">
+                            <i class="fa fa-plus"></i></button>
+                        </div>
+                </div>`);
+        }
+    });
     function deleteRow(rowIcon) {
         $(rowIcon).closest('tr').remove();
     }
@@ -204,15 +251,16 @@
     function savePrint(isback=false){
         if(!validatePrint()) return;
 
-        var dataSet1 = getManufac('subPrint');
+        var dataSet1 = getManufac('machine3');
         var dataSet2 = getManufac('manufacture1');
         var dataSet3 = getManufac('manufacture2');
 
         var data = {
             "name" : $("#name").val(),
             "price_type" : 1,
+            "sub_name" : $("#subName").val(),
             "type_name" : $("#typeText").val(),
-            "subPrint"  : dataSet1,
+            "machine3"  : dataSet1,
             "manufac_1" : dataSet2,
             "manufac_2" : dataSet3,
             "SCID" : "ADDSUBPRINT"
