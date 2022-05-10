@@ -99,24 +99,24 @@
                     <div class="table-data w-100">
                         <table class="table table-responsive" id="tb_data">
                             <colgroup>
-                                <col style="width:15%">
-                                <col style="width:15%">
-                                <col style="width:15%">
                                 <col style="width:5%">
+                                <col style="width:15%">
+                                <col style="width:15%">
+                                <col style="width:15%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:10%">
                                 <col style="width:5%">
-                                <col style="width:10%">
-                                <col style="width:10%">
-                                <col style="width:10%">
-                                <col style="width:10%">
-                                <col style="width:10%">
                               </colgroup>
                             <thead>
                                 <tr>
+                                    <td>STT</td>
                                     <td>LOẠI IN</td>
                                     <td>GIA CÔNG</td>
                                     <td>HỖ TRỢ</td>
-                                    <td>NGANG</td>
-                                    <td>DỌC</td>
+                                    <td>KÍCH THƯỚC</td>
                                     <td>SỐ LƯỢNG</td>
                                     <td>ĐƠN GIÁ</td>
                                     <td>TỔNG</td>
@@ -125,7 +125,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <td>
                                         <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
                                             <option value=''>Chọn loại in</option>
@@ -157,7 +157,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -252,35 +252,35 @@
             <label for="machine1" class=" form-control-label">Gia công :</label>
         </div>
         <div class="col-12 col-md-8">
-            <select id="machine1" name="machine1" class="form-control-sm form-control">
+            <select id="machine1" name="machine1" class="form-control-sm form-control" onchange="changeDataPr2();">
                 <option value=''>Chọn gia công</option>
             </select>
         </div>
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="machine2" class=" form-control-label">Hỗ trợ :</label>
+            <label for="machine2" class="form-control-label">Hỗ trợ :</label>
         </div>
         <div class="col-12 col-md-8">
-            <select id="machine2" name="machine2" class="form-control-sm form-control">
+            <select id="machine2" name="machine2" class="form-control-sm form-control" onchange="changeDataPr2();">
                 <option value=''>Chọn hỗ trợ</option>
             </select>
         </div>
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="quantity" class=" form-control-label">Số lượng :</label>
+            <label for="quantity" class="form-control-label">Số lượng :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="quantity" placeholder="Số lượng" class="form-control">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
+            <label for="unitPrice" class="form-control-label">Đơn giá :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="unitPrice" placeholder="Đơn giá" class="form-control">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -290,7 +290,7 @@
 <template id="tmpPrintType3">
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="machine1" class=" form-control-label">Gia công :</label>
+            <label for="machine1" class="form-control-label">Gia công :</label>
         </div>
         <div class="col-12 col-md-8">
             <select id="machine1" name="machine1" class="form-control-sm form-control">
@@ -310,7 +310,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="size" class=" form-control-label">Kích thước :</label>
+            <label for="size" class="form-control-label">Kích thước :</label>
         </div>
         <div class="col-12 col-md-8">
             <select id="size" name="size" class="form-control-sm form-control">
@@ -323,7 +323,7 @@
             <label for="quantity" class=" form-control-label">Số lượng :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="quantity" placeholder="Số lượng" class="form-control">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -331,7 +331,7 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -368,10 +368,10 @@
                 <label for="width" class=" form-control-label">Kích thước :</label>
             </div>
             <div class="col-12 col-md-4">
-                <input type="number" name="width" placeholder="Ngang(m2)" class="form-control" onchange="changeDataPr4();">
+                <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control">
             </div>
             <div class="col-12 col-md-4">
-                <input type="number" name="heigth" placeholder="Dọc(m2)" class="form-control" onchange="changeDataPr4();">
+                <input type="number" id="heigth" name="heigth" placeholder="Dọc(m2)" class="form-control">
             </div>
         </div>
     </div>
@@ -380,7 +380,7 @@
             <label for="quantity" class=" form-control-label">Số lượng :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="quantity" placeholder="Số lượng" class="form-control">
+            <input type="number" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -388,7 +388,7 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control">
+            <input type="number" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -468,7 +468,7 @@
                             <select id="dPrintType" name="dPrintType" class="form-control-sm form-control" onchange="changePrintType(this);">
                                 <option value=''>Chọn loại in</option>
                                 @foreach ($printes as $pr)
-                                <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}">{{$pr->name . " / " .$pr->sub_name}}</option>
+                                <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}" data-subunit="{{$pr->type_name}}">{{$pr->name . " / " .$pr->sub_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -818,6 +818,14 @@ var detailData = [];
         $("#totalPrice").text((total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
+    $('#mdDetail').on('shown.bs.modal', function () {
+        $("#dPrintType").val("");
+        $("#detailWrap").empty();
+        $("#spTotal").text("0");
+        $("#spunit").text("");
+        $("#spAmount").text("0");
+    })
+
     function changePrintType(element) {
         var subtype = $(element).find('option:selected').data('subtype');
         var currentId = element.value;
@@ -924,17 +932,34 @@ var detailData = [];
         $("#spAmount").text(priceText);
     }
 
+    function changeDataPr2() {
+
+        if(COMMON._isNullOrEmpty("#quantity")
+        || COMMON._isNullOrEmpty("#unitPrice")) return;
+
+        var quantity = Number.parseInt($("#quantity").val());
+        var unitPrice = Number.parseInt($("#unitPrice").val());
+        var unit = $('#dPrintType option:selected').data('subunit');
+        let price = quantity * unitPrice;
+
+        let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+
+        $("#spTotal").text(quantity);
+        $("#spunit").text(unit);
+        $("#spAmount").text(priceText);
+    }
+
     function addPrintDetail() {
-        var printType = $("#dPrintType").val();
+        var printType = $("#dPrintType option:selected").data('subtype');
         switch (printType) {
             case 1:
                 applyData1();
                 break;
             case 2:
-                applyData1();
+                applyData2();
                 break;
             case 3:
-                applyData1();
+                applyData3();
                 break;
             case 4:
                 applyData1();
@@ -942,6 +967,8 @@ var detailData = [];
             default:
                 break;
         }
+        loadDetail();
+        $("#mdDetail").modal('hide');
     }
 
     function applyData1() {
@@ -949,25 +976,112 @@ var detailData = [];
         var heigth = Number.parseFloat($("#heigth").val());
         var quantity = Number.parseInt($("#quantity").val());
         var unitPrice = Number.parseInt($("#unitPrice").val());
+        var machine1 = $("#machine1 option:selected").text();
+        var machine2 = $("#machine2 option:selected").text()
 
         var totalSize = $("#spTotal").text();
-        var unnit = $("#spunit").text();
+        var unit = $("#spunit").text();
         var amount = $("#spAmount").text();
 
         var object = {
             print_id : $("#dPrintType").val(),
-            print_name : $("#dPrintType option:selected").val(),
+            print_name : $("#dPrintType option:selected").text(),
+            machine1 : machine1,
+            machine2 : machine2,
             width : $("#dPrintType option:selected").val(),
             height : $("#dPrintType option:selected").val(),
-            size : 0,
-            quantity : 0,
-            unit_price : 0,
-            total_size : 0,
-            amount : 0,
-            amount_display : 0,
+            size : width + unit + ' x ' + heigth + unit,
+            quantity : quantity,
+            unit_price : unitPrice,
+            total_size : totalSize,
+            unit : unit,
+            amount : amount,
+            amount_display : amount,
         }
 
         detailData.push(object);
+    }
+
+    function applyData2() {
+        var quantity = Number.parseInt($("#quantity").val());
+        var unitPrice = Number.parseInt($("#unitPrice").val());
+        var machine1 = $("#machine1 option:selected").text();
+        var machine2 = $("#machine2 option:selected").text();
+
+        var totalSize = $("#spTotal").text();
+        var unit = $("#spunit").text();
+        var amount = $("#spAmount").text();
+
+        var object = {
+            print_id : $("#dPrintType").val(),
+            print_name : $("#dPrintType option:selected").text(),
+            machine1 : machine1,
+            machine2 : machine2,
+            width : 0,
+            height : 0,
+            size : '',
+            quantity : quantity,
+            unit_price : unitPrice,
+            total_size : totalSize,
+            unit : unit,
+            amount : amount,
+            amount_display : amount,
+        }
+
+        detailData.push(object);
+    }
+
+    function applyData3() {
+        var quantity = Number.parseInt($("#quantity").val());
+        var unitPrice = Number.parseInt($("#unitPrice").val());
+        var machine1 = $("#machine1 option:selected").text();
+        var machine2 = $("#machine2 option:selected").text();
+        var machine3 = $("#size option:selected").text();
+
+        var totalSize = $("#spTotal").text();
+        var unit = $("#spunit").text();
+        var amount = $("#spAmount").text();
+
+        var object = {
+            print_id : $("#dPrintType").val(),
+            print_name : $("#dPrintType option:selected").text(),
+            machine1 : machine1,
+            machine2 : machine2,
+            width : 0,
+            height : 0,
+            size : machine3,
+            quantity : quantity,
+            unit_price : unitPrice,
+            total_size : totalSize,
+            unit : unit,
+            amount : amount,
+            amount_display : amount,
+        }
+
+        detailData.push(object);
+    }
+
+    function loadDetail() {
+        $("#tb_data tbody").empty();
+        $.each(detailData, ( index, item ) => {
+            $("#tb_data tbody").append(
+                `<tr>
+                    <td>${index + 1}</td>
+                    <td>${item.print_name}</td>
+                    <td>${item.machine1}</td>
+                    <td>${item.machine2}</td>
+                    <td>${item.size}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.unit_price}</td>
+                    <td>${item.total_size + item.unit}</td>
+                    <td>${item.amount_display}&nbsp; VNĐ</td>
+                    <td><div class="table-data-feature">
+                        <button class="item" onclick="deleteRow(this);">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button</div>
+                    </td>
+                </tr>`)
+        });
     }
 
 </script>

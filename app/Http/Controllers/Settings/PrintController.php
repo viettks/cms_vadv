@@ -77,7 +77,7 @@ class PrintController extends Controller
 
         $manufac1 = PrintManufacture::where(["print_id" => $id, "sub_type" => 1])->get();
         $manufac2 = PrintManufacture::where(["print_id" => $id, "sub_type" => 2])->get();
-        $manufac2 = PrintManufacture::where(["print_id" => $id, "sub_type" => 3])->get();
+        $manufac3 = PrintManufacture::where(["print_id" => $id, "sub_type" => 3])->get();
 
         return response()->json([
             'status' => 200,
@@ -85,7 +85,7 @@ class PrintController extends Controller
                 "id" => $id,
                 "manufac1" => $manufac1,
                 "manufac2" => $manufac2,
-                "manufac3" => $manufac2,
+                "manufac3" => $manufac3,
             ],
             'message' => "Lấy thông tin thành công.",
         ], 200);
