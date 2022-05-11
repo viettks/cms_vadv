@@ -14,23 +14,19 @@ class OrderRepository
     public function getListOrders($param,$pagging = true)
     {
         $sql = "
-            o.id,
-            o.bill_code,
             DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
             o.name AS customer,
+            o.id,
+            o.bill_code,
             o.phone,
-            d.print_name as name,
-            d.manufac1,
-            d.manufac2,
-            d.width,
-            d.heigth,
-            d.quantity,
-            d.quantity as unit_total,
-            d.unit_price,
-            d.unit_name,
+            o.status,
+            o.amount AS total_amount,
+            CONCAT( d.print_name,'(',d.machine1,',',d.machine2,')') AS detail,
+            d.size,
+            CONCAT(d.total_size,' ',unit) AS total_size,
+            CONCAT(d.unit_price,' VNĐ') AS unit_price,
             d.amount,
-            o.amount AS total,
-            o.status
+            CONCAT(d.amount_display,' VNĐ') AS amount_display
             ";
 
         $result = array();
@@ -80,25 +76,22 @@ class OrderRepository
     public function getOne($id)
     {
         $sql = "
+            DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
+            o.name AS customer,
             o.id,
             o.bill_code,
-            o.name AS customer,
             o.phone,
-            o.address,
-            o.payment,
-            DATE_FORMAT(o.release, '%d/%m/%Y') AS release_dt ,
-            o.note,
-            o.amount AS total,
             o.status,
+            o.amount AS total_amount,
             d.print_name,
-            d.manufac1,
-            d.manufac2,
-            d.width,
-            d.heigth,
+            IFNULL(d.machine1,'') AS machine1,
+            IFNULL(d.machine2,'') AS machine2,
+            IFNULL(d.size,'')  AS size,
             d.quantity,
-            d.unit_price,
-            CONCAT(d.total,d.unit_name) AS unit_total,
-            d.amount
+            CONCAT(d.total_size,' ',unit) AS total_size,
+            CONCAT(d.unit_price,' VNĐ') AS unit_price,
+            d.amount,
+            CONCAT(d.amount_display,' VNĐ') AS amount_display
             ";
         
         $data =  DB::table('tb_order AS o')

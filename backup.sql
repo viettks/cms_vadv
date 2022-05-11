@@ -92,10 +92,12 @@ CREATE TABLE IF NOT EXISTS `tb_debt` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table vadv_cms.tb_debt: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_debt` DISABLE KEYS */;
+INSERT INTO `tb_debt` (`id`, `order_id`, `bill_code`, `amount`, `payment`, `status`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, 4, 'VAD000000004', 1000, 0, 0, NULL, 3, 3, '2022-05-05 13:25:53', '2022-05-05 13:25:53');
 /*!40000 ALTER TABLE `tb_debt` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order
@@ -115,34 +117,58 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tb_order` DISABLE KEYS */;
+INSERT INTO `tb_order` (`id`, `bill_code`, `name`, `phone`, `address`, `payment`, `release`, `amount`, `note`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(4, 'VAD000000004', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 1000, NULL, 0, 3, 3, '2022-05-05 13:25:53', '2022-05-05 13:25:53'),
+	(7, 'VAD000000007', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 0, NULL, 0, 3, 3, '2022-05-10 17:53:52', '2022-05-10 17:53:52'),
+	(8, 'VAD000000008', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 0, NULL, 0, 3, 3, '2022-05-10 17:54:47', '2022-05-10 17:54:47'),
+	(9, 'VAD000000009', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 0, NULL, 0, 3, 3, '2022-05-10 18:02:02', '2022-05-10 18:02:02'),
+	(10, 'VAD000000010', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 0, NULL, 0, 3, 3, '2022-05-10 18:06:33', '2022-05-10 18:06:33'),
+	(11, 'VAD000000011', 'Westen Union', '0123456789', 'Khối Phố Xuân Tây', 0, NULL, 0, NULL, 0, 3, 3, '2022-05-10 18:10:06', '2022-05-10 18:10:06');
 /*!40000 ALTER TABLE `tb_order` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_order_detail
 CREATE TABLE IF NOT EXISTS `tb_order_detail` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int DEFAULT NULL,
-  `print_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `manufac1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `manufac2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `print_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `print_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `print_type` tinyint(1) DEFAULT NULL,
+  `machine1` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `machine2` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `width` float DEFAULT NULL,
   `heigth` float DEFAULT NULL,
+  `size` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `quantity` int DEFAULT NULL,
-  `total` float DEFAULT NULL,
-  `unit_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `unit_price` float DEFAULT NULL,
+  `unit_price` int DEFAULT NULL,
+  `total_size` float DEFAULT NULL,
+  `unit` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
-  `unit_type` bigint DEFAULT NULL,
+  `amount_display` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `colunm1` bigint DEFAULT NULL,
+  `Column2` bigint DEFAULT NULL,
+  `Column3` bigint DEFAULT NULL,
+  `Column4` bigint DEFAULT NULL,
+  `Column5` bigint DEFAULT NULL,
+  `Column6` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_tb_order_detail_tb_order` (`order_id`),
   CONSTRAINT `FK_tb_order_detail_tb_order` FOREIGN KEY (`order_id`) REFERENCES `tb_order` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_order_detail: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.tb_order_detail: ~6 rows (approximately)
 /*!40000 ALTER TABLE `tb_order_detail` DISABLE KEYS */;
+INSERT INTO `tb_order_detail` (`id`, `order_id`, `print_id`, `print_name`, `print_type`, `machine1`, `machine2`, `width`, `heigth`, `size`, `quantity`, `unit_price`, `total_size`, `unit`, `amount`, `amount_display`, `colunm1`, `Column2`, `Column3`, `Column4`, `Column5`, `Column6`) VALUES
+	(1, 4, NULL, 'In PP / Trong Nhà', NULL, 'Cán Màng Bóng', 'Cắt Thành Phẩm', 1, 1, NULL, 1, 1000, 1, 'm2', 1000, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, 7, NULL, 'Loại 3 / phụ', 3, 'test1', 'GC 1', 0, NULL, 'A2', 5, 5, 5, 'tam', 25, '25', NULL, NULL, NULL, NULL, NULL, NULL),
+	(3, 8, NULL, 'Loại 3 / phụ', 3, 'test1', 'GC 1', 0, NULL, 'A2', 5, 5, 5, 'tam', 25, '25', NULL, NULL, NULL, NULL, NULL, NULL),
+	(4, 8, NULL, 'Loại 3 / phụ', 3, 'test1', 'GC 1', 0, NULL, 'A1', 12131, 1231231231, 12131, 'tam', 14936066063261, '14.936.066.063.261', NULL, NULL, NULL, NULL, NULL, NULL),
+	(5, 9, NULL, 'Loại 3 / phụ', 3, 'test1', 'GC 1', 0, NULL, 'A1', 123, 2312, 123, 'tam', 284376, '284.376', NULL, NULL, NULL, NULL, NULL, NULL),
+	(6, 10, NULL, 'Loại 3 / phụ', 3, 'test1', 'GC 1', 0, 0, 'A1', 1, 1, 1, 'tam', 1, '1', NULL, NULL, NULL, NULL, NULL, NULL),
+	(7, 11, '39', 'loai 4 / laoi 4', 4, 'test1', 'GC 1', 2, 2, '2m2 x 2m2', 1, 1, 1, 'ks', 1, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `tb_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print_sub
@@ -158,10 +184,13 @@ CREATE TABLE IF NOT EXISTS `tb_print_sub` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print_sub: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print_sub: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_print_sub` DISABLE KEYS */;
+INSERT INTO `tb_print_sub` (`id`, `name`, `sub_name`, `price_type`, `type_name`, `is_delete`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(38, 'Loại 3', 'phụ', 3, 'tam', 0, 3, 3, '2022-05-10 15:07:03', '2022-05-10 15:07:03'),
+	(39, 'loai 4', 'laoi 4', 4, 'ks', 0, 3, 3, '2022-05-10 17:15:08', '2022-05-10 17:15:08');
 /*!40000 ALTER TABLE `tb_print_sub` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_print_sub_manufacture
@@ -171,10 +200,18 @@ CREATE TABLE IF NOT EXISTS `tb_print_sub_manufacture` (
   `sub_type` tinyint(1) DEFAULT NULL,
   `print_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_print_sub_manufacture: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.tb_print_sub_manufacture: ~7 rows (approximately)
 /*!40000 ALTER TABLE `tb_print_sub_manufacture` DISABLE KEYS */;
+INSERT INTO `tb_print_sub_manufacture` (`id`, `name`, `sub_type`, `print_id`) VALUES
+	(168, 'test1', 1, 38),
+	(169, 'GC 1', 2, 38),
+	(170, 'A1', 3, 38),
+	(171, 'A2', 3, 38),
+	(172, 'A3', 3, 38),
+	(173, 'test1', 1, 39),
+	(174, 'GC 1', 2, 39);
 /*!40000 ALTER TABLE `tb_print_sub_manufacture` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.tb_revenue
@@ -206,8 +243,11 @@ CREATE TABLE IF NOT EXISTS `tb_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table vadv_cms.tb_role: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.tb_role: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_role` DISABLE KEYS */;
+INSERT INTO `tb_role` (`id`, `name`, `decription`) VALUES
+	(1, 'ADMIN', 'Quản trị viên'),
+	(2, 'USER', 'Thành viên');
 /*!40000 ALTER TABLE `tb_role` ENABLE KEYS */;
 
 -- Dumping structure for table vadv_cms.users
@@ -228,8 +268,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `FK_tb_user_tb_role` FOREIGN KEY (`role_id`) REFERENCES `tb_role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table vadv_cms.users: ~0 rows (approximately)
+-- Dumping data for table vadv_cms.users: ~5 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `name`, `user_name`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_delete`, `role_id`) VALUES
+	(3, 'admin', 'admin', NULL, '$2y$10$qdYvNoUBf1RIYApEDlV5Yu7ypkqD1C1xVtS/WiJWA/8yM1KP93JpK', NULL, '2022-03-19 10:45:47', '2022-04-05 18:05:01', 0, 1),
+	(4, 'Westen Union', 'abc', NULL, '$2y$10$x2vqngAftpLpduTkynPYTelD48BKH9VmWhNBOQY9ojZFMPSlkZNNu', NULL, '2022-04-01 11:07:41', '2022-04-01 15:11:48', 0, 1),
+	(5, 'test', 'abc1', NULL, '$2y$10$8lnpdZXmy6wXOwJ6lf6wPulEoqtwgNCegyJn3hNf/LhFfvDxc19EO', NULL, '2022-04-01 11:10:15', '2022-04-01 15:06:16', 0, 2),
+	(6, 'Westen Union', '24', NULL, '$2y$10$iS3zwffiTMQoEBvK.ObGiuJU/Jfm88rHuXKUOCf6YNOEldKBJf1ha', NULL, '2022-04-01 11:12:26', '2022-04-01 15:18:33', 1, 2),
+	(7, 'member', 'member', NULL, '$2y$10$nelDszcqkbU6MJqYIkoJ7Omhm1kZk.E88B6kAlLoOEA4dbsz6vzGe', NULL, '2022-04-02 07:03:01', '2022-04-02 07:03:01', 0, 2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

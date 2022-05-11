@@ -85,17 +85,16 @@
                     <table class="table table-bordered" id="tb_data">
                         <thead>
                             <tr>
-                                <th>Ngày</th>
-                                <th>Tên khách hàng</th>
-                                <th>Số điện thoại</th>
-                                <th>Chi tiết</th>
-                                <th>KT ngang</th>
-                                <th>KT dọc</th>
-                                <th>Tổng</th>
-                                <th>Đơn giá</th>
-                                <th>Thành tiền</th>
-                                <th>Tổng tiền</th>
-                                <th>Tình trạng</th>
+                                <th>NGÀY</th>
+                                <th>TÊN KHÁCH HÀNG</th>
+                                <th>SỐ ĐIỆN THOẠI</th>
+                                <th>CHI TIẾT</th>
+                                <th>KÍCH THƯỚC</th>
+                                <th>TỔNG</th>
+                                <th>ĐƠN GIÁ</th>
+                                <th>THÀNH TIỀN</th>
+                                <th>TỔNG TIỀN</th>
+                                <th>TÌNH TRẠNG</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -210,11 +209,11 @@
                             <table class="table" id="tb_data_sub">
                                 <thead>
                                     <tr>
+                                        <td>STT</td>
                                         <td>LOẠI IN</td>
                                         <td>GIA CÔNG</td>
                                         <td>HỖ TRỢ</td>
-                                        <td>NGANG</td>
-                                        <td>DỌC</td>
+                                        <td>KÍCH THƯỚC</td>
                                         <td>SỐ LƯỢNG</td>
                                         <td>ĐƠN GIÁ</td>
                                         <td>TỔNG</td>
@@ -359,25 +358,12 @@
                     return data;
                 }
             }},
-            {"data" : "width", "orderable": false, "render": function ( data, type, row, meta ) {
-                let text = '';
-                text += row.manufac1 ? row.manufac1 + ',':'';
-                text += row.manufac2 ? row.manufac2 :'';
-                text = text == '' ? row.name : row.name + '(' + text + ')';
-                return text;
-            }},
-            {"data" : "width", "orderable": false, "render": function ( data, type, row, meta ) {
-                return data == 0 ? "" : data;
-            }},
-            {"data" : "heigth", "orderable": false, "render": function ( data, type, row, meta ) {
-                return data == 0 ? "" : data;
-            }},
-            {"data" : "unit_total", "orderable": false, "render": function ( data, type, row, meta ) {
-                return data + ' ' + row.unit_name;
-            }},
+            {"data" : "detail", "orderable": false},
+            {"data" : "size", "orderable": false},
+            {"data" : "total_size", "orderable": false},
             {"data" : "unit_price", "orderable": false,},
-            {"data" : "amount", "orderable": false,},
-            {"data" : "total", "orderable": false, "render": function ( data, type, full, meta ) {
+            {"data" : "amount_display", "orderable": false,},
+            {"data" : "total_amount", "orderable": false, "render": function ( data, type, full, meta ) {
                 if(meta.row > 0 && meta.settings.aoData[meta.row-1]._aData.id == meta.settings.aoData[meta.row]._aData.id){
                     return "";
                 }else{
@@ -461,20 +447,21 @@
                     $('#payment').val(data[0].payment);
                     $('#release').val(data[0].release_dt);
                     $('#note').val(data[0].note);
-                    $("#totalPrice").text((data[0].total+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+                    $("#totalPrice").text((data[0].total_amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
                     $("#orderID").val(data[0].id)
                     $("#tb_data_sub tbody").empty();
                     data.forEach((element,index) => {
                         let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                        var row = `<tr> <td>${element.print_name}</td>
-                                        <td>${element.manufac1 ? element.manufac1 : ''}</td>
-                                        <td>${element.manufac2 ? element.manufac2 : ''}</td>
-                                        <td>${element.width == 0 ? '' : element.width}</td>
-                                        <td>${element.heigth == 0 ? '' : element.heigth}</td>
-                                        <td>${element.quantity}</td>
-                                        <td>${element.unit_price}</td>
-                                        <td>${element.unit_total}</td>
-                                        <td>${amountTemp} VNĐ</td></tr>`;
+                        var row = `<tr>
+                                    <td>${index + 1}</td>
+                                    <td>${element.print_name}</td>
+                                    <td>${element.machine1}</td>
+                                    <td>${element.machine2}</td>
+                                    <td>${element.size}</td>
+                                    <td>${element.quantity}</td>
+                                    <td>${element.unit_price}</td>
+                                    <td>${element.total_size}</td>
+                                    <td>${element.amount_display} VNĐ</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
 

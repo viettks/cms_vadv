@@ -99,7 +99,7 @@
                     <div class="table-data__tool-left w-100">
                     </div>
                     <div class="table-data__tool-right">
-                        <button type="button" class="btn btn-outline-primary btn-sm ml-5" data-toggle="modal" data-target="#mdDetail">
+                        <button type="button" class="btn btn-outline-primary btn-sm ml-5" data-toggle="modal" data-target="#mdDetail" data-mode="I">
                             Thêm dòng
                         </button>
                     </div>
@@ -221,7 +221,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="width" class=" form-control-label">Kích thước :</label>
+            <label for="width" class=" form-control-label">Kích thước (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-4">
             <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control" onchange="changeDataPr1();">
@@ -232,7 +232,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="quantity" class=" form-control-label">Số lượng :</label>
+            <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr1();">
@@ -240,7 +240,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
+            <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control" onchange="changeDataPr1();">
@@ -273,7 +273,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="quantity" class="form-control-label">Số lượng :</label>
+            <label for="quantity" class="form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
@@ -281,7 +281,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="unitPrice" class="form-control-label">Đơn giá :</label>
+            <label for="unitPrice" class="form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
@@ -314,7 +314,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="size" class="form-control-label">Kích thước :</label>
+            <label for="size" class="form-control-label">Kích thước (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <select id="size" name="size" class="form-control-sm form-control">
@@ -324,7 +324,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="quantity" class=" form-control-label">Số lượng :</label>
+            <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
@@ -332,10 +332,10 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
+            <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -365,7 +365,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="width" class=" form-control-label">Kích thước :</label>
+            <label for="width" class=" form-control-label">Kích thước (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-4">
             <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control">
@@ -376,7 +376,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="quantity" class=" form-control-label">Số lượng :</label>
+            <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
@@ -384,7 +384,7 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="unitPrice" class=" form-control-label">Đơn giá :</label>
+            <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
             <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
@@ -552,7 +552,7 @@ var detailData = [];
             $("#modal1").modal('show');
         });
 
-        $('#modal1').on('shown.bs.modal', function () {
+        $('#modal1').on('shown.bs.modal', function (element) {
             if(!table){
                 table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
             }
@@ -562,11 +562,6 @@ var detailData = [];
             table.ajax.reload(null,true);
         });
     });
-
-    function deleteRow(rowIcon) {
-        $(rowIcon).closest('tr').remove();
-        getTotalPrice();
-    }
 
     function changeData(subRow){
         var row = $(subRow).closest('tr');
@@ -637,9 +632,6 @@ var detailData = [];
 
     function save(isback=false) {
         if(!validate()) return;
-
-
-        detailData.length
 
         if(detailData.length == 0){
             alert('Vui lòng kiểm tra chi tiết đơn hàng.');
@@ -817,16 +809,19 @@ var detailData = [];
         $("#totalPrice").text((total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
-    $('#mdDetail').on('shown.bs.modal', function () {
-        $("#dPrintType").val("");
-        $("#detailWrap").empty();
-        $("#spTotal").text("0");
-        $("#spunit").text("");
-        $("#spAmount").text("0");
+    $('#mdDetail').on('shown.bs.modal', function (element) {
+        if(element.relatedTarget){
+            $("#dPrintType").val("");
+            $("#detailWrap").empty();
+            $("#spTotal").text("0");
+            $("#spunit").text("");
+            $("#spAmount").text("0");
+        }
     })
 
     function changePrintType(element) {
         var subtype = $(element).find('option:selected').data('subtype');
+        var unit = $(element).find('option:selected').data('subunit');
         var currentId = element.value;
         switch (subtype) {
             case 1:
@@ -844,6 +839,7 @@ var detailData = [];
             default:
                 break;
         }
+        $("#spunit").text(unit);
     }
 
     function loadSubtype1(id) {
@@ -927,7 +923,6 @@ var detailData = [];
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
         $("#spTotal").text(size);
-        $("#spunit").text("m2");
         $("#spAmount").text(priceText);
     }
 
@@ -944,19 +939,19 @@ var detailData = [];
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
         $("#spTotal").text(quantity);
-        $("#spunit").text(unit);
         $("#spAmount").text(priceText);
     }
 
     function addPrintDetail() {
         var printType = $("#dPrintType option:selected").data('subtype');
+        if(!validateDetail(printType)) return;
         applyData(printType);
-
         loadDetail();
         $("#mdDetail").modal('hide');
     }
 
     function applyData(print_type) {
+
         var width = 0;
         var heigth = 0;
         var quantity = Number.parseInt($("#quantity").val());
@@ -966,6 +961,10 @@ var detailData = [];
 
         var print_id = $("#dPrintType").val();
         var size = '';
+        
+        var totalSize = $("#spTotal").text();
+        var unit = $("#spunit").text();
+        var amount = $("#spAmount").text();
 
         if(print_type == 1){
             width = Number.parseFloat($("#width").val());
@@ -980,10 +979,6 @@ var detailData = [];
             heigth = Number.parseFloat($("#heigth").val());
             size = width + 'm2' + ' x ' + heigth + 'm2';
         }
-
-        var totalSize = $("#spTotal").text();
-        var unit = $("#spunit").text();
-        var amount = $("#spAmount").text();
 
         var object = {
             print_id : $("#dPrintType").val(),
@@ -1005,102 +1000,86 @@ var detailData = [];
         detailData.push(object);
     }
 
-    function applyData2() {
-        var quantity = Number.parseInt($("#quantity").val());
-        var unitPrice = Number.parseInt($("#unitPrice").val());
-        var machine1 = $("#machine1 option:selected").text();
-        var machine2 = $("#machine2 option:selected").text();
-
-        var totalSize = $("#spTotal").text();
-        var unit = $("#spunit").text();
-        var amount = $("#spAmount").text();
-
-        var object = {
-            print_id : $("#dPrintType").val(),
-            print_name : $("#dPrintType option:selected").text(),
-            print_type : 2,
-            machine1 : machine1,
-            machine2 : machine2,
-            width : 0,
-            height : 0,
-            size : '',
-            quantity : quantity,
-            unit_price : unitPrice,
-            total_size : totalSize,
-            unit : unit,
-            amount : amount.replaceAll('.',''),
-            amount_display : amount,
+    function validateDetail(print_type) {
+        var check = true;
+        if(print_type == 1){
+            if(COMMON._isNullOrEmpty("#width")){
+                alert("Vui lòng nhập chiều rộng.")
+                $("#width").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#heigth")){
+                alert("Vui lòng nhập chiều dài.")
+                $("#heigth").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#quantity")){
+                alert("Vui lòng nhập số lượng.")
+                $("#quantity").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#unitPrice")){
+                alert("Vui lòng nhập đơn giá.")
+                $("#unitPrice").focus();
+                return false;
+            }
+        }else if(print_type == 2){
+            if(COMMON._isNullOrEmpty("#quantity")){
+                alert("Vui lòng nhập số lượng.")
+                $("#quantity").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#unitPrice")){
+                alert("Vui lòng nhập đơn giá.")
+                $("#unitPrice").focus();
+                return false;
+            }
+        }else if(print_type == 3){
+            if(COMMON._isNullOrEmpty("#size")){
+                alert("Vui lòng chọn kích thước.")
+                $("#size").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#quantity")){
+                alert("Vui lòng nhập số lượng.")
+                $("#quantity").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#unitPrice")){
+                alert("Vui lòng nhập đơn giá.")
+                $("#unitPrice").focus();
+                return false;
+            }
+        }else if(print_type == 4){
+            if(COMMON._isNullOrEmpty("#width")){
+                alert("Vui lòng nhập chiều rộng.")
+                $("#width").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#heigth")){
+                alert("Vui lòng nhập chiều dài.")
+                $("#heigth").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#quantity")){
+                alert("Vui lòng nhập số lượng.")
+                $("#quantity").focus();
+                return false;
+            }
+            if(COMMON._isNullOrEmpty("#unitPrice")){
+                alert("Vui lòng nhập đơn giá.")
+                $("#unitPrice").focus();
+                return false;
+            }
         }
-
-        detailData.push(object);
-    }
-
-    function applyData3() {
-        var quantity = Number.parseInt($("#quantity").val());
-        var unitPrice = Number.parseInt($("#unitPrice").val());
-        var machine1 = $("#machine1 option:selected").text();
-        var machine2 = $("#machine2 option:selected").text();
-        var machine3 = $("#size option:selected").text();
-
-        var totalSize = $("#spTotal").text();
-        var unit = $("#spunit").text();
-        var amount = $("#spAmount").text();
-
-        var object = {
-            print_id : $("#dPrintType").val(),
-            print_name : $("#dPrintType option:selected").text(),
-            print_type : 3,
-            machine1 : machine1,
-            machine2 : machine2,
-            width : 0,
-            height : 0,
-            size : machine3,
-            quantity : quantity,
-            unit_price : unitPrice,
-            total_size : totalSize,
-            unit : unit,
-            amount : amount.replaceAll('.',''),
-            amount_display : amount,
-        }
-
-        detailData.push(object);
-    }
-
-    function applyData4() {
-        var width = Number.parseFloat($("#width").val());
-        var heigth = Number.parseFloat($("#heigth").val());
-        var quantity = Number.parseInt($("#quantity").val());
-        var unitPrice = Number.parseInt($("#unitPrice").val());
-        var machine1 = $("#machine1 option:selected").text();
-        var machine2 = $("#machine2 option:selected").text()
-
-        var totalSize = $("#spTotal").text();
-        var unit = $("#spunit").text();
-        var amount = $("#spAmount").text();
-
-        var object = {
-            print_id : $("#dPrintType").val(),
-            print_name : $("#dPrintType option:selected").text(),
-            print_type : 4,
-            machine1 : machine1,
-            machine2 : machine2,
-            width : width,
-            height : heigth,
-            size : width + 'm2' + ' x ' + heigth + 'm2',
-            quantity : quantity,
-            unit_price : unitPrice,
-            total_size : totalSize,
-            unit : unit,
-            amount : amount.replaceAll('.',''),
-            amount_display : amount,
-        }
-
-        detailData.push(object);
+        return check;
     }
 
     function loadDetail() {
         $("#tb_data tbody").empty();
+        var sum = 0;
         $.each(detailData, ( index, item ) => {
+            sum += Number.parseInt(item.amount);
             $("#tb_data tbody").append(
                 `<tr>
                     <td>${index + 1}</td>
@@ -1113,13 +1092,66 @@ var detailData = [];
                     <td>${item.total_size + item.unit}</td>
                     <td>${item.amount_display}&nbsp; VNĐ</td>
                     <td><div class="table-data-feature">
-                        <button class="item" onclick="deleteRow(this);">
+                        <button class="item" onclick="editDetail(${index});">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button</div>
+                        <button class="item" onclick="removerDetail(${index});">
                             <i class="zmdi zmdi-delete"></i>
                         </button</div>
                     </td>
                 </tr>`)
         });
+        $("#totalPrice").text((sum+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
+    function removerDetail(idx) {
+        detailData.splice(idx, 1);
+        loadDetail();
+    } 
+
+    function editDetail(idx) {
+        var object = detailData[idx];
+        $("#dPrintType").val(object.print_id);
+        $("#dPrintType").change();
+
+
+        if(object.print_type == 1){
+            $("#width").val(object.width);
+            $("#heigth").val(object.heigth);
+            $("#quantity").val(object.quantity);
+            $("#unitPrice").val(object.unit_price);
+            setTimeout((machine1 = object.machine1,machine2 = object.machine2) => {
+                $("#machine1").val(machine1);
+                $("#machine2").val(machine2);
+            }, 500);
+   
+        }else if(object.print_type == 2){
+            $("#quantity").val(object.quantity);
+            $("#unitPrice").val(object.unit_price);
+            setTimeout((machine1 = object.machine1,machine2 = object.machine2) => {
+                $("#machine1").val(machine1);
+                $("#machine2").val(machine2);
+            }, 500);
+        }else if(object.print_type == 3){
+            $("#quantity").val(object.quantity);
+            $("#unitPrice").val(object.unit_price);
+            setTimeout((machine1 = object.machine1,machine2 = object.machine2, machine3 = object.size) => {
+                $("#machine1").val(machine1);
+                $("#machine2").val(machine2);
+                $("#size").val(machine3);
+            }, 500);
+        }else if(object.print_type == 3){
+            $("#width").val(object.width);
+            $("#heigth").val(object.heigth);
+            $("#quantity").val(object.quantity);
+            $("#unitPrice").val(object.unit_price);
+            setTimeout((machine1 = object.machine1,machine2 = object.machine2, machine3 = object.size) => {
+                $("#machine1").val(machine1);
+                $("#machine2").val(machine2);
+            }, 500);
+        }
+
+        $('#mdDetail').modal('show');
+    }
 </script>
 @endsection
