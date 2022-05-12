@@ -462,6 +462,11 @@
                     <div class="row form-group">
                         <div class="col col-md-4">
                             <label for="dPrintType" class=" form-control-label">Tên loại in</label>
+                            <input type="hidden" id="mode" value="I">
+                            <input type="hidden" id="index" value="0">
+                            <input type="hidden" id="defmc1" value="0">
+                            <input type="hidden" id="defmc2" value="0">
+                            <input type="hidden" id="defmc3" value="0">
                         </div>
                         <div class="col-12 col-md-8">
                             <select id="dPrintType" name="dPrintType" class="form-control-sm form-control" onchange="changePrintType(this);">
@@ -676,80 +681,6 @@ var detailData = [];
         });
     }
 
-    function getDetails() {
-        var rows = $("#tb_data tbody tr");
-        var rowSize = rows.length;
-        var result = [];
-
-        $(rows).each(function (index,row) {
-            let print_name = $(row).find('select[name=print] option:selected')[0].text;
-            let manufac1 = $(row).find('select[name=manufac1]')[0].value;
-            let manufac2 = $(row).find('select[name=manufac2]')[0].value;
-            let width = COMMON._isNullOrEmpty($(row).find('input[name=width]')) ? 0 :  Number.parseFloat($(row).find('input[name=width]')[0].value);
-            let height = COMMON._isNullOrEmpty($(row).find('input[name=height]')) ? 0 : Number.parseFloat($(row).find('input[name=height]')[0].value);
-            let quantity = COMMON._isNullOrEmpty($(row).find('input[name=quantity]')) ? 0 : Number.parseInt($(row).find('input[name=quantity]')[0].value);
-            let unitPrice = COMMON._isNullOrEmpty($(row).find('input[name=unitPrice]')) ? 0 : Number.parseFloat($(row).find('input[name=unitPrice]')[0].value);
-
-            let amount = Number.parseFloat($(row).find('span.rowPriceData').text().replaceAll('.',''));
-            let total = Number.parseInt($(row).find('span.rowQuantity').text());
-            let unit = $(row).find('select[name=print] option:selected').data('subtype');
-
-            if(COMMON._isNullOrEmpty($(row).find('select[name=print]'))){
-                alert('Vui lòng chọn loại in!');
-                $(item).find('select[name=print]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            let unit_name = $(row).find('select[name=print] option:selected').data('subunit');
-            if(unit == 1){
-                if(width == 0){
-                    alert('Vui lòng chọn nhập chiều rộng!');
-                    $(row).find('input[name=width]')[0].focus();
-                    result = [];
-                    return false;
-                }
-
-                if(height == 0){
-                    alert('Vui lòng chọn nhập chiều dài!');
-                    $(row).find('input[name=height]')[0].focus();
-                    result = [];
-                    return false;
-                }
-            }
-
-            if(quantity == 0){
-                alert('Vui lòng chọn nhập số lượng!');
-                $(row).find('input[name=quantity]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            if(unitPrice == 0){
-                alert('Vui lòng chọn nhập đơn giá!');
-                $(row).find('input[name=unitPrice]')[0].focus();
-                result = [];
-                return false;
-            }
-
-            var data = {
-                "print_name"  : print_name,
-                "manufac1"  : manufac1,
-                "manufac2"  : manufac2,
-                "width"     : width,
-                "heigth"    : height,
-                "quantity"  : quantity,
-                "unit_price" : unitPrice,
-                "unit_name" : unit_name,
-                "amount"    : amount,
-                "total" : total,
-                "unit_type" : unit,
-            }
-            result.push(data);
-        });
-        return result;
-    }
-
     function validate() {
         if(COMMON._isNullOrEmpty($("#name"))){
             alert('Tên khách hàng không được để trống!');
@@ -816,25 +747,26 @@ var detailData = [];
             $("#spTotal").text("0");
             $("#spunit").text("");
             $("#spAmount").text("0");
+            $("#mode").val('I');
         }
     })
 
-    function changePrintType(element) {
+    function changePrintType(element,mode = "L") {
         var subtype = $(element).find('option:selected').data('subtype');
         var unit = $(element).find('option:selected').data('subunit');
         var currentId = element.value;
         switch (subtype) {
             case 1:
-                loadSubtype1(currentId);
+                loadSubtype1(currentId,mode);
                 break;
             case 2:
-                loadSubtype2(currentId);
+                loadSubtype2(currentId,mode);
                 break;
             case 3:
-                loadSubtype3(currentId);
+                loadSubtype3(currentId,mode);
                 break;
             case 4:
-                loadSubtype4(currentId);
+                loadSubtype4(currentId,mode);
                 break;
             default:
                 break;
@@ -842,7 +774,7 @@ var detailData = [];
         $("#spunit").text(unit);
     }
 
-    function loadSubtype1(id) {
+    function loadSubtype1(id,mode="L") {
         let template = $("#tmpPrintType1");
         $("#detailWrap").empty().append(template.html());
         $.when(getPrintData(id)).done(data=>{
@@ -854,10 +786,16 @@ var detailData = [];
             $.each(manu2, ( index, item ) => {
                 $('#machine2').append(`<option value="${item.name}">${item.name}</option>`);
             });
+            if (mode =="U" && $("#mode").val() == "U"){
+                var mc1 = $("#defmc1").val();
+                var mc2 = $("#defmc2").val();
+                $('#machine1').val(mc1);
+                $('#machine2').val(mc2);
+            }
         });
     }
 
-    function loadSubtype2(id) {
+    function loadSubtype2(id,mode = "L") {
         let template = $("#tmpPrintType2");
         $("#detailWrap").empty().append(template.html());
         $.when(getPrintData(id)).done(data=>{
@@ -869,10 +807,17 @@ var detailData = [];
             $.each(manu2, ( index, item ) => {
                 $('#machine2').append(`<option value="${item.name}">${item.name}</option>`);
             });
+            if (mode =="U" && $("#mode").val() == "U"){
+                var mc1 = $("#defmc1").val();
+                var mc2 = $("#defmc2").val();
+
+                $('#machine1').val(mc1);
+                $('#machine2').val(mc2);
+            }
         });
     }
 
-    function loadSubtype3(id) {
+    function loadSubtype3(id,mode = "L") {
         let template = $("#tmpPrintType3");
         $("#detailWrap").empty().append(template.html());
         $.when(getPrintData(id)).done(data=>{
@@ -888,10 +833,18 @@ var detailData = [];
             $.each(manu3, ( index, item ) => {
                 $('#size').append(`<option value="${item.name}">${item.name}</option>`);
             });
+            if (mode =="U" && $("#mode").val() == "U"){
+                var mc1 = $("#defmc1").val();
+                var mc2 = $("#defmc2").val();
+                var mc3 = $("#defmc3").val();
+                $('#machine1').val(mc1);
+                $('#machine2').val(mc2);
+                $('#size').val(mc3);
+            }
         });
     }
     
-    function loadSubtype4(id) {
+    function loadSubtype4(id,mode = "L") {
         let template = $("#tmpPrintType4");
         $("#detailWrap").empty().append(template.html());
         $.when(getPrintData(id)).done(data=>{
@@ -903,6 +856,13 @@ var detailData = [];
             $.each(manu2, ( index, item ) => {
                 $('#machine2').append(`<option value="${item.name}">${item.name}</option>`);
             });
+            if (mode =="U" && $("#mode").val() == "U"){
+                var mc1 = $("#defmc1").val();
+                var mc2 = $("#defmc2").val();
+
+                $('#machine1').val(mc1);
+                $('#machine2').val(mc2);
+            }
         });
     }
 
@@ -996,8 +956,13 @@ var detailData = [];
             amount : amount.replaceAll('.',''),
             amount_display : amount,
         }
-
-        detailData.push(object);
+        if($("#mode").val() == 'U'){
+            index =  $("#index").val();
+            detailData[index] = object;
+        }else{
+            detailData.push(object); 
+        }
+       
     }
 
     function validateDetail(print_type) {
@@ -1093,7 +1058,7 @@ var detailData = [];
                     <td>${item.amount_display}&nbsp; VNĐ</td>
                     <td><div class="table-data-feature">
                         <button class="item" onclick="editDetail(${index});">
-                            <i class="zmdi zmdi-delete"></i>
+                            <i class="fa fa-edit"></i>
                         </button</div>
                         <button class="item" onclick="removerDetail(${index});">
                             <i class="zmdi zmdi-delete"></i>
@@ -1112,45 +1077,30 @@ var detailData = [];
     function editDetail(idx) {
         var object = detailData[idx];
         $("#dPrintType").val(object.print_id);
-        $("#dPrintType").change();
+        changePrintType($("#dPrintType")[0],"U");
+        $("#index").val(idx);
 
+        $("#defmc1").val(object.machine1);
+        $("#defmc2").val(object.machine2);
+        $("#quantity").val(object.quantity);
+        $("#unitPrice").val(object.unit_price);
+
+        $("#spTotal").text(object.total_size);
+        $("#spAmount").text(object.amount_display);
 
         if(object.print_type == 1){
             $("#width").val(object.width);
             $("#heigth").val(object.heigth);
-            $("#quantity").val(object.quantity);
-            $("#unitPrice").val(object.unit_price);
-            setTimeout((machine1 = object.machine1,machine2 = object.machine2) => {
-                $("#machine1").val(machine1);
-                $("#machine2").val(machine2);
-            }, 500);
+
    
         }else if(object.print_type == 2){
-            $("#quantity").val(object.quantity);
-            $("#unitPrice").val(object.unit_price);
-            setTimeout((machine1 = object.machine1,machine2 = object.machine2) => {
-                $("#machine1").val(machine1);
-                $("#machine2").val(machine2);
-            }, 500);
         }else if(object.print_type == 3){
-            $("#quantity").val(object.quantity);
-            $("#unitPrice").val(object.unit_price);
-            setTimeout((machine1 = object.machine1,machine2 = object.machine2, machine3 = object.size) => {
-                $("#machine1").val(machine1);
-                $("#machine2").val(machine2);
-                $("#size").val(machine3);
-            }, 500);
-        }else if(object.print_type == 3){
+            $("#defmc3").val(object.size);
+        }else if(object.print_type == 4){
             $("#width").val(object.width);
             $("#heigth").val(object.heigth);
-            $("#quantity").val(object.quantity);
-            $("#unitPrice").val(object.unit_price);
-            setTimeout((machine1 = object.machine1,machine2 = object.machine2, machine3 = object.size) => {
-                $("#machine1").val(machine1);
-                $("#machine2").val(machine2);
-            }, 500);
         }
-
+        $("#mode").val('U');
         $('#mdDetail').modal('show');
     }
 </script>

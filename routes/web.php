@@ -46,6 +46,7 @@ Route::group([
     Route::get('/settings/add-print', [PrintController::class, 'viewCreate'])->name('addPrint')->middleware('can:ADMIN');
     Route::get('/settings/list-print', [PrintController::class, 'viewList'])->name('listPrint')->middleware('can:ADMIN');
     Route::get('/settings/print/update/{id}', [PrintController::class, 'viewUpdate'])->name('updatePrint')->middleware('can:ADMIN');
+    Route::get('/settings/print-1/update/{id}', [PrintController::class, 'viewUpdate1'])->name('viewUpdate1')->middleware('can:ADMIN');
 
     //LOẠI IN SUB
     Route::get('/settings/add-print-1', [PrintController::class, 'viewCreate1'])->name('addPrint1')->middleware('can:ADMIN');

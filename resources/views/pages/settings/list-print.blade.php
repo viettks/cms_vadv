@@ -30,12 +30,14 @@
         </div>
         <div class="card-body">
             <div class="table-data__tool">
-                <div class="table-data__tool-left w-100">
+                <div class="table-data__tool-left w-75">
 
                 </div>
                 <div class="table-data__tool-right">
-                    <a type="button" class="btn btn btn-outline-success" href="{{ url('settings/add-print') }}">
-                        <i class="fa fa fa-plus"></i>&nbsp; Tạo mới</a>
+                    <a type="button" class="btn btn btn-outline-success mr-2" href="{{ url('settings/add-print') }}">
+                        <i class="fa fa fa-plus"></i>&nbsp; Tạo mới loại 1</a>
+                    <a type="button" class="btn btn btn-outline-success" href="{{ url('settings/add-print-1') }}">
+                        <i class="fa fa fa-plus"></i>&nbsp; Tạo mới loại 2</a>
                 </div>
                 <hr>
             </div>
@@ -79,7 +81,12 @@
 
     var columns = [
             {"data" : "name", "orderable": false,"render": function ( data, type, row, meta ) {
-                return `<a href="{{url('/settings/print/update')}}/${row.id}">${data}</a>`;
+                if(row.price_type == 1 || row.price_type == 2){
+                    return `<a href="{{url('/settings/print/update')}}/${row.id}">${data}</a>`;
+                }else{
+                    return `<a href="{{url('/settings/print-1/update')}}/${row.id}">${data}</a>`;
+                }
+
             }},
             {"data" : "sub_name", "orderable": false,},
             {"data" : "type_name", "orderable": false,},

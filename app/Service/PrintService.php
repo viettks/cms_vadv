@@ -101,23 +101,31 @@ class PrintService
    }
 
     //UPDATE MANUFACTURE
-    public static function updatePrint($id, $manufac1, $manufac2)
+    public static function updatePrint($id, $manufac1, $manufac2,$machine3)
     {
         try {
             DB::beginTransaction();
 
             PrintManufacture::where("print_id", $id)->delete();
-            if (sizeof($manufac1) > 0) {
+            if (isset($manufac1) > 0) {
                 foreach ($manufac1 as $manu) {
                     $manu["print_id"] = $id;
                     $manu["sub_type"] = "01";
                     PrintManufacture::create($manu);
                 }
             }
-            if (sizeof($manufac2) > 0) {
+            if (isset($manufac2) > 0) {
                 foreach ($manufac2 as $manu) {
                     $manu["print_id"] = $id;
                     $manu["sub_type"] = "02";
+                    PrintManufacture::create($manu);
+                }
+            }
+
+            if (isset($machine3) > 0) {
+                foreach ($machine3 as $manu) {
+                    $manu["print_id"] = $id;
+                    $manu["sub_type"] = "03";
                     PrintManufacture::create($manu);
                 }
             }

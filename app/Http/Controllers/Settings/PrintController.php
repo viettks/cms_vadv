@@ -46,6 +46,22 @@ class PrintController extends Controller
         return view('pages.settings.updatePrint')->with(compact('printing', 'manufac1', 'manufac2'));
     }
 
+    
+    public function viewUpdate1(Request $request)
+    {
+        $id = $request->id;
+        $printing = PrintSub::where('is_delete', '!=', 1)->find($id);
+        if (!isset($printing)) {
+            abort(404);
+        }
+
+        $manufac1 = PrintManufacture::where(["print_id" => $id, "sub_type" => 1])->get();
+        $manufac2 = PrintManufacture::where(["print_id" => $id, "sub_type" => 2])->get();
+        $manufac3 = PrintManufacture::where(["print_id" => $id, "sub_type" => 3])->get();
+
+        return view('pages.settings.print.update-1')->with(compact('printing', 'manufac1', 'manufac2','manufac3'));
+    }
+
     //API
 
     /*
@@ -155,8 +171,9 @@ class PrintController extends Controller
             $id = $request->id;
             $manufac1 = $request->manufac_1;
             $manufac2 = $request->manufac_2;
+            $machine3 = $request->machine3;
 
-            $result = PrintService::updatePrint($id, $manufac1, $manufac2);
+            $result = PrintService::updatePrint($id, $manufac1, $manufac2,$machine3);
             return response()->json([
                 'status' => 201,
                 'data'   => $result,

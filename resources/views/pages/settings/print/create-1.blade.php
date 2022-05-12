@@ -86,10 +86,10 @@
                 <div id="groupManu1">
                     <div class="row manu-wrap form-group">
                         <div class="col col-sm-2">
-                            <label for="input-normal" class=" form-control-label">Chất liệu</label>
+                            <label for="input-normal" class=" form-control-label">Gia công</label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" name="manufacture1" placeholder="Chất liệu" class="form-control"
+                            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control"
                                 maxlength="100">
                         </div>
                         <div class="col col-sm-6">
@@ -101,10 +101,10 @@
                 <div id="groupManu2">
                     <div class="row manu-wrap form-group">
                         <div class="col col-sm-2">
-                            <label for="input-normal" class=" form-control-label">Gia công</label>
+                            <label for="input-normal" class=" form-control-label">Chất liệu</label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" id="manufacture2" name="manufacture2" placeholder="Gia công"
+                            <input type="text" id="manufacture2" name="manufacture2" placeholder="Chất liệu"
                                 class="form-control" maxlength="100">
                         </div>
                         <div class="col col-sm-6">
@@ -373,6 +373,11 @@
         if(COMMON._isNullOrEmpty($('#typeText'))){
             alert('Vui lòng nhập đơn vị tính!');
             $('#typeText').focus();
+            return false;
+        }
+        if(!$("#handleInput").is(":checked") && $("input[name=machine3]").val() == ''){
+            alert('Vui lòng nhập kích thước!');
+            $("input[name=machine3]")[0].focus();
             return false;
         }
         return true;
