@@ -31,7 +31,8 @@
                                     Cài đặt
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="{{ url('settings/add-print') }}">Tạo mới loại in</a>
+                                  <a class="dropdown-item" href="{{ url('settings/add-print') }}">Tạo mới loại in 1</a>
+                                  <a class="dropdown-item" href="{{ url('settings/add-print-1') }}">Tạo mới loại in 2</a>
                                   <a class="dropdown-item" href="{{ url('/settings/list-print') }}">Danh sách loại in</a>
                                   <a class="dropdown-item" href="{{ url('/settings/member') }}">Danh sách thành viên</a>
                                 </div>
