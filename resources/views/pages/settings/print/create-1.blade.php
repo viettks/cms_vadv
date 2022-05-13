@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Tạo mới loại in')
+@section('title','Tạo mới loại in 1')
 @section('style')
 <style>
     .mh-76 {
@@ -9,8 +9,7 @@
     .input-date-wrap {
         width: 185px;
     }
-
-    input.form-control-sm {
+    input.form-control-sm{
         border: 1px solid #ced4da;
     }
 </style>
@@ -21,7 +20,7 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Tạo mới loại in</strong>
+            <strong class="card-title" v-if="headerText">Tạo mới loại in 1</strong>
         </div>
         <div class="card-body">
             <form action="" method="post" class="form-horizontal" onsubmit="return false;">
@@ -30,12 +29,10 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="input-normal" class=" form-control-label">Tên loại in (<span
-                                class="required">*</span>)</label>
+                        <label for="input-normal" class=" form-control-label">Tên loại in (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
-                        <input type="text" id="name" name="name" placeholder="Tên loại in" class="form-control"
-                            maxlength="200">
+                        <input type="text" id="name" name="name" placeholder="Tên loại in" class="form-control" maxlength="200">
                     </div>
                     <div class="col col-sm-6">
                     </div>
@@ -52,45 +49,27 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="input-normal" class=" form-control-label">Đơn vị tính (<span
-                                class="required">*</span>)</label>
+                        <label for="input-normal" class=" form-control-label">Đơn vị tính (<span class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-2">
-                        <input type="text" id="typeText" name="typeText" placeholder="Đơn vị" class="form-control"
-                            maxlength="50">
+                        <select id="priceType" name="priceType" class="form-control-sm form-control">
+                            <option value="1">m<sup>2</sup></option>
+                            <option value="2">Đơn vị</option>
+                        </select>
                     </div>
                     <div class="col col-sm-2">
-                        <label for="handleInput" class=" form-control-label">
-                            <input type="checkbox" id="handleInput"/>
-                             Tự nhập kích thước?</label>
+                        <input type="text" id="typeText" name="typeText" placeholder="Đơn vị" class="form-control" maxlength="50" value="m2" disabled>
                     </div>
                     <div class="col col-sm-6">
                     </div>
                 </div>
-                <div id="subPrintWrap">
-                    <div class="row manu-wrap form-group">
-                        <div class="col col-sm-2">
-                            <label for="subPrint" class=" form-control-label">Kích thước:</label>
-                        </div>
-                        <div class="col col-sm-4">
-                            <input type="text" name="machine3" placeholder="Tên loại" class="form-control"
-                                maxlength="100">
-                        </div>
-                        <div class="col col-sm-6">
-                            <button type="button" class="btn btn-outline-success" onclick="addManu(3);">
-                                <i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="groupManu1">
                     <div class="row manu-wrap form-group">
                         <div class="col col-sm-2">
                             <label for="input-normal" class=" form-control-label">Gia công</label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control"
-                                maxlength="100">
+                            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control" maxlength="100">
                         </div>
                         <div class="col col-sm-6">
                             <button type="button" class="btn btn-outline-success" onclick="addManu(1);">
@@ -101,11 +80,10 @@
                 <div id="groupManu2">
                     <div class="row manu-wrap form-group">
                         <div class="col col-sm-2">
-                            <label for="input-normal" class=" form-control-label">Chất liệu</label>
+                            <label for="input-normal" class=" form-control-label">Hỗ trợ</label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" id="manufacture2" name="manufacture2" placeholder="Chất liệu"
-                                class="form-control" maxlength="100">
+                            <input type="text" id="manufacture2" name="manufacture2" placeholder="Hỗ trợ" class="form-control" maxlength="100">
                         </div>
                         <div class="col col-sm-6">
                             <button type="button" class="btn btn-outline-success" onclick="addManu(2);">
@@ -130,8 +108,8 @@
 </div>
 <template id="dataRow">
     <tr>
-        <td><input type="number" name="from" placeholder="Từ" class="form-control-sm"></td>
-        <td><input type="number" name="to" placeholder="Đến" class="form-control-sm"></td>
+        <td><input type="number" name="from"  placeholder="Từ" class="form-control-sm"></td>
+        <td><input type="number" name="to"    placeholder="Đến" class="form-control-sm"></td>
         <td><input type="number" name="price" placeholder="Giá tiền" class="form-control-sm"></td>
         <td>
             <div class="table-data-feature">
@@ -142,30 +120,13 @@
         </td>
     </tr>
 </template>
-
-<!-- TÊN LOẠI -->
-<template id="tmpMaterial">
-    <div class="row manu-wrap form-group">
-        <div class="col col-sm-2">
-        </div>
-        <div class="col col-sm-4">
-            <input type="text" name="machine3" placeholder="Tên loại" class="form-control" maxlength="100">
-        </div>
-        <div class="col col-sm-6">
-            <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
-                <i class="fa fa-trash"></i></button>
-        </div>
-    </div>
-</template>
-<!-- END CHẤT LIỆU -->
-
-<!-- GIA CÔNG -->
+<!-- DÀNH CHO GIA CÔNG -->
 <template id="tmpManu1">
     <div class="row manu-wrap form-group">
         <div class="col col-sm-2">
         </div>
         <div class="col col-sm-4">
-            <input type="text" name="manufacture1" placeholder="Chất liệu" class="form-control" maxlength="100">
+            <input type="text" name="manufacture1" placeholder="Gia công" class="form-control" maxlength="100">
         </div>
         <div class="col col-sm-6">
             <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
@@ -181,7 +142,7 @@
         <div class="col col-sm-2">
         </div>
         <div class="col col-sm-4">
-            <input type="text" name="manufacture2" placeholder="Gia công" class="form-control" maxlength="100">
+            <input type="text" name="manufacture2" placeholder="Hỗ trợ" class="form-control" maxlength="100">
         </div>
         <div class="col col-sm-6">
             <button type="button" class="btn btn-outline-danger" onclick="deleteManu(this);">
@@ -196,6 +157,23 @@
 @section('extend_script')
 <script>
     $(document).ready(function(){
+
+        $("#priceType").change(function(){
+            var value = this.value;
+            if(value == 1){
+                $("#typeText").val("m2");
+                $("#typeText").prop("disabled",true);
+            }else{
+                $("#typeText").val("");
+                $("#typeText").prop("disabled",false);
+            }
+        });
+
+        $("#addRow").click(function(){
+            let template = $("#dataRow");
+            $("#tb_price tbody").append(template.html());
+        });
+
         $("#btnReset").click(function(){
             reset();
         });
@@ -208,42 +186,7 @@
             savePrint(true);
         });
     });
-    
-    $("#handleInput").change(function(){
-        if(this.checked){
-            $("#subPrintWrap").empty();
-            $("#subPrintWrap").append(`
-                <div class="row manu-wrap form-group">
-                    <div class="col col-sm-2">
-                        <label for="subPrint" class=" form-control-label">Kích thước:</label>
-                    </div>
-                    <div class="col col-sm-4">
-                        <input type="text" name="machine3" disabled placeholder="Tên loại" class="form-control"
-                            maxlength="100">
-                    </div>
-                    <div class="col col-sm-6">
-                        <button type="button" class="btn btn-outline-success">
-                            <i class="fa fa-plus"></i></button>
-                        </div>
-                </div>`);
-        }else{
-            $("#subPrintWrap").empty();
-            $("#subPrintWrap").append(`
-                <div class="row manu-wrap form-group">
-                    <div class="col col-sm-2">
-                        <label for="subPrint" class=" form-control-label">Kích thước:</label>
-                    </div>
-                    <div class="col col-sm-4">
-                        <input type="text" name="machine3" placeholder="Tên loại" class="form-control"
-                            maxlength="100">
-                    </div>
-                    <div class="col col-sm-6">
-                        <button type="button" class="btn btn-outline-success" onclick="addManu(3);">
-                            <i class="fa fa-plus"></i></button>
-                        </div>
-                </div>`);
-        }
-    });
+
     function deleteRow(rowIcon) {
         $(rowIcon).closest('tr').remove();
     }
@@ -251,19 +194,15 @@
     function savePrint(isback=false){
         if(!validatePrint()) return;
 
-        var dataSet1 = getManufac('machine3');
-        var dataSet2 = getManufac('manufacture1');
-        var dataSet3 = getManufac('manufacture2');
-
+        var dataSet1 = getManufac('manufacture1');
+        var dataSet2 = getManufac('manufacture2');
         var data = {
             "name" : $("#name").val(),
-            "price_type" : 1,
             "sub_name" : $("#subName").val(),
+            "price_type" : $("#priceType").val(),
             "type_name" : $("#typeText").val(),
-            "machine3"  : dataSet1,
-            "manufac_1" : dataSet2,
-            "manufac_2" : dataSet3,
-            "SCID" : "ADDSUBPRINT"
+            "manufac_1" : dataSet1,
+            "manufac_2" : dataSet2,
         }
 
         return $.ajax({
@@ -294,14 +233,13 @@
     }
 
     function reset() {
-        window.location.reload();
-        // $("#name").val("");
-        // $("#pe_film_1").val("");
-        // $("#pe_film_2").val("");
-        // $("#pe_film_3").val("");
-        // $("#tb_price tbody").empty();
-        // let template = $("#dataRow");
-        // $("#tb_price tbody").append(template.html());
+        $("#name").val("");
+        $("#pe_film_1").val("");
+        $("#pe_film_2").val("");
+        $("#pe_film_3").val("");
+        $("#tb_price tbody").empty();
+        let template = $("#dataRow");
+        $("#tb_price tbody").append(template.html());
     }
 
     function getPrice(){
@@ -375,11 +313,6 @@
             $('#typeText').focus();
             return false;
         }
-        if(!$("#handleInput").is(":checked") && $("input[name=machine3]").val() == ''){
-            alert('Vui lòng nhập kích thước!');
-            $("input[name=machine3]")[0].focus();
-            return false;
-        }
         return true;
     }
 
@@ -387,12 +320,9 @@
         if(info == 1){
             let template = $("#tmpManu1");
             $("#groupManu1").append(template.html());
-        }else if(info == 2){
+        }else{
             let template = $("#tmpManu2");
             $("#groupManu2").append(template.html());
-        }else if(info == 3){
-            let template = $("#tmpMaterial");
-            $("#subPrintWrap").append(template.html());
         }
     }
 

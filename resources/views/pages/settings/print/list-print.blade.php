@@ -34,9 +34,9 @@
 
                 </div>
                 <div class="table-data__tool-right">
-                    <a type="button" class="btn btn btn-outline-success mr-2" href="{{ url('settings/add-print') }}">
+                    <a type="button" class="btn btn btn-outline-success mr-2" href="{{ url('settings/add-print-1') }}">
                         <i class="fa fa fa-plus"></i>&nbsp; Tạo mới loại 1</a>
-                    <a type="button" class="btn btn btn-outline-success" href="{{ url('settings/add-print-1') }}">
+                    <a type="button" class="btn btn btn-outline-success" href="{{ url('settings/add-print-2') }}">
                         <i class="fa fa fa-plus"></i>&nbsp; Tạo mới loại 2</a>
                 </div>
                 <hr>
@@ -82,9 +82,9 @@
     var columns = [
             {"data" : "name", "orderable": false,"render": function ( data, type, row, meta ) {
                 if(row.price_type == 1 || row.price_type == 2){
-                    return `<a href="{{url('/settings/print/update')}}/${row.id}">${data}</a>`;
+                    return `<a href="{{url('/settings/print/update-1')}}/${row.id}">${data}</a>`;
                 }else{
-                    return `<a href="{{url('/settings/print-1/update')}}/${row.id}">${data}</a>`;
+                    return `<a href="{{url('/settings/print/update-2')}}/${row.id}">${data}</a>`;
                 }
 
             }},

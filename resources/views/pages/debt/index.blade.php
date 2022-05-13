@@ -190,11 +190,11 @@
                                 <table class="table" id="tb_data_sub">
                                     <thead>
                                         <tr>
+                                            <td>STT</td>
                                             <td>LOẠI IN</td>
                                             <td>GIA CÔNG</td>
-                                            <td>HỖ TRỢ</td>
-                                            <td>NGANG</td>
-                                            <td>DỌC</td>
+                                            <td>HỖ TRỢ (CHẤT LIỆU)</td>
+                                            <td>KÍCH THƯỚC</td>
                                             <td>SỐ LƯỢNG</td>
                                             <td>ĐƠN GIÁ</td>
                                             <td>TỔNG</td>
@@ -222,6 +222,63 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- end modal medium -->
+
+    <!-- modal detail -->
+<div class="modal fade" id="mdDetail" tabindex="-1" role="dialog" aria-labelledby="mdDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetailLabel">
+                    <i class="mr-2 fa fa-align-justify"></i>
+                    Chi tiết đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label for="dPrintType" class=" form-control-label">Tên loại in</label>
+                            <input type="hidden" id="mode" value="I">
+                            <input type="hidden" id="index" value="0">
+                            <input type="hidden" id="defmc1" value="0">
+                            <input type="hidden" id="defmc2" value="0">
+                            <input type="hidden" id="defmc3" value="0">
+                        </div>
+                        <div class="col-12 col-md-8">
+                        </div>
+                    </div>
+                    <div id="detailWrap">
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class=" form-control-label">Tổng :</label>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <span id="spTotal">0</span>&nbsp;
+                            <span id="spunit"></span>
+                        </div>
+                        <div class="col col-md-4">
+                            <label class=" form-control-label">Thành tiền :</label>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <span id="spAmount">0</span><span> VNĐ</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary mr-2" onclick="addPrintDetail();">
+                    <i class="fa fa-check"></i>&nbsp; Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>&nbsp;Hủy</button>
+            </div>
+        </div>
+    </div>
     </div>
     <!-- end modal medium -->
 @endsection
@@ -273,10 +330,16 @@
                 "value" : function() { return $('#sValue').val() },
             }
         };
+    
+    var table;
 
     function callback(settings){
-        var total = (settings.json.total+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        $("#total").text(total);
+        $('#tb_data').on('click dblclick', 'td', function () {
+            var id = table.row(this).data().id;
+            var row = this._DT_CellIndex;
+            if(row.column == 1) return;
+            showDebt(id);
+        })
     }
 
     $(document).ready(function(){
@@ -290,7 +353,7 @@
             }
         });
 
-        var table = CMTBL.init($('#tb_data'),columns,ajax,callback);
+        table = CMTBL.init($('#tb_data'),columns,ajax,callback);
     });
 
     function init() {
@@ -318,20 +381,74 @@
                     $('#payment').val(data[0].payment);
                     $('#release').val(data[0].release_dt);
                     $('#note').val(data[0].note);
-                    $("#totalPrice").text((data[0].total+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+                    $("#totalPrice").text((data[0].total_amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
                     $("#orderID").val(data[0].id)
                     $("#tb_data_sub tbody").empty();
                     data.forEach((element,index) => {
                         let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                        var row = `<tr> <td>${element.print_name}</td>
-                                        <td>${element.manufac1 ? '' : element.manufac1}</td>
-                                        <td>${element.manufac2 ? '' : element.manufac2}</td>
-                                        <td>${element.width == 0 ? '' : element.width}</td>
-                                        <td>${element.heigth == 0 ? '' : element.heigth}</td>
-                                        <td>${element.quantity}</td>
-                                        <td>${element.unit_price}</td>
-                                        <td>${element.unit_total}</td>
-                                        <td>${amountTemp} VNĐ</td></tr>`;
+                        var row = `<tr>
+                                    <td>${index + 1}</td>
+                                    <td>${element.print_name}</td>
+                                    <td>${element.machine1}</td>
+                                    <td>${element.machine2}</td>
+                                    <td>${element.size}</td>
+                                    <td>${element.quantity}</td>
+                                    <td>${element.unit_price}</td>
+                                    <td>${element.total_size}</td>
+                                    <td>${element.amount_display}</td></tr>`;
+                        $("#tb_data_sub tbody").append(row);
+                    });
+
+                    if(data[0].status == 1){
+                        $('#status .badge-success').show();
+                        $('#status .badge-danger ').hide();
+                    }else{
+                        $('#status .badge-success').hide();
+                        $('#status .badge-danger ').show();
+                    }
+                    $('#modal1').modal('show');
+                }else{
+                    alert('Đã xảy ra lỗi!')
+                }
+            },
+            error: function(xhr) {
+                alert('Đã xảy ra lỗi!')
+            },
+        });
+    }
+
+    function showDebt(id) {
+        $.ajax({
+            type: "GET",
+            url: "{{url('/api/order')}}",
+            data: {
+                'id': id,
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.length > 0){
+                    $('#billId').val(data[0].bill_code);
+                    $('#name').val(data[0].customer);
+                    $('#phone').val(data[0].phone);
+                    $('#address').val(data[0].address);
+                    $('#payment').val(data[0].payment);
+                    $('#release').val(data[0].release_dt);
+                    $('#note').val(data[0].note);
+                    $("#totalPrice").text((data[0].total_amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+                    $("#orderID").val(data[0].id)
+                    $("#tb_data_sub tbody").empty();
+                    data.forEach((element,index) => {
+                        let amountTemp = (element.amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+                        var row = `<tr>
+                                    <td>${index + 1}</td>
+                                    <td>${element.print_name}</td>
+                                    <td>${element.machine1}</td>
+                                    <td>${element.machine2}</td>
+                                    <td>${element.size}</td>
+                                    <td>${element.quantity}</td>
+                                    <td>${element.unit_price}</td>
+                                    <td>${element.total_size}</td>
+                                    <td>${element.amount_display}</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
 

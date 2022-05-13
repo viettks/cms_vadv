@@ -15,9 +15,9 @@ class DebtRepository
             o.id,
             o.name,
             o.phone,
-            o.amount,
-            o.payment,
-            (o.amount - o.payment) AS debt,
+            d.amount,
+            d.payment,
+            (d.amount - d.payment) AS debt,
             DATEDIFF(NOW(),d.created_at) AS debt_date,
             d.status
             ";
@@ -62,9 +62,9 @@ class DebtRepository
         })
         ->selectRaw($sql);
         if($pagging){
-            $data = $eloquent->skip($param['length'] * $param['start'])->take($param['length'])->get();
+            $data = $eloquent->orderBy('id', 'DESC')->skip($param['length'] * $param['start'])->take($param['length'])->get();
         }else{
-            $data = $eloquent->get();
+            $data = $eloquent->orderBy('id', 'DESC')->get();
         }
         $result['recordsTotal'] = $eloquent->count();
         $result['recordsFiltered'] = $eloquent->count();

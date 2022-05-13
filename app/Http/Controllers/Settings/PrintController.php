@@ -16,23 +16,23 @@ use Symfony\Component\VarDumper\VarDumper;
 class PrintController extends Controller
 {
     //TẠO MỚI LOẠI IN
-    public function viewCreate(Request $request)
-    {
-        return view('pages.settings.print');
-    }
-
-    //TẠO LOẠI IN SUB
     public function viewCreate1(Request $request)
     {
         return view('pages.settings.print.create-1');
     }
 
-    public function viewList(Request $request)
+    //TẠO LOẠI IN SUB
+    public function viewCreate2(Request $request)
     {
-        return view('pages.settings.list-print');
+        return view('pages.settings.print.create-2');
     }
 
-    public function viewUpdate(Request $request)
+    public function viewList(Request $request)
+    {
+        return view('pages.settings.print.list-print');
+    }
+
+    public function viewUpdate1(Request $request)
     {
         $id = $request->id;
         $printing = PrintSub::where('is_delete', '!=', 1)->find($id);
@@ -43,11 +43,11 @@ class PrintController extends Controller
         $manufac1 = PrintManufacture::where(["print_id" => $id, "sub_type" => 1])->get();
         $manufac2 = PrintManufacture::where(["print_id" => $id, "sub_type" => 2])->get();
 
-        return view('pages.settings.updatePrint')->with(compact('printing', 'manufac1', 'manufac2'));
+        return view('pages.settings.print.update-1')->with(compact('printing', 'manufac1', 'manufac2'));
     }
 
     
-    public function viewUpdate1(Request $request)
+    public function viewUpdate2(Request $request)
     {
         $id = $request->id;
         $printing = PrintSub::where('is_delete', '!=', 1)->find($id);
@@ -59,7 +59,7 @@ class PrintController extends Controller
         $manufac2 = PrintManufacture::where(["print_id" => $id, "sub_type" => 2])->get();
         $manufac3 = PrintManufacture::where(["print_id" => $id, "sub_type" => 3])->get();
 
-        return view('pages.settings.print.update-1')->with(compact('printing', 'manufac1', 'manufac2','manufac3'));
+        return view('pages.settings.print.update-2')->with(compact('printing', 'manufac1', 'manufac2','manufac3'));
     }
 
     //API

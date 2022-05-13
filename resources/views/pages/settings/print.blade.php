@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Tạo mới loại in')
+@section('title','Tạo mới loại in 1')
 @section('style')
 <style>
     .mh-76 {
@@ -20,7 +20,7 @@
     <div class="card mh-76">
         <div class="card-header">
             <i class="mr-2 fa fa-align-justify"></i>
-            <strong class="card-title" v-if="headerText">Tạo mới loại in</strong>
+            <strong class="card-title" v-if="headerText">Tạo mới loại in 1</strong>
         </div>
         <div class="card-body">
             <form action="" method="post" class="form-horizontal" onsubmit="return false;">

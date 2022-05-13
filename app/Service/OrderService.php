@@ -102,7 +102,7 @@ class OrderService
 
             OrderDetail::where('order_id','=',$order['id'])->delete();
 
-            foreach ($details as $detail) {
+            foreach($details as $detail){
                 $detail["order_id"] = $result->id;
                 OrderDetail::create($detail);
             }

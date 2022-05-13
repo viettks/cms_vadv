@@ -67,6 +67,7 @@ Route::group([
     'prefix' => 'debt'
 ], function ($router) {
     Route::get('/',[DebtController::class, 'getDebtes']);
+    Route::get('/info',[DebtController::class, 'getInfo']);
     Route::post('/', [DebtController::class, 'createDebt']);
 });
 

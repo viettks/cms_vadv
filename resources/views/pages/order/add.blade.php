@@ -124,7 +124,7 @@
                                     <td>STT</td>
                                     <td>LOẠI IN</td>
                                     <td>GIA CÔNG</td>
-                                    <td>HỖ TRỢ</td>
+                                    <td>HỖ TRỢ (CHẤT LIỆU)</td>
                                     <td>KÍCH THƯỚC</td>
                                     <td>SỐ LƯỢNG</td>
                                     <td>ĐƠN GIÁ</td>
@@ -134,39 +134,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- <tr>
-                                    <td>
-                                        <select name="print" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn loại in</option>
-                                            @foreach ($printes as $pr)
-                                            <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}" data-subunit="{{$pr->type_name}}">{{$pr->name . " / " .$pr->sub_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>                                        
-                                        <select name="manufac1" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn gia công</option>
-                                        </select>
-                                    </td>
-                                    <td>                                        
-                                        <select name="manufac2" class="form-control-sm form-control" onchange="changeData(this);">
-                                            <option value=''>Chọn hỗ trợ</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" name="width" value="0" class="form-control-sm print-size" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="height" value="0" class="form-control-sm print-size" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="quantity" value="0" class="form-control-sm print-quant" onchange="changeData(this);"></td>
-                                    <td><input type="number" name="unitPrice" value="0" placeholder="Đơn giá" class="form-control-sm" onchange="changeData(this);"></td>
-                                    <td><span class="rowQuantity">0</span>&nbsp;<span class="row-unit">m2</span></td>
-                                    <td><span class="rowPriceData">0</span>&nbsp;<span>VNĐ</span></td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" onclick="deleteRow(this);">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr> --}}
+                               
                             </tbody>
                         </table>
                     </div>
@@ -304,11 +272,11 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="machine2" class=" form-control-label">Hỗ trợ :</label>
+            <label for="machine2" class=" form-control-label">Chất liệu :</label>
         </div>
         <div class="col-12 col-md-8">
             <select id="machine2" name="machine2" class="form-control-sm form-control">
-                <option value=''>Chọn hỗ trợ</option>
+                <option value=''>Chọn chất liệu</option>
             </select>
         </div>
     </div>
@@ -355,11 +323,11 @@
     </div>
     <div class="row form-group">
         <div class="col col-md-4">
-            <label for="machine2" class=" form-control-label">Hỗ trợ :</label>
+            <label for="machine2" class=" form-control-label">Chất liệu :</label>
         </div>
         <div class="col-12 col-md-8">
             <select id="machine2" name="machine2" class="form-control-sm form-control">
-                <option value=''>Chọn hỗ trợ</option>
+                <option value=''>Chọn chất liệu</option>
             </select>
         </div>
     </div>
@@ -916,8 +884,8 @@ var detailData = [];
         var heigth = 0;
         var quantity = Number.parseInt($("#quantity").val());
         var unitPrice = Number.parseInt($("#unitPrice").val());
-        var machine1 = $("#machine1 option:selected").text();
-        var machine2 = $("#machine2 option:selected").text()
+        var machine1 = $("#machine1").val();
+        var machine2 = $("#machine2").val()
 
         var print_id = $("#dPrintType").val();
         var size = '';
@@ -933,7 +901,7 @@ var detailData = [];
         }else if(print_type == 2){
         
         }else if(print_type == 3){
-            size = $("#size option:selected").text();
+            size = $("#size").val();
         }else if(print_type == 4){
             width = Number.parseFloat($("#width").val());
             heigth = Number.parseFloat($("#heigth").val());

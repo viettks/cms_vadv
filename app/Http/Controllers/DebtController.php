@@ -43,6 +43,14 @@ class DebtController extends Controller
         return response()->json(DebtService::getDebtes($param), 200);
     }
 
+    function getInfo(Request $request){
+        $param = $request->id;
+        $user = auth()->user();
+        $param['is_admin'] = $user->hasRole('ADMIN');
+        $param['user'] = $user->id;
+        return response()->json(DebtService::getDebtes($param), 200);
+    }
+
     function createDebt(Request $request){
         $validator = Validator::make($request->all(), [
             'id'   => 'required',

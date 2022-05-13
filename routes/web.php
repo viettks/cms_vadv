@@ -43,13 +43,12 @@ Route::group([
     Route::get('/debt/create', [DebtController::class, 'viewCreate'])->name('createDebt');
     Route::get('/debt/download', [DebtController::class, 'export'])->name('exportDebt');
     //LOẠI IN
-    Route::get('/settings/add-print', [PrintController::class, 'viewCreate'])->name('addPrint')->middleware('can:ADMIN');
-    Route::get('/settings/list-print', [PrintController::class, 'viewList'])->name('listPrint')->middleware('can:ADMIN');
-    Route::get('/settings/print/update/{id}', [PrintController::class, 'viewUpdate'])->name('updatePrint')->middleware('can:ADMIN');
-    Route::get('/settings/print-1/update/{id}', [PrintController::class, 'viewUpdate1'])->name('viewUpdate1')->middleware('can:ADMIN');
-
-    //LOẠI IN SUB
     Route::get('/settings/add-print-1', [PrintController::class, 'viewCreate1'])->name('addPrint1')->middleware('can:ADMIN');
+    Route::get('/settings/add-print-2', [PrintController::class, 'viewCreate2'])->name('addPrint2')->middleware('can:ADMIN');
+    Route::get('/settings/list-print', [PrintController::class, 'viewList'])->name('listPrint')->middleware('can:ADMIN');
+    Route::get('/settings/print/update-1/{id}', [PrintController::class, 'viewUpdate1'])->name('viewUpdate1')->middleware('can:ADMIN');
+    Route::get('/settings/print/update-2/{id}', [PrintController::class, 'viewUpdate2'])->name('viewUpdate2')->middleware('can:ADMIN');
+
     //THÀNH VIÊN
     Route::get('/settings/member', [MemberController::class, 'viewList'])->name('listMember')->middleware('can:ADMIN');
     Route::get('/settings/changePW', [AuthController::class, 'viewChangePW'])->name('changePW');

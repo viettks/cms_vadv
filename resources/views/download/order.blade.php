@@ -5,36 +5,44 @@
 </style>
 <table>
     <thead>
+        <tr></tr>
         <tr>
-            <td colspan="12" style="text-align: center"><h1>Danh sách đơn hàng</h1></td>
+            <td colspan="12" style="text-align: center;font-weight: 500;font-size:25px; border:1px solid black;">
+                <h1>Danh sách đơn hàng</h1>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td width="150px" style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
+            <td width="150px" style="font-weight: 500;border:1px solid black;">Ngày kết thúc</td>
+            <td width="150px" style="font-weight: 500;border:1px solid black;">Tình trạng</td>
+            <td width="350px" style="font-weight: 500;border:1px solid black;">Nhân viên</td>
+            <td width="150px" style="font-weight: 500;border:1px solid black;">Giá trị tìm kiếm</td>
+            <td width="150px"></td>
+            <td width="150px"></td>
+            <td width="150px"></td>
+            <td width="150px"></td>
+            <td width="150px"></td>
         </tr>
         <tr>
-            <td width="150px">Ngày bắt đầu</td>
-            <td width="150px">Ngày kết thúc</td>
-            <td width="150px">Tình trạng</td>
-            <td width="150px">Nhân viên</td>
-            <td width="150px">Giá trị tìm kiếm</td>
-        </tr>
-        <tr>
-            <td>{{$search['fromDate']}}</td>
-            <td>{{$search['toDate']}}</td>
-            <td>{{$search['status']}}</td>
-            <td>{{$search['staff']}}</td>
-            <td>{{$search['value']}}</td>
+            <td style="border:1px solid black;">{{$search['fromDate']}}</td>
+            <td style="border:1px solid black;">{{$search['toDate']}}</td>
+            <td style="border:1px solid black;">{{$search['status']}}</td>
+            <td style="border:1px solid black;">{{$search['staff']}}</td>
+            <td style="border:1px solid black;">{{$search['value']}}</td>
         </tr>
         <tr></tr>
         <tr>                                
-            <th>Ngày</th>
-            <th>Tên khách hàng</th>
-            <th>Số điện thoại</th>
-            <th>Chi tiết</th>
-            <th>KT ngang</th>
-            <th width="150px" style="">KT dọc</th>
-            <th width="150px">Tổng</th>
-            <th width="150px">Đơn giá</th>
-            <th width="150px">Thành tiền</th>
-            <th width="150px">Tổng tiền</th>
-            <th width="150px">Tình trạng</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">NGÀY</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">TÊN KHÁCH HÀNG</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">SỐ ĐIỆN THOẠI</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">CHI TIẾT</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">KÍCH THƯỚC</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">TỔNG</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">ĐƠN GIÁ</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">THÀNH TIỀN</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">TỔNG TIỀN</th>
+            <th style="text-align: center;font-size:12px; border:1px solid black;">TÌNH TRẠNG</th>
         </tr>
     </thead>
     <tbody>
@@ -44,39 +52,32 @@
         @foreach ($order['data'] as $item)
 
         <tr>
-            <td>
+            <td style="border:1px solid black;">
                 @if ($tempId != $item->id)
                     {{$item->create_date}}
                 @endif
             </td>
-            <td>
+            <td style="border:1px solid black;">
                 @if ($tempId != $item->id)
                 {{$item->customer}}
                 @endif
             </td>
-            <td>
+            <td style="border:1px solid black;">
                 @if ($tempId != $item->id)
                 {{$item->phone}}
                 @endif
             </td>
-            @php
-                $chitiet = '';
-                $chitiet .= $item->manufac1 ? $item->manufac2 . ',':'';
-                $chitiet .= $item->manufac2 ? $item->manufac2 :'';
-                $chitiet = $chitiet == '' ? $item->name : $item->name . '(' .$chitiet .')';
-            @endphp
-            <td>{{$chitiet}}</td>
-            <td>{{$item->width == 0 ? "" : $item->width}}</td>
-            <td>{{$item->heigth == 0 ? "" : $item->heigth}}</td>
-            <td>{{$item->unit_total .' ' .$item->unit_name}}</td>
-            <td>{{$item->unit_price}}</td>
-            <td>{{$item->amount}}</td>
-            <td>                
+            <td style="border:1px solid black;">{{$item->detail}}</td>
+            <td style="border:1px solid black;">{{$item->size}}</td>
+            <td style="border:1px solid black;">{{$item->total_size}}</td>
+            <td style="border:1px solid black;">{{$item->unit_price}}</td>
+            <td style="border:1px solid black;">{{$item->amount_display}}</td>
+            <td style="border:1px solid black;">                
                 @if ($tempId != $item->id)
-                {{$item->total}}
+                {{$item->total_amount}}
                 @endif
             </td>
-            <td>               
+            <td style="border:1px solid black;">               
                 @if ($tempId != $item->id)
                     @if ($item->status == 1)
                         Hoàn thành

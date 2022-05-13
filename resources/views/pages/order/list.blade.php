@@ -130,25 +130,21 @@
                             <label for="note" class=" form-control-label">Mã vận đơn</label>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="text" disabled id="billId" name="billId" placeholder="Tên khách hàng"
-                                class="form-control">
+                            <input type="text" disabled id="billId" name="billId" class="form-control">
                         </div>
                         <div class="col col-sm-6">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-sm-2">
-                            <label for="name" class=" form-control-label">Tên khách hàng (<span
-                                    class="required">*</span>)</label>
+                            <label for="name" class=" form-control-label">Tên khách hàng </label>
                         </div>
                         <div class="col col-sm-4">
-                            <input type="text" disabled id="name" name="name" placeholder="Tên khách hàng"
-                                class="form-control">
+                            <input type="text" disabled id="name" name="name" class="form-control">
                             <input type="hidden" id="orderID" />
                         </div>
                         <div class="col col-sm-2">
-                            <label for="name" class=" form-control-label">Trạng thái (<span
-                                    class="required">*</span>)</label>
+                            <label for="name" class=" form-control-label">Trạng thái </label>
                         </div>
                         <div class="col col-sm-4">
                             <span id="status">
@@ -163,16 +159,13 @@
                                     class="required">*</span>)</label>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="text" disabled id="phone" name="phone" placeholder="Số điện thoại"
-                                class="form-control">
+                            <input type="text" disabled id="phone" name="phone" class="form-control">
                         </div>
                         <div class="col col-md-2">
-                            <label for="address" class=" form-control-label">Địa chỉ (<span
-                                    class="required">*</span>)</label>
+                            <label for="address" class=" form-control-label">Địa chỉ </label>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="text" disabled id="address" name="address" placeholder="Địa chỉ"
-                                class="form-control">
+                            <input type="text" disabled id="address" name="address" class="form-control">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -180,15 +173,13 @@
                             <label for="payment" class=" form-control-label">Trả trước</label>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước"
-                                class="form-control" value="0" disabled>
+                            <input type="number" id="payment" name="payment" class="form-control" value="0" disabled>
                         </div>
                         <div class="col col-md-2">
                             <label for="release" class=" form-control-label">Ngày hoàn thành</label>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="text" disabled id="release" name="release" placeholder="Ngày hoàn thành"
-                                class="form-control">
+                            <input type="text" disabled id="release" name="release" class="form-control">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -196,13 +187,12 @@
                             <label for="note" class=" form-control-label">Ghi chú</label>
                         </div>
                         <div class="col-12 col-md-10">
-                            <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..."
-                                class="form-control"></textarea>
+                            <textarea disabled name="note" id="note" rows="9" class="form-control"></textarea>
                         </div>
                     </div>
                     <hr>
                     <div class="row form-group">
-                        <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
+                        <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng</h5>
                     </div>
                     <div class="row form-group">
                         <div class="table-responsive table-data">
@@ -212,7 +202,7 @@
                                         <td>STT</td>
                                         <td>LOẠI IN</td>
                                         <td>GIA CÔNG</td>
-                                        <td>HỖ TRỢ</td>
+                                        <td>HỖ TRỢ (CHẤT LIỆU)</td>
                                         <td>KÍCH THƯỚC</td>
                                         <td>SỐ LƯỢNG</td>
                                         <td>ĐƠN GIÁ</td>
@@ -405,7 +395,7 @@
             var row = this._DT_CellIndex;
             if(row.column == 1) return;
             showInfo(id);
-        })
+        });
     }
     var table ;
     $(document).ready(function(){
@@ -461,7 +451,7 @@
                                     <td>${element.quantity}</td>
                                     <td>${element.unit_price}</td>
                                     <td>${element.total_size}</td>
-                                    <td>${element.amount_display} VNĐ</td></tr>`;
+                                    <td>${element.amount_display}</td></tr>`;
                         $("#tb_data_sub tbody").append(row);
                     });
 
