@@ -15,6 +15,8 @@ class DebtRepository
             o.id,
             o.name,
             o.phone,
+            d.id as debt_id,
+            d.bill_code,
             d.amount,
             d.payment,
             (d.amount - d.payment) AS debt,
@@ -69,7 +71,7 @@ class DebtRepository
         $result['recordsTotal'] = $eloquent->count();
         $result['recordsFiltered'] = $eloquent->count();
         $result['data'] = $data;
-        $result['total'] = $eloquent->sum(DB::raw('o.amount - o.payment'));
+        $result['total'] = $eloquent->sum(DB::raw('d.amount - d.payment'));
         return $result;
     }
 }

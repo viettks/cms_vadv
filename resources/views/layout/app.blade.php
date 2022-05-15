@@ -38,6 +38,13 @@
     </div>
     @include('fragment.script')
     @yield('extend_script')
+    <script>
+        $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+            if(xhr.status){
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 </html>
 <!-- end document-->

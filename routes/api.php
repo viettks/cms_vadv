@@ -69,6 +69,7 @@ Route::group([
     Route::get('/',[DebtController::class, 'getDebtes']);
     Route::get('/info',[DebtController::class, 'getInfo']);
     Route::post('/', [DebtController::class, 'createDebt']);
+    Route::patch('/complete', [DebtController::class, 'completeDebt']);
 });
 
 //REVENUES

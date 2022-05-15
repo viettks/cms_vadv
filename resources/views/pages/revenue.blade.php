@@ -31,7 +31,7 @@
                     <span class="text-danger text-strong">
                         <i class="fa fa-dollar"></i>&nbsp; Tổng chi : </span>
                     <span class="text-danger text-strong" id="total">0</span>
-                    <span class="text-danger text-strong"> VNĐ.</span>
+                    <span class="text-danger text-strong"></span>
                 </div>
                 <div class="table-data__tool-right">
                     <button type="button" class="btn btn-outline-primary" onclick="exportExcel();">

@@ -2,19 +2,22 @@
 @section('title','Quản lý nợ')
 @section('style')
 <style>
-    .mh-76{
+    .mh-76 {
         min-height: 76vh;
     }
-    .input-date-wrap{
+
+    .input-date-wrap {
         width: 185px;
     }
-    .modal-lg{
+
+    .modal-lg {
         min-width: 80%;
     }
-    .switch-label{
+
+    .switch-label {
         border-color: #ff182b !important;
         background-color: #ff182b !important;
-    }   
+    }
 </style>
 @endsection
 @section('content')
@@ -36,7 +39,7 @@
                 <div class="table-data__tool-right d-flex">
                     <a type="button" class="btn btn btn-outline-success mr-2" href="{{url('/debt/create')}}">
                         <i class="fa fa fa-plus"></i>&nbsp; Tạo mới</a>
-                    
+
                     <button type="button" class="btn btn-outline-primary" onclick="exportExcel();">
                         <i class="fa fa-download"></i>&nbsp; Xuất file excel</button>
                 </div>
@@ -46,7 +49,8 @@
                 <div class="m-b-45 mr-2 seach-box">
                     <div class="form-group mr-2">
                         <label>Ngày bắt đầu</label>
-                        <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Ngày bắt đầu">
+                        <input type="date" class="form-control" id="fromDate" name="fromDate"
+                            placeholder="Ngày bắt đầu">
                     </div>
                     <div class="form-group mr-2">
                         <label>Ngày kết thúc</label>
@@ -87,6 +91,7 @@
                         <thead>
                             <tr>
                                 <th>NGÀY</th>
+                                <th>MÃ ĐƠN</th>
                                 <th>TÊN KHÁCH HÀNG</th>
                                 <th>SỐ ĐIỆN THOẠI</th>
                                 <th>TỒNG TIỀN</th>
@@ -106,133 +111,155 @@
 </div>
 @section('modal')
 <!-- modal medium -->
-    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">
-                        <i class="mr-2 fa fa-align-justify"></i>
-                        Chi tiết hóa đơn</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" class="form-horizontal">
-                        <div class="row form-group">
-                            <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">
+                    <i class="mr-2 fa fa-align-justify"></i>
+                    Chi tiết hóa đơn
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="note" class=" form-control-label">Mã vận đơn</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-sm-2">
-                                <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col col-sm-4">
-                                <input type="text" disabled id="name" name="name" placeholder="Tên khách hàng" class="form-control">
-                                <input type="hidden" id="orderID"/>
-                            </div>
-                            <div class="col col-sm-2">
-                                <label for="name" class=" form-control-label">Trạng thái (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col col-sm-4">
-                                <label for="">Chưa hoàn thành</label>
-                                <label class="switch switch-default switch-pill switch-danger mr-2">
-                                    <input type="checkbox" id="status" class="switch-input" checked="true" disabled>
-                                    <span class="switch-label"></span>
-                                    <span class="switch-handle"></span>
-                                </label>
-                                <label for="">hoàn thành</label>
-                            </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="billId" name="billId" class="form-control">
+                        </div>
+                        <div class="col col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-sm-2">
+                            <label for="name" class=" form-control-label">Tên khách hàng (<span
+                                    class="required">*</span>)</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <input type="text" disabled id="name" name="name" placeholder="Tên khách hàng"
+                                class="form-control">
+                            <input type="hidden" id="orderID" />
+                        </div>
+                        <div class="col col-sm-2">
+                            <label for="name" class=" form-control-label">Trạng thái (<span
+                                    class="required">*</span>)</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <label for="">Chưa hoàn thành</label>
+                            <label class="switch switch-default switch-pill switch-danger mr-2">
+                                <input type="checkbox" id="status" class="switch-input" checked="true" disabled>
+                                <span class="switch-label"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                            <label for="">hoàn thành</label>
+                        </div>
 
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="phone" class=" form-control-label">Số điện thoại (<span
+                                    class="required">*</span>)</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="phone" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="phone" name="phone" placeholder="Số điện thoại" class="form-control">
-                            </div>
-                            <div class="col col-md-2">
-                                <label for="address" class=" form-control-label">Địa chỉ (<span class="required">*</span>)</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="address" name="address" placeholder="Địa chỉ" class="form-control">
-                            </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="phone" name="phone" placeholder="Số điện thoại"
+                                class="form-control">
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="payment" class=" form-control-label">Trả trước</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="number" disabled id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
-                            </div>
-                            <div class="col col-md-2">
-                                <label for="release" class=" form-control-label">Ngày hoàn thành</label>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <input type="text" disabled id="release" name="release" placeholder="Ngày hoàn thành" class="form-control">
-                            </div>
+                        <div class="col col-md-2">
+                            <label for="address" class=" form-control-label">Địa chỉ (<span
+                                    class="required">*</span>)</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">
-                                <label for="note" class=" form-control-label">Ghi chú</label>
-                            </div>
-                            <div class="col-12 col-md-10">
-                                <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
-                            </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="address" name="address" placeholder="Địa chỉ"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="payment" class=" form-control-label">Trả trước</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="number" disabled id="payment" name="payment" placeholder="Số tiền trả trước"
+                                class="form-control" value="0">
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="release" class=" form-control-label">Ngày hoàn thành</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" disabled id="release" name="release" placeholder="Ngày hoàn thành"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="note" class=" form-control-label">Ghi chú</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <textarea disabled name="note" id="note" rows="9" placeholder="Ghi chú..."
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row form-group">
+                        <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
+                    </div>
+                    <div class="row form-group">
+                        <div class="table-responsive table-data">
+                            <table class="table" id="tb_data_sub">
+                                <thead>
+                                    <tr>
+                                        <td>STT</td>
+                                        <td>LOẠI IN</td>
+                                        <td>GIA CÔNG</td>
+                                        <td>HỖ TRỢ (CHẤT LIỆU)</td>
+                                        <td>KÍCH THƯỚC</td>
+                                        <td>SỐ LƯỢNG</td>
+                                        <td>ĐƠN GIÁ</td>
+                                        <td>TỔNG</td>
+                                        <td>THÀNH TIỀN</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-data__tool">
+                        <div class="table-data__tool-left w-100">
+                            <span class="text-danger text-strong">
+                                <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
+                            <span class="text-danger text-strong" id="totalPrice">0</span>
+                            <span class="text-danger text-strong"> VNĐ.</span>
                         </div>
                         <hr>
-                        <div class="row form-group">
-                            <h5 class="title-5 m-b-30 ml-3">Chi tiết đơn hàng (<span class="required">*</span>)</h5>
-                        </div>
-                        <div class="row form-group">
-                            <div class="table-responsive table-data">
-                                <table class="table" id="tb_data_sub">
-                                    <thead>
-                                        <tr>
-                                            <td>STT</td>
-                                            <td>LOẠI IN</td>
-                                            <td>GIA CÔNG</td>
-                                            <td>HỖ TRỢ (CHẤT LIỆU)</td>
-                                            <td>KÍCH THƯỚC</td>
-                                            <td>SỐ LƯỢNG</td>
-                                            <td>ĐƠN GIÁ</td>
-                                            <td>TỔNG</td>
-                                            <td>THÀNH TIỀN</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="table-data__tool">
-                            <div class="table-data__tool-left w-100">
-                                <span class="text-danger text-strong">
-                                    <i class="fa fa-dollar"></i>&nbsp; Tổng giá trị : </span>
-                                <span class="text-danger text-strong" id="totalPrice">0</span>
-                                <span class="text-danger text-strong"> VNĐ.</span>
-                            </div>
-                            <hr>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa fa-times"></i>&nbsp;Hủy</button>
             </div>
         </div>
     </div>
-    <!-- end modal medium -->
+</div>
+<!-- end modal medium -->
 
-    <!-- modal detail -->
+<!-- modal detail -->
 <div class="modal fade" id="mdDetail" tabindex="-1" role="dialog" aria-labelledby="mdDetailLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="mdDetailLabel">
                     <i class="mr-2 fa fa-align-justify"></i>
-                    Chi tiết đơn hàng</h5>
+                    Chi tiết đơn hàng
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -279,8 +306,8 @@
             </div>
         </div>
     </div>
-    </div>
-    <!-- end modal medium -->
+</div>
+<!-- end modal medium -->
 @endsection
 
 @endsection
@@ -290,9 +317,10 @@
 
     var columns = [
             {"data" : "create_date", "orderable": false,},
-            {"data" : "name","orderable": false, "render": function ( data, type, row, meta ) {
+            {"data" : "bill_code","orderable": false, "render": function ( data, type, row, meta ) {
                 return '<a href="#" onclick="showInfo(\''+row.id+'\')">'+ data + '</a>';
             }},
+            {"data" : "name", "orderable": false,},
             {"data" : "phone", "orderable": false,},
             {"data" : "amount", "orderable": false, "render": function ( data, type, row, meta ) {
                 return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
@@ -305,17 +333,17 @@
             }},
             {"data" : "status", "orderable": false, "render": function ( data, type, row, meta ) {
  
-                    if(data == 1){
-                        return '<p class="text-success">Hoàn thành.</p>';
+                if(data == 1){
+                    return '<p class="text-success">Hoàn thành.</p>';
+                }else{
+                    if(row.debt_date <= 15){
+                        return '<p class="text-danger">Dưới 15 ngày.<button class="btn btn-outline-primary btn-sm ml-2" onClick="completeDebt(\''+row.debt_id+'\')">Hoàn tất?</button></p>';
+                    }else if(row.debt_date > 30){
+                        return '<p class="text-danger">Trên 30 ngày.<button class="btn btn-outline-primary btn-sm ml-2" onClick="completeDebt(\''+row.debt_id+'\')">Hoàn tất?</button></p>';
                     }else{
-                        if(row.debt_date <= 15){
-                            return '<p class="text-danger">Dưới 15 ngày.</p>';
-                        }else if(row.debt_date > 30){
-                            return '<p class="text-danger">Trên 30 ngày.</p>';
-                        }else{
-                            return '<p class="text-danger">Trên 15 ngày.</p>';
-                        }
+                        return '<p class="text-danger">Trên 15 ngày.<button class="btn btn-outline-primary btn-sm ml-2" onClick="completeDebt(\''+row.debt_id+'\')">Hoàn tất?</button></p>';
                     }
+                }
             }},
         ];
 
@@ -334,12 +362,6 @@
     var table;
 
     function callback(settings){
-        $('#tb_data').on('click dblclick', 'td', function () {
-            var id = table.row(this).data().id;
-            var row = this._DT_CellIndex;
-            if(row.column == 1) return;
-            showDebt(id);
-        })
     }
 
     $(document).ready(function(){
@@ -479,6 +501,30 @@
                 "value" : $('#sValue').val()
             };
         window.open('{{url('debt/download')}}?' + $.param(data), '_blank').focus();
+    }
+
+    function completeDebt(id) {
+        if(confirm('Xác nhận hoàn tất công nợ?')){
+            return $.ajax({
+            url : "{{ url('api/debt/complete') }}",
+            type : "PATCH",
+            dataType:"json",
+            data: {id:id},
+            success : function(data) {
+                alert(data.message);
+                $("#btnSeach").click();
+            },
+            error : function(xhr) {
+
+            },
+            beforeSend: function() {
+                $("#overlay").show();
+            },
+            complete: function() {
+                $("#overlay").hide();
+            }
+        });
+        }
     }
 </script>
 @endsection

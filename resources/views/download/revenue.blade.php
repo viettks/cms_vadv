@@ -1,60 +1,65 @@
-<style>
-    td{
-        min-width: 200px;
-    }
-</style>
 <table>
-    <thead>
-        <tr>
-            <td colspan="11" style="text-align: center"><h1>Danh sách chi</h1></td>
-        </tr>
-        <tr>
-            <td width="150px">Ngày bắt đầu</td>
-            <td width="150px">Ngày kết thúc</td>
-            <td width="150px">Tình trạng</td>
-            <td width="150px">Nhân viên</td>
-            <td width="150px">Giá trị tìm kiếm</td>
-        </tr>
-        <tr>
-            <td>{{$search['fromDate']}}</td>
-            <td>{{$search['toDate']}}</td>
-            <td>{{$search['status']}}</td>
-            <td>{{$search['staff']}}</td>
-            <td>{{$search['value']}}</td>
-        </tr>
-        <tr></tr>
-        <tr>                                
-            <th>NGÀY</th>
-            <th>TÊN ĐỐI TÁC</th>
-            <th>LÝ DO CHI</th>
-            <th>SỐ TIỀN</th>
-            <th>NHÂN VIÊN</th>
-            <th width="150px">NGƯỜI DUYỆT</th>
-            <th width="150px">TRẠNG THÁI</th>
-    </thead>
-    <tbody>
-        @php
+    <tr>
+        <td colspan="11" style="text-align: center;font-weight: 500;font-size:25px; border:1px solid black;">
+            Danh sách chi
+        </td>
+    </tr>
+    <tr>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+        <td width="150px"></td>
+    </tr>
+    <tr>
+        <td style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
+        <td style="font-weight: 500;border:1px solid black;">Ngày kết tdúc</td>
+        <td style="font-weight: 500;border:1px solid black;">Tình trạng</td>
+        <td style="font-weight: 500;border:1px solid black;">Nhân viên</td>
+        <td style="font-weight: 500;border:1px solid black;">Giá trị tìm kiếm</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid black;">{{$search['fromDate']}}</td>
+        <td style="border:1px solid black;">{{$search['toDate']}}</td>
+        <td style="border:1px solid black;">{{$search['status']}}</td>
+        <td style="border:1px solid black;">{{$search['staff']}}</td>
+        <td style="border:1px solid black;">{{$search['value']}}</td>
+    </tr>
+    <tr></tr>
+    <tr>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">NGÀY</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">TÊN ĐỐI TÁC</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">LÝ DO CHI</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">SỐ TIỀN</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">NHÂN VIÊN</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">NGƯỜI DUYỆT</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">TRẠNG THÁI</td>
+    </tr>
+    @php
         $tempId = null;
-        @endphp
-        @foreach ($order['data'] as $item)
-
-        <tr>
-            <th>{{$item->create_date}}</th>
-            <th>{{$item->name}}</th>
-            <th>{{$item->note}}</th>
-            <th>{{$item->amount}}</th>
-            <th>{{$item->created_by}}</th>
-            <th>{{$item->updated_by}}</th>
-            <th>
-                @if ($item->status == 2)
-                Hoàn thành
-                @elseif($item->status == 1)
-                Từ chối
-                @else
-                Đang xử lý
-                @endif
-            </th>
-        </tr>
-        @endforeach
-    </tbody>
+    @endphp
+    @foreach ($order['data'] as $item)
+    <tr>
+        <td style="border:1px solid black;">{{$item->create_date}}</td>
+        <td style="border:1px solid black;">{{$item->name}}</td>
+        <td style="border:1px solid black;">{{$item->note}}</td>
+        <td style="border:1px solid black;">{{$item->amount}}</td>
+        <td style="border:1px solid black;">{{$item->created_by}}</td>
+        <td style="border:1px solid black;">{{$item->updated_by}}</td>
+        <td style="border:1px solid black;">
+        @if ($item->status == 2)
+            Hoàn tdành
+        @elseif($item->status == 1)
+            Từ chối
+        @else
+            Đang xử lý
+        @endif
+        </td>
+    </tr>
+    @endforeach
 </table>

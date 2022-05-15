@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportDebt;
+use App\Models\Debt;
 use App\Service\DebtService;
 use App\Service\MemberService;
 use Illuminate\Http\Request;
@@ -71,6 +72,24 @@ class DebtController extends Controller
         return response()->json([
             'status' => "OK",
             'data' => DebtService::createDebt($param), 
+            'message' => 'Thành công.'
+        ]);
+    }
+
+    function completeDebt(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id'   => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        
+        Debt::where('id', $request->id)->update(['status' => 1]);
+
+        return response()->json([
+            'status' => "OK",
+            'data' => $request->id, 
             'message' => 'Thành công.'
         ]);
     }
