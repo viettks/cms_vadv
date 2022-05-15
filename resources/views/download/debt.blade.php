@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
-        <td style="font-weight: 500;border:1px solid black;">Ngày kết tdúc</td>
+        <td style="font-weight: 500;border:1px solid black;">Ngày kết thúc</td>
         <td style="font-weight: 500;border:1px solid black;">Tình trạng</td>
         <td style="font-weight: 500;border:1px solid black;">Nhân viên</td>
         <td style="font-weight: 500;border:1px solid black;">Giá trị tìm kiếm</td>
@@ -34,7 +34,7 @@
     <tr>
         <td style="text-align: center;font-size:12px; border:1px solid black;">NGÀY</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TÊN KHÁCH HÀNG</td>
-        <td style="text-align: center;font-size:12px; border:1px solid black;">SỐ ĐIỆN tdOẠI</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">SỐ ĐIỆN THOẠI</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TỒNG TIỀN</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">CHI TRẢ</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">NỢ</td>
@@ -52,7 +52,7 @@
         <td style="border:1px solid black;">{{$item->debt}}</td>
         <td style="border:1px solid black;">
             @if ($item->status == 1)
-            Hoàn tdành
+            Hoàn thành
             @else
             @if ($item->debt_date <=15) <p class="text-danger">Dưới 15 ngày.</p>
                 @elseif($item->debt_date > 30)

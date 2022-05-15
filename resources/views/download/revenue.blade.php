@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
-        <td style="font-weight: 500;border:1px solid black;">Ngày kết tdúc</td>
+        <td style="font-weight: 500;border:1px solid black;">Ngày kết thúc</td>
         <td style="font-weight: 500;border:1px solid black;">Tình trạng</td>
         <td style="font-weight: 500;border:1px solid black;">Nhân viên</td>
         <td style="font-weight: 500;border:1px solid black;">Giá trị tìm kiếm</td>
@@ -53,7 +53,7 @@
         <td style="border:1px solid black;">{{$item->updated_by}}</td>
         <td style="border:1px solid black;">
         @if ($item->status == 2)
-            Hoàn tdành
+            Hoàn thành
         @elseif($item->status == 1)
             Từ chối
         @else

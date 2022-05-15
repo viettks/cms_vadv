@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
-        <td style="font-weight: 500;border:1px solid black;">Ngày kết tdúc</td>
+        <td style="font-weight: 500;border:1px solid black;">Ngày kết thúc</td>
         <td style="font-weight: 500;border:1px solid black;">Tình trạng</td>
         <td style="font-weight: 500;border:1px solid black;">Nhân viên</td>
         <td style="font-weight: 500;border:1px solid black;">Giá trị tìm kiếm</td>
@@ -35,12 +35,12 @@
     <tr>
         <td style="text-align: center;font-size:12px; border:1px solid black;">NGÀY</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TÊN KHÁCH HÀNG</td>
-        <td style="text-align: center;font-size:12px; border:1px solid black;">SỐ ĐIỆN tdOẠI</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">SỐ ĐIỆN THOẠI</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">CHI TIẾT</td>
-        <td style="text-align: center;font-size:12px; border:1px solid black;">KÍCH tdƯỚC</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">KÍCH THƯỚC</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TỔNG</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">ĐƠN GIÁ</td>
-        <td style="text-align: center;font-size:12px; border:1px solid black;">tdÀNH TIỀN</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">THÀNH TIỀN</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TỔNG TIỀN</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TÌNH TRẠNG</td>
     </tr>
@@ -77,9 +77,9 @@
         <td style="border:1px solid black;">
             @if ($tempId != $item->id)
             @if ($item->status == 1)
-            Hoàn tdành
+            Hoàn thành
             @else
-            Chưa hoàn tdành
+            Chưa hoàn thành
             @endif
             @php
             $tempId = $item->id;
