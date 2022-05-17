@@ -268,7 +268,7 @@
                                 class="form-control">
                         </div>
                         <div class="col col-md-2">
-                            <label for="hisPhone" class=" form-control-label">Tên khách hàng</label>
+                            <label for="hisPhone" class=" form-control-label">Số điện thoại</label>
                         </div>
                         <div class="col-12 col-md-4">
                             <input type="text" disabled id="hisPhone" name="hisPhone" placeholder="Số điện thoại"
