@@ -93,6 +93,7 @@
                                 <th>TỔNG</th>
                                 <th>ĐƠN GIÁ</th>
                                 <th>THÀNH TIỀN</th>
+                                <th>VAT</th>
                                 <th>TỔNG TIỀN</th>
                                 <th>TÌNH TRẠNG</th>
                             </tr>
@@ -180,6 +181,21 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <input type="text" disabled id="release" name="release" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="isVat" class=" form-control-label">VAT (?)</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="checkbox" id="isVat" name="isVat" disabled>
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="vatFee" class=" form-control-label">Số tiền VAT (10%)</label>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" id="vatFee" name="release" placeholder="Số tiền VAT" class="form-control"
+                                value="0" disabled>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -353,6 +369,13 @@
             {"data" : "total_size", "orderable": false},
             {"data" : "unit_price", "orderable": false,},
             {"data" : "amount_display", "orderable": false,},
+            {"data" : "vat_fee", "orderable": false, "render": function ( data, type, full, meta ) {
+                if(meta.row > 0 && meta.settings.aoData[meta.row-1]._aData.id == meta.settings.aoData[meta.row]._aData.id){
+                    return "";
+                }else{
+                    return (data+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ';
+                }
+            }},
             {"data" : "total_amount", "orderable": false, "render": function ( data, type, full, meta ) {
                 if(meta.row > 0 && meta.settings.aoData[meta.row-1]._aData.id == meta.settings.aoData[meta.row]._aData.id){
                     return "";
@@ -437,6 +460,8 @@
                     $('#payment').val(data[0].payment);
                     $('#release').val(data[0].release_dt);
                     $('#note').val(data[0].note);
+                    $("#isVat").prop("checked", data[0].is_vat == '1');
+                    $("#vatFee").val((data[0].vat_fee+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' VNĐ');
                     $("#totalPrice").text((data[0].total_amount+ "").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
                     $("#orderID").val(data[0].id)
                     $("#tb_data_sub tbody").empty();

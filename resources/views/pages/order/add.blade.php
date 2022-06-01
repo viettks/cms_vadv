@@ -9,13 +9,16 @@
     .input-date-wrap {
         width: 185px;
     }
-    input.form-control-sm{
+
+    input.form-control-sm {
         border: 1px solid #ced4da;
     }
-    .print-size{
+
+    .print-size {
         max-width: 50px;
     }
-    .print-quant{
+
+    .print-quant {
         max-width: 75px;
     }
 
@@ -41,12 +44,14 @@
         </div>
         <div class="card-body">
             <form action="" method="post" class="form-horizontal" onsubmit="return false;">
+                <!-- FORM USER INFO -->
                 <div class="row form-group">
                     <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
                 </div>
                 <div class="row form-group">
                     <div class="col col-sm-2">
-                        <label for="name" class=" form-control-label">Tên khách hàng (<span class="required">*</span>)</label>
+                        <label for="name" class=" form-control-label">Tên khách hàng (<span
+                                class="required">*</span>)</label>
                     </div>
                     <div class="col col-sm-4">
                         <input type="text" id="name" name="name" placeholder="Tên khách hàng" class="form-control">
@@ -57,13 +62,15 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2">
-                        <label for="phone" class=" form-control-label">Số điện thoại (<span class="required">*</span>)</label>
+                        <label for="phone" class=" form-control-label">Số điện thoại (<span
+                                class="required">*</span>)</label>
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="text" id="phone" name="phone" placeholder="Số điện thoại" class="form-control">
                     </div>
                     <div class="col col-md-2">
-                        <label for="address" class=" form-control-label">Địa chỉ (<span class="required">*</span>)</label>
+                        <label for="address" class=" form-control-label">Địa chỉ (<span
+                                class="required">*</span>)</label>
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="text" id="address" name="address" placeholder="Địa chỉ" class="form-control">
@@ -74,13 +81,30 @@
                         <label for="payment" class=" form-control-label">Trả trước</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước" class="form-control" value="0">
+                        <input type="number" id="payment" name="payment" placeholder="Số tiền trả trước"
+                            class="form-control" value="0">
                     </div>
                     <div class="col col-md-2">
                         <label for="release" class=" form-control-label">Ngày hoàn thành</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành" class="form-control">
+                        <input type="date" id="release" name="release" placeholder="Ngày hoàn thành"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2">
+                        <label for="isVat" class=" form-control-label">VAT (?)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="checkbox" id="isVat" name="isVat">
+                    </div>
+                    <div class="col col-md-2">
+                        <label for="vatFee" class=" form-control-label">Số tiền VAT (10%)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="text" id="vatFee" name="release" placeholder="Số tiền VAT" class="form-control"
+                            value="0" disabled>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -88,7 +112,8 @@
                         <label for="note" class=" form-control-label">Ghi chú</label>
                     </div>
                     <div class="col-12 col-md-10">
-                        <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
+                        <textarea name="note" id="note" rows="9" placeholder="Ghi chú..."
+                            class="form-control"></textarea>
                     </div>
                 </div>
                 <hr>
@@ -99,11 +124,15 @@
                     <div class="table-data__tool-left w-100">
                     </div>
                     <div class="table-data__tool-right">
-                        <button type="button" class="btn btn-outline-primary btn-sm ml-5" data-toggle="modal" data-target="#mdDetail" data-mode="I">
+                        <button type="button" class="btn btn-outline-primary btn-sm ml-5" data-toggle="modal"
+                            data-target="#mdDetail" data-mode="I">
                             Thêm dòng
                         </button>
                     </div>
                 </div>
+                <!-- END FORM USER INFO -->
+
+                <!-- TABLE ORDER DETAIL-->
                 <div class="row form-group">
                     <div class="table-data w-100">
                         <table class="table table-responsive" id="tb_data">
@@ -118,7 +147,7 @@
                                 <col style="width:10%">
                                 <col style="width:10%">
                                 <col style="width:5%">
-                              </colgroup>
+                            </colgroup>
                             <thead>
                                 <tr>
                                     <td>STT</td>
@@ -134,12 +163,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <!-- END TABLE ORDER DETAIL-->
 
+                <!-- TOTAL AMOUNT -->
                 <div class="table-data__tool">
                     <div class="table-data__tool-left w-100">
                         <span class="text-danger text-strong">
@@ -149,9 +180,10 @@
                     </div>
                     <hr>
                 </div>
+                <!-- END TOTAL AMOUNT -->
             </form>
-            <!-- END USER DATA-->
         </div>
+        <!-- GROUP ACTION -->
         <div class="card-footer">
             <button type="button" class="btn btn-outline-primary mr-2" id="btnSave">
                 <i class="fa fa-save"></i>&nbsp; Lưu</button>
@@ -162,6 +194,7 @@
             <a class="btn btn-outline-secondary" href="{{url('/order/list')}}">
                 <i class="fa fa-times"></i>&nbsp; Hủy</a>
         </div>
+        <!-- END GROUP ACTION -->
     </div>
 </div>
 
@@ -192,10 +225,12 @@
             <label for="width" class=" form-control-label">Kích thước (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-4">
-            <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control" onchange="changeDataPr1();">
+            <input type="number" id="width" name="width" placeholder="Ngang(m2)" class="form-control"
+                onchange="changeDataPr1();">
         </div>
         <div class="col-12 col-md-4">
-            <input type="number" id="heigth" name="heigth" placeholder="Dọc(m2)" class="form-control" onchange="changeDataPr1();">
+            <input type="number" id="heigth" name="heigth" placeholder="Dọc(m2)" class="form-control"
+                onchange="changeDataPr1();">
         </div>
     </div>
     <div class="row form-group">
@@ -203,7 +238,8 @@
             <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr1();">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control"
+                onchange="changeDataPr1();">
         </div>
     </div>
     <div class="row form-group">
@@ -211,7 +247,8 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label></label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control" onchange="changeDataPr1();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá (VNĐ/m2)" class="form-control"
+                onchange="changeDataPr1();">
         </div>
     </div>
 </template>
@@ -244,7 +281,8 @@
             <label for="quantity" class="form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -252,7 +290,8 @@
             <label for="unitPrice" class="form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -295,7 +334,8 @@
             <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -303,7 +343,8 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -347,7 +388,8 @@
             <label for="quantity" class=" form-control-label">Số lượng (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="quantity" name="quantity" placeholder="Số lượng" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
     <div class="row form-group">
@@ -355,7 +397,8 @@
             <label for="unitPrice" class=" form-control-label">Đơn giá (<span class="required">*</span>)</label>
         </div>
         <div class="col-12 col-md-8">
-            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control" onchange="changeDataPr2();">
+            <input type="number" id="unitPrice" name="unitPrice" placeholder="Đơn giá" class="form-control"
+                onchange="changeDataPr2();">
         </div>
     </div>
 </template>
@@ -364,52 +407,54 @@
 
 <!-- modal medium -->
 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="mediumModalLabel">
-                <i class="mr-2 fa fa-align-justify"></i>
-                Danh sách khách hàng</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="m-b-45 mr-2 seach-box">
-                <div class="form-group mr-2">
-                    <label></label>
-                    <input class="form-control" type="text" name="sValue" id="sValue" placeholder="Tìm kiếm...">
-                </div>
-                <div class="form-group mr-2">
-                    <label></label>
-                    <button type="button" class="btn btn-primary" id="btnSeach">Tra cứu</button>
-                </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">
+                    <i class="mr-2 fa fa-align-justify"></i>
+                    Danh sách khách hàng
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <form action="" method="post" class="form-horizontal">
-                <div class="row form-group">
-                    <div class="table-responsive table-data">
-                        <table class="table" id="tb_data_sub">
-                            <thead>
-                                <tr>
-                                    <td>TÊN</td>
-                                    <td>SỐ ĐIỆN THOẠI</td>
-                                    <td>ĐỊA CHỈ</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+            <div class="modal-body">
+                <div class="m-b-45 mr-2 seach-box">
+                    <div class="form-group mr-2">
+                        <label></label>
+                        <input class="form-control" type="text" name="sValue" id="sValue" placeholder="Tìm kiếm...">
+                    </div>
+                    <div class="form-group mr-2">
+                        <label></label>
+                        <button type="button" class="btn btn-primary" id="btnSeach">Tra cứu</button>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="table-responsive table-data">
+                            <table class="table" id="tb_data_sub">
+                                <thead>
+                                    <tr>
+                                        <td>TÊN</td>
+                                        <td>SỐ ĐIỆN THOẠI</td>
+                                        <td>ĐỊA CHỈ</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
 
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Hủy</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa fa-times"></i>&nbsp;Hủy</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <!-- end modal medium -->
 
@@ -420,7 +465,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="mdDetailLabel">
                     <i class="mr-2 fa fa-align-justify"></i>
-                    Chi tiết đơn hàng</h5>
+                    Chi tiết đơn hàng
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -437,10 +483,12 @@
                             <input type="hidden" id="defmc3" value="0">
                         </div>
                         <div class="col-12 col-md-8">
-                            <select id="dPrintType" name="dPrintType" class="form-control-sm form-control" onchange="changePrintType(this);">
+                            <select id="dPrintType" name="dPrintType" class="form-control-sm form-control"
+                                onchange="changePrintType(this);">
                                 <option value=''>Chọn loại in</option>
                                 @foreach ($printes as $pr)
-                                <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}" data-subunit="{{$pr->type_name}}">{{$pr->name . " / " .$pr->sub_name}}</option>
+                                <option value="{{$pr->id}}" data-subtype="{{$pr->price_type}}"
+                                    data-subunit="{{$pr->type_name}}">{{$pr->name . " / " .$pr->sub_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -473,42 +521,31 @@
             </div>
         </div>
     </div>
-    </div>
-    <!-- end modal medium -->
+</div>
+<!-- end modal medium -->
 @endsection
 
 @endsection
 @section('extend_script')
 <script>
 
-//FOR DATATABLE
-
-var columns = [
-    {"data" : "name", "orderable": false,},
-    {"data" : "phone", "orderable": false,},
-    {"data" : "address", "orderable": false,},
-    {"data" : "name", "orderable": false, "render": function ( data, type, row, meta ) {
-        return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.address}')"><i class="fa fa-location-arrow"></i></a>`;
-    }},
-];
-
-var detailData = [];
-    
-    var ajax = {
-    'url' : '{{url("api/order/customer")}}',
-    "type": "GET",
-    "data": {
-        "value" : function() { return $('#sValue').val() },
-        },
-    };
+    // define local variable
     var table;
+    var columns;
+    var detailData = [];
+    var ajax;
 
+    /* Initialization  */
     $(document).ready(function(){
-        $("#addRow").click(function(){
-            let template = $("#templateRow");
-            $("#tb_data tbody").append(template.html());
-        });
+        initDatatable();
+        initialization();
+    });
 
+
+    // Screen Initialization
+    function initialization(){
+        
+        //main actions
         $("#btnReset").click(function(){
             reset();
         });
@@ -520,9 +557,41 @@ var detailData = [];
         $("#btnSaveBack").click(function(){
             save(true);
         });
-
+        
+        //sub actions
         $("#btnSelect").click(function(){
             $("#modal1").modal('show');
+        });
+
+        $("#addRow").click(function(){
+            let template = $("#templateRow");
+            $("#tb_data tbody").append(template.html());
+        });
+
+        $("#isVat").change(()=>{loadDetail();});
+    }
+
+    function initDatatable(){
+        columns = [
+                {"data" : "name", "orderable": false,},
+                {"data" : "phone", "orderable": false,},
+                {"data" : "address", "orderable": false,},
+                {"data" : "name", "orderable": false, "render": function ( data, type, row, meta ) {
+                return `<a href="#" onclick="setCustomer('${row.name}','${row.phone}','${row.address}')"><i
+                        class="fa fa-location-arrow"></i></a>`;
+                }},
+            ];
+
+        ajax = {
+            'url' : '{{url("api/order/customer")}}',
+            "type": "GET",
+            "data": {
+            "value" : function() { return $('#sValue').val() },
+            },
+        };
+
+        $("#btnSeach").click(function(){
+            table.ajax.reload(null,true);
         });
 
         $('#modal1').on('shown.bs.modal', function (element) {
@@ -530,11 +599,95 @@ var detailData = [];
                 table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
             }
         });
+    }
 
-        $("#btnSeach").click(function(){
-            table.ajax.reload(null,true);
+    // main action
+    function reset() {
+        $("#name").val('');
+        $("#phone").val('');
+        $("#address").val('');
+        $("#payment").val(0);
+        $("#release").val('');
+        $("#note").val('');
+        $("#tb_data tbody").empty();
+        let template = $("#templateRow");
+        $("#tb_data tbody").append(template.html());
+        $("#totalPrice").text("0");
+    }
+
+    function save(isback=false) {
+
+        if(!validate()) return;
+
+        if(detailData.length == 0){
+            alert('Vui lòng kiểm tra chi tiết đơn hàng.');
+            return;
+        }
+
+        var data = {
+            "name"   : $("#name").val(),
+            "phone"  : $("#phone").val(),
+            "address": $("#address").val(),
+            "payment": Number.parseInt($("#payment").val()),
+            "release": $("#release").val(),
+            "note"   : $("#note").val(),
+            "detail" : detailData,
+            "is_vat"  : $("#isVat").is(":checked") ? '1' : '0',
+            "vat_fee"  : $("#vatFee").val().replaceAll('.',''),
+            "amount"  : $("#totalPrice").text().replaceAll('.','')
+        }
+
+        return $.ajax({
+            url : "{{ url('api/order') }}",
+            type : "POST",
+            dataType:"json",
+            data: data,
+            success : function(data) {
+                debugger
+                alert(data.message)
+                if(isback){
+                    window.location.href = '{{url("/order/list")}}';
+                }else{
+                    reset();
+                }
+            },
+            error : function(xhr) {
+                if(xhr.responseJSON && xhr.responseJSON.message!='') {
+                    alert(xhr.responseJSON.message);
+                }
+            },
+            beforeSend: function() {
+                $("#overlay").show();
+            },
+            complete: function() {
+                $("#overlay").hide();
+            }
         });
-    });
+    }
+
+    function validate() {
+        if(COMMON._isNullOrEmpty($("#name"))){
+            alert('Tên khách hàng không được để trống!');
+            $("#name").focus();
+            return false;
+        }
+
+        if(COMMON._isNullOrEmpty($("#phone"))){
+            alert('Số điện thoại không được để trống!');
+            $("#phone").focus();
+            return false;
+        }
+
+        if(COMMON._isNullOrEmpty($("#address"))){
+            alert('Địa chỉ không được để trống!');
+            $("#address").focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    // end main action
 
     function changeData(subRow){
         var row = $(subRow).closest('tr');
@@ -588,87 +741,6 @@ var detailData = [];
             }
             getTotalPrice();
         }
-    }
-
-    function reset() {
-        $("#name").val('');
-        $("#phone").val('');
-        $("#address").val('');
-        $("#payment").val(0);
-        $("#release").val('');
-        $("#note").val('');
-        $("#tb_data tbody").empty();
-        let template = $("#templateRow");
-        $("#tb_data tbody").append(template.html());
-        $("#totalPrice").text("0");
-    }
-
-    function save(isback=false) {
-        if(!validate()) return;
-
-        if(detailData.length == 0){
-            alert('Vui lòng kiểm tra chi tiết đơn hàng.');
-            return;
-        }
-
-        var data = {
-            "name"   : $("#name").val(),
-            "phone"  : $("#phone").val(),
-            "address": $("#address").val(),
-            "payment": Number.parseInt($("#payment").val()),
-            "release": $("#release").val(),
-            "note"   : $("#note").val(),
-            "detail" : detailData,
-            "amount"  : $("#totalPrice").text().replaceAll('.','')
-        }
-
-        return $.ajax({
-            url : "{{ url('api/order') }}",
-            type : "POST",
-            dataType:"json",
-            data: data,
-            success : function(data) {
-                alert(data.message)
-                if(isback){
-                    window.location.href = '{{url("/order/list")}}';
-                }else{
-                    reset();
-                }
-            },
-            error : function(xhr) {
-                if(xhr.responseJSON && xhr.responseJSON.message!='') {
-                    alert(xhr.responseJSON.message);
-                }
-            },
-            beforeSend: function() {
-                $("#overlay").show();
-            },
-            complete: function() {
-                $("#overlay").hide();
-            }
-        });
-    }
-
-    function validate() {
-        if(COMMON._isNullOrEmpty($("#name"))){
-            alert('Tên khách hàng không được để trống!');
-            $("#name").focus();
-            return false;
-        }
-
-        if(COMMON._isNullOrEmpty($("#phone"))){
-            alert('Số điện thoại không được để trống!');
-            $("#phone").focus();
-            return false;
-        }
-
-        if(COMMON._isNullOrEmpty($("#address"))){
-            alert('Địa chỉ không được để trống!');
-            $("#address").focus();
-            return false;
-        }
-
-        return true;
     }
 
     function setCustomer(name,phone,address) {
@@ -1034,7 +1106,16 @@ var detailData = [];
                     </td>
                 </tr>`)
         });
-        $("#totalPrice").text((sum+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+        var vat = 0;
+        if($("#isVat").is(":checked")){
+            vat = Number.parseInt(sum * 0.1);
+
+        }
+
+        $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+        var totalAmount = sum + vat;
+
+        $("#totalPrice").text((totalAmount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
     function removerDetail(idx) {

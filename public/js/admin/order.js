@@ -12,5 +12,4 @@
         $("#fromDate").val(firstDayOfMonth.toLocaleDateString('en-CA'));
         $("#todate").val(lastDayOfMonth.toLocaleDateString('en-CA'));
     }
-
 });

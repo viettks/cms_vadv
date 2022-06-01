@@ -40,7 +40,7 @@
     @yield('extend_script')
     <script>
         $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
-            if(xhr.status){
+            if(xhr.status == 403){
                 window.location.reload();
             }
         });

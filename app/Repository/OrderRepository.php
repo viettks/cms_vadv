@@ -11,7 +11,7 @@ class OrderRepository
 {
 
     //GET LIST ORDER
-    public function getListOrders($param,$pagging = true)
+    public static function getListOrders($param,$pagging = true)
     {
         $sql = "
             DATE_FORMAT(o.created_at,'%d/%m/%Y') AS create_date,
@@ -20,6 +20,7 @@ class OrderRepository
             o.bill_code,
             o.phone,
             o.status,
+            o.vat_fee,
             o.amount AS total_amount,
             CONCAT( d.print_name,COALESCE(
                 CONCAT(' (',
@@ -94,6 +95,8 @@ class OrderRepository
             DATE_FORMAT(o.release,'%d/%m/%Y') AS release_dt,
             o.payment,
             o.note,
+            o.is_vat,
+            o.vat_fee,
             d.print_id,
             d.print_name,
             d.print_type,

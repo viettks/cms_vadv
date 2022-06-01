@@ -17,23 +17,23 @@ class OrderController extends Controller
 {
     public function viewListOrder(Request $request)
     {
-        $memberes = DB::table('users AS u')->get();
-        return view('pages.order.list')->with(compact('memberes'));
+        $memberes = DB::table("users AS u")->get();
+        return view("pages.order.list")->with(compact("memberes"));
     }
 
     //VIEW TẠO ĐƠN HÀNG
     public function viewCreate(Request $request)
     {
-        $printes = PrintSub::where('is_delete','!=','1')->get();
-        return view('pages.order.add')
-             ->with(compact('printes'));
+        $printes = PrintSub::where("is_delete","!=","1")->get();
+        return view("pages.order.add")
+             ->with(compact("printes"));
     }
 
     //VIEW TẠO ĐƠN HÀNG
     public function viewDetail(Request $request)
     {
         $id = $request->id;
-        $printes = PrintSub::where('is_delete', '!=', '1')->get();
+        $printes = PrintSub::where("is_delete", "!=", "1")->get();
         $select = "
             id,
             bill_code,
@@ -45,19 +45,19 @@ class OrderController extends Controller
             note,
             amount,
             status";
-        $order = Order::from('tb_order as o')->selectRaw($select)->where('o.id', '=', $id)->first();
-        $details = OrderDetail::where('order_id', '=', $id)->get();
-        return view('pages.order.detail')
-        ->with(compact(['printes','order','details']));
+        $order = Order::from("tb_order as o")->selectRaw($select)->where("o.id", "=", $id)->first();
+        $details = OrderDetail::where("order_id", "=", $id)->get();
+        return view("pages.order.detail")
+        ->with(compact(["printes","order","details"]));
     }
 
     public function export(Request $request) 
     {
         $param = $request->all();
         $user = auth()->user();
-        $param['is_admin'] = $user->hasRole('ADMIN');
-        $param['user'] = $user->id;
-        return Excel::download(new ExportOrder($param), 'don-hang.xlsx');
+        $param["is_admin"] = $user->hasRole("ADMIN");
+        $param["user"] = $user->id;
+        return Excel::download(new ExportOrder($param), "don-hang.xlsx");
     }
 
     //API
@@ -70,8 +70,8 @@ class OrderController extends Controller
     {
         $param = $request->all();
         $user = auth()->user();
-        $param['is_admin'] = $user->hasRole('ADMIN');
-        $param['user'] = $user->id;
+        $param["is_admin"] = $user->hasRole("ADMIN");
+        $param["user"] = $user->id;
 
         $result = OrderService::getListOrder($param);
         return response()->json($result, 200);
@@ -116,7 +116,7 @@ class OrderController extends Controller
     public function getOrderHistory(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'phone'   => 'required',
+            "phone"   => "required",
         ]);
 
         if($validator->fails()){
@@ -124,9 +124,9 @@ class OrderController extends Controller
         }
 
         return response()->json([
-            'status' => "OK",
-            'data' => OrderService::getOrderHistory($request->all()), 
-            'message' => 'Thành công.'
+            "status" => "OK",
+            "data" => OrderService::getOrderHistory($request->all()), 
+            "message" => "Thành công."
         ]);
     }
 
@@ -136,11 +136,13 @@ class OrderController extends Controller
     public function createOrder(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'    => 'required|string',
-            'phone'   => 'required',
-            'address' => 'required',
-            'payment' => 'required|integer',
-            'detail'  => 'array|required',
+            "name"    => "required|string",
+            "phone"   => "required",
+            "address" => "required",
+            "is_vat" => "required",
+            "vat_fee" => "required|integer",
+            "payment" => "required|integer",
+            "detail"  => "array|required",
         ]);
 
         if($validator->fails()){
@@ -148,24 +150,23 @@ class OrderController extends Controller
         }
 
         $printDetails = $request->detail;
-            
         $author = auth()->user();
+        $order = $request->except(["detail"]);
+        $order["created_by"] = $author->id;
+        $order["updated_by"] = $author->id;
 
-        $order = $request->except(['detail']);
-        $order['created_by'] = $author->id;
-        $order['updated_by'] = $author->id;
         try {
             $result = OrderService::createOrder($order,$printDetails);
             return response()->json([
-                'status' => "OK",
-                'data' => $result, 
-                'message' => 'Tạo mới thành công.'
+                "status" => "OK",
+                "data" => $result, 
+                "message" => "Tạo mới thành công."
             ]);
         } catch (Exception $e) {
             
             return response()->json([
-                'status'  => 500,
-                'message' => 'Đã xảy ra lỗi hệ thống.',
+                "status"  => 500,
+                "message" => "Đã xảy ra lỗi hệ thống.",
             ], 500);
         }
     }
@@ -177,11 +178,11 @@ class OrderController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'    => 'required|string',
-            'phone'   => 'required',
-            'address' => 'required',
-            'payment' => 'required|integer',
-            'detail'  => 'array|required',
+            "name"    => "required|string",
+            "phone"   => "required",
+            "address" => "required",
+            "payment" => "required|integer",
+            "detail"  => "array|required",
         ]);
 
         if($validator->fails()){
@@ -192,21 +193,21 @@ class OrderController extends Controller
             
         $author = auth()->user();
 
-        $order = $request->except(['detail']);
-        $order['created_by'] = $author->id;
-        $order['updated_by'] = $author->id;
+        $order = $request->except(["detail"]);
+        $order["created_by"] = $author->id;
+        $order["updated_by"] = $author->id;
         try {
             $result = OrderService::updateOrder($order,$printDetails);
             return response()->json([
-                'status' => "OK",
-                'data' => $result, 
-                'message' => 'Cập nhật thành công.'
+                "status" => "OK",
+                "data" => $result, 
+                "message" => "Cập nhật thành công."
             ]);
         } catch (Exception $e) {
             
             return response()->json([
-                'status'  => 500,
-                'message' => 'Đã xảy ra lỗi hệ thống.',
+                "status"  => 500,
+                "message" => "Đã xảy ra lỗi hệ thống.",
             ], 500);
         }
     }
@@ -219,9 +220,9 @@ class OrderController extends Controller
     {
         $id = $request->id;
         return response()->json([
-            'status' => "OK",
-            'data' => OrderService::delete($id), 
-            'message' => 'Xóa thành công.'
+            "status" => "OK",
+            "data" => OrderService::delete($id), 
+            "message" => "Xóa thành công."
         ]);
     }
 }

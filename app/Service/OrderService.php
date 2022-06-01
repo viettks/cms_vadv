@@ -35,7 +35,7 @@ class OrderService
     }
 
     //CREATE ORDER AND MORE
-    public function createOrder($order,$details)
+    public static function createOrder($order,$details)
     {
         try {
             DB::beginTransaction();
