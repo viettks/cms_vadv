@@ -103,6 +103,21 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2">
+                        <label for="isVat" class=" form-control-label">VAT (?)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="checkbox" id="isVat" name="isVat" {{$order->is_vat == "1" ? 'checked' : ''}}>
+                    </div>
+                    <div class="col col-md-2">
+                        <label for="vatFee" class=" form-control-label">Số tiền VAT (10%)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="text" id="vatFee" name="release" placeholder="Số tiền VAT" class="form-control"
+                            value="0" disabled>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2">
                         <label for="note" class=" form-control-label">Ghi chú</label>
                     </div>
                     <div class="col-12 col-md-10">
@@ -528,6 +543,8 @@ var detailData = [];
                 table = CMTBL.init($('#tb_data_sub'),columns,ajax,null);
             }
         });
+
+        $("#isVat").change(()=>{loadDetail();});
     });
 
     function InitOrderDetail(){
@@ -594,7 +611,15 @@ var detailData = [];
                     </td>
                 </tr>`)
         });
-        $("#totalPrice").text((sum+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+debugger
+        var vat = 0;
+        if($("#isVat").is(":checked")){
+            vat = Number.parseInt(sum * 0.1);
+        }
+        $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+        var totalAmount = sum + vat;
+
+        $("#totalPrice").text((totalAmount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
     $('#mdDetail').on('shown.bs.modal', function (element) {
@@ -851,8 +876,7 @@ var detailData = [];
         var unitPrice = Number.parseInt($("#unitPrice").val());
 
         var size = width * heigth * quantity;
-        let price = size * unitPrice;
-
+        let price = Math.round(size * unitPrice);
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
         $("#spTotal").text(size);
@@ -867,8 +891,7 @@ var detailData = [];
         var quantity = Number.parseInt($("#quantity").val());
         var unitPrice = Number.parseInt($("#unitPrice").val());
         var unit = $('#dPrintType option:selected').data('subunit');
-        let price = quantity * unitPrice;
-
+        let price = Math.round(quantity * unitPrice);
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
         $("#spTotal").text(quantity);

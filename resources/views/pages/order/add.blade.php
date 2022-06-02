@@ -731,11 +731,11 @@
             let unit = $(row).find('select[name=print] option:selected').data('subtype');
             if(unit == 1){
                 var size = width * height * quantity;
-                let price = size * unitPrice;
+                let price = Math.round(size * unitPrice);
                 $(row).find('span.rowQuantity').text(size);
                 $(row).find('span.rowPriceData').text((price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
             }else{
-                let price = quantity * unitPrice;
+                let price = Math.round(quantity * unitPrice);
                 $(row).find('span.rowQuantity').text(quantity);
                 $(row).find('span.rowPriceData').text((price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
             }
@@ -918,8 +918,7 @@
         var unitPrice = Number.parseInt($("#unitPrice").val());
 
         var size = width * heigth * quantity;
-        let price = size * unitPrice;
-
+        let price = Math.round(size * unitPrice);
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
         $("#spTotal").text(size);
@@ -934,7 +933,7 @@
         var quantity = Number.parseInt($("#quantity").val());
         var unitPrice = Number.parseInt($("#unitPrice").val());
         var unit = $('#dPrintType option:selected').data('subunit');
-        let price = quantity * unitPrice;
+        let price = Math.round(quantity * unitPrice);
 
         let priceText = (price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 
@@ -1109,7 +1108,6 @@
         var vat = 0;
         if($("#isVat").is(":checked")){
             vat = Number.parseInt(sum * 0.1);
-
         }
 
         $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
