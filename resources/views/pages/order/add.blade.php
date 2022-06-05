@@ -730,9 +730,7 @@
         }else{
             let unit = $(row).find('select[name=print] option:selected').data('subtype');
             if(unit == 1){
-                var size = width * height * quantity;
-
-                size =Math.round(size*Math.pow(10,2))/Math.pow(10,2);
+                var size = Number.parseFloat(width * height * quantity);
                 let price = Math.round(size * unitPrice);
                 $(row).find('span.rowQuantity').text(size);
                 $(row).find('span.rowPriceData').text((price+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
