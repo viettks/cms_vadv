@@ -44,6 +44,8 @@ class OrderController extends Controller
             DATE_FORMAT(o.release, '%Y-%m-%d') AS release_dt,
             note,
             amount,
+            is_vat,
+            vat_fee,
             status";
         $order = Order::from("tb_order as o")->selectRaw($select)->where("o.id", "=", $id)->first();
         $details = OrderDetail::where("order_id", "=", $id)->get();

@@ -67,8 +67,8 @@
                     </div>
                 </div>
                 <div class="table-responsive table--no-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Danh thu</h3>
+                    <div class="au-card-inner au-card--pad-40">
+                        <h3 class="title-2 m-b-40">Doanh thu</h3>
                         <canvas id="myChart" style="max-height: 400px" width="100%"></canvas>
                     </div>
                 </div>

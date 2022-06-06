@@ -3336,6 +3336,10 @@ select.form-control:not([size]):not([multiple]) {
     padding: 0;
 }
 
+.au-card--pad-40 {
+    padding: 40px;
+}
+
 .au-card-title {
     position: relative;
     padding: 40px;

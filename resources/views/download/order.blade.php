@@ -16,6 +16,7 @@
         <td width="150px"></td>
         <td width="150px"></td>
         <td width="150px"></td>
+        <td width="150px"></td>
     </tr>
     <tr>
         <td style="font-weight: 500;border:1px solid black;">Ngày bắt đầu</td>
@@ -41,6 +42,7 @@
         <td style="text-align: center;font-size:12px; border:1px solid black;">TỔNG</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">ĐƠN GIÁ</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">THÀNH TIỀN</td>
+        <td style="text-align: center;font-size:12px; border:1px solid black;">VAT(10%)</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TỔNG TIỀN</td>
         <td style="text-align: center;font-size:12px; border:1px solid black;">TÌNH TRẠNG</td>
     </tr>
@@ -69,6 +71,11 @@
         <td style="border:1px solid black;">{{$item->total_size}}</td>
         <td style="border:1px solid black;">{{$item->unit_price}}</td>
         <td style="border:1px solid black;">{{$item->amount_display}}</td>
+        <td style="border:1px solid black;">
+            @if ($tempId != $item->id)
+            {{$item->vat_fee}}
+            @endif
+        </td>
         <td style="border:1px solid black;">
             @if ($tempId != $item->id)
             {{$item->total_amount}}

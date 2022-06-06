@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="text" id="vatFee" name="release" placeholder="Số tiền VAT" class="form-control"
-                            value="0" disabled>
+                            value="{{$order->vat_fee}}" disabled>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -585,42 +585,44 @@ var detailData = [];
         });
     }
 
-    function loadDetail() {
-        $("#tb_data tbody").empty();
-        var sum = 0;
-        $.each(detailData, ( index, item ) => {
-            sum += Number.parseInt(item.amount);
-            $("#tb_data tbody").append(
-                `<tr>
-                    <td>${index + 1}</td>
-                    <td>${item.print_name}</td>
-                    <td>${item.machine1}</td>
-                    <td>${item.machine2}</td>
-                    <td>${item.size}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.unit_price}</td>
-                    <td>${item.total_size + item.unit}</td>
-                    <td>${item.amount_display}&nbsp; VNĐ</td>
-                    <td><div class="table-data-feature">
-                        <button class="item" onclick="editDetail(${index});">
-                            <i class="fa fa-edit"></i>
-                        </button</div>
-                        <button class="item" onclick="removerDetail(${index});">
-                            <i class="zmdi zmdi-delete"></i>
-                        </button</div>
-                    </td>
-                </tr>`)
-        });
-debugger
-        var vat = 0;
-        if($("#isVat").is(":checked")){
-            vat = Number.parseInt(sum * 0.1);
-        }
-        $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
-        var totalAmount = sum + vat;
+    // function loadDetail() {
+    //     debugger
+    //     $("#tb_data tbody").empty();
+    //     var sum = 0;
+    //     $.each(detailData, ( index, item ) => {
+    //         sum += Number.parseInt(item.amount);
+    //         $("#tb_data tbody").append(
+    //             `<tr>
+    //                 <td>${index + 1}</td>
+    //                 <td>${item.print_name}</td>
+    //                 <td>${item.machine1}</td>
+    //                 <td>${item.machine2}</td>
+    //                 <td>${item.size}</td>
+    //                 <td>${item.quantity}</td>
+    //                 <td>${item.unit_price}</td>
+    //                 <td>${item.total_size + item.unit}</td>
+    //                 <td>${item.amount_display}&nbsp; VNĐ</td>
+    //                 <td><div class="table-data-feature">
+    //                     <button class="item" onclick="editDetail(${index});">
+    //                         <i class="fa fa-edit"></i>
+    //                     </button</div>
+    //                     <button class="item" onclick="removerDetail(${index});">
+    //                         <i class="zmdi zmdi-delete"></i>
+    //                     </button</div>
+    //                 </td>
+    //             </tr>`)
+    //     });
+    //     debugger
+    //     var vat = 0;
+    //     if($("#isVat").is(":checked")){
+    //         vat = Number.parseInt(sum * 0.1);
+    //     }
 
-        $("#totalPrice").text((totalAmount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
-    }
+    //     $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+    //     var totalAmount = sum + vat;
+
+    //     $("#totalPrice").text((totalAmount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+    // }
 
     $('#mdDetail').on('shown.bs.modal', function (element) {
         if(element.relatedTarget){
@@ -1062,7 +1064,15 @@ debugger
                     </td>
                 </tr>`)
         });
-        $("#totalPrice").text((sum+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+        var vat = 0;
+        if($("#isVat").is(":checked")){
+            vat = Number.parseInt(sum * 0.1);
+        }
+
+        $("#vatFee").val((vat+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+        var totalAmount = sum + vat;
+
+        $("#totalPrice").text((totalAmount+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
     }
 
     function removerDetail(idx) {
