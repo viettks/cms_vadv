@@ -100,7 +100,7 @@
                 <i class="fa fa-reply"></i>&nbsp; Lưu và quay lại</button>
             <button type="button" class="btn btn-outline-warning mr-2" onclick="reset();">
                 <i class="fa fa-undo"></i>&nbsp; Reset</button>
-            <a type="button" class="btn btn-outline-secondary" href="{{url('/settings/list-print')}}">
+            <a type="button" class="btn btn-outline-secondary" href="{{URL::asset('/image/propic.png')}}">
                 <i class="fa fa-times"></i>&nbsp; Hủy</a>
         </div>
     </div>

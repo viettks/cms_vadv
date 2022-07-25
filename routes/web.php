@@ -34,6 +34,7 @@ Route::group([
     Route::get('/order/add', [OrderController::class, 'viewCreate'])->name('addOrder');
     Route::get('/order/download', [OrderController::class, 'export'])->name('exportOrder');
     Route::get('/order/info/{id}', [OrderController::class, 'viewDetail'])->name('detailOrder');
+    Route::get('/order/printer/{id}', [OrderController::class, 'viewPrinterQuotaion'])->name('vPrinterQuotaion');
     // CHI
     Route::get('/revenue', [RevenueController::class, 'index'])->name('revenue');
     Route::get('/revenue/{file}', [RevenueController::class, 'getFile'])->name('getFile');

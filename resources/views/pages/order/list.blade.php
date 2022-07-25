@@ -111,7 +111,7 @@
 <!-- modal medium -->
 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="mediumModalLabel">
                     <i class="mr-2 fa fa-align-justify"></i>
@@ -122,10 +122,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" class="form-horizontal">
+                <form action="" method="post" class="form-horizontal" onsubmit="return false;">
                     <div class="row form-group">
-                        <h5 class="title-5 m-b-30 ml-3">Thông tin khách hàng</h5>
+                        <h5 class="title-5 m-b-30 ml-3 col-6">Thông tin khách hàng</h5>
+                        <div class="row form-group col-6">
+                            <button class="btn btn-primary" onclick="custom_print()"><i class="fa fa-print"> In báo
+                                    giá</i></button>
+                        </div>
                     </div>
+
                     <div class="row form-group">
                         <div class="col col-md-2">
                             <label for="note" class=" form-control-label">Mã vận đơn</label>
@@ -260,7 +265,7 @@
 <!-- MODAL HISTORY -->
 <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="mediumModalLabel">
                     <i class="mr-2 fa fa-align-justify"></i>
@@ -600,6 +605,14 @@
         });
     }
 }
+var myframe
+function custom_print() {
+    myframe =  document.createElement('IFRAME');
+    myframe.src = `http://localhost:8000/order/printer/${id}`;
+    document.body.appendChild(myframe);
+    
+}
+
 </script>
 @endcan
 @endsection

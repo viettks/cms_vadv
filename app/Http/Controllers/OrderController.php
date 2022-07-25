@@ -62,6 +62,11 @@ class OrderController extends Controller
         return Excel::download(new ExportOrder($param), "don-hang.xlsx");
     }
 
+    public function viewPrinterQuotaion(Request $request)
+    {
+        return view("pages.printer.quotation");
+    }
+
     //API
 
     /*
